@@ -7,7 +7,6 @@
  Description : main definition
 ===============================================================================
 */
-//eeee
 #ifdef __USE_CMSIS
 #include "LPC17xx.h"
 #endif
