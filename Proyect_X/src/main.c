@@ -7,7 +7,6 @@
  Description : main definition
 ===============================================================================
 */
-//eeee
 
 //hola
 #ifdef __USE_CMSIS
