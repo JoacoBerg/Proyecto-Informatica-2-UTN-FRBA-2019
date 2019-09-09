@@ -5,12 +5,45 @@ c:/nxp/mcuxpressoide_11.0.0_2516/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.0
 
 Discarded input sections
 
+ .group         0x00000000        0xc ./src/DR_GPIO.o
+ .group         0x00000000        0xc ./src/DR_GPIO.o
+ .group         0x00000000        0xc ./src/DR_GPIO.o
+ .text          0x00000000        0x0 ./src/DR_GPIO.o
+ .data          0x00000000        0x0 ./src/DR_GPIO.o
+ .bss           0x00000000        0x0 ./src/DR_GPIO.o
+ .text.Set_Pinsel
+                0x00000000       0x92 ./src/DR_GPIO.o
+ .text.GPIO_Mode
+                0x00000000       0x88 ./src/DR_GPIO.o
+ .text.GPIO_Dir
+                0x00000000       0x70 ./src/DR_GPIO.o
+ .text.GPIO_Set
+                0x00000000       0x46 ./src/DR_GPIO.o
+ .text.GPIO_Get
+                0x00000000       0x36 ./src/DR_GPIO.o
+ .debug_info    0x00000000      0x219 ./src/DR_GPIO.o
+ .debug_abbrev  0x00000000       0xe4 ./src/DR_GPIO.o
+ .debug_aranges
+                0x00000000       0x40 ./src/DR_GPIO.o
+ .debug_ranges  0x00000000       0x30 ./src/DR_GPIO.o
+ .debug_macro   0x00000000       0x29 ./src/DR_GPIO.o
+ .debug_macro   0x00000000      0xa9c ./src/DR_GPIO.o
+ .debug_macro   0x00000000       0x2e ./src/DR_GPIO.o
+ .debug_macro   0x00000000       0x28 ./src/DR_GPIO.o
+ .debug_line    0x00000000      0x18a ./src/DR_GPIO.o
+ .debug_str     0x00000000     0x2fc3 ./src/DR_GPIO.o
+ .comment       0x00000000       0x76 ./src/DR_GPIO.o
+ .debug_frame   0x00000000       0xd8 ./src/DR_GPIO.o
+ .ARM.attributes
+                0x00000000       0x2d ./src/DR_GPIO.o
  .group         0x00000000        0xc ./src/DR_PLL.o
  .group         0x00000000        0xc ./src/DR_PLL.o
  .group         0x00000000        0xc ./src/DR_PLL.o
  .text          0x00000000        0x0 ./src/DR_PLL.o
  .data          0x00000000        0x0 ./src/DR_PLL.o
  .bss           0x00000000        0x0 ./src/DR_PLL.o
+ .debug_macro   0x00000000      0xa9c ./src/DR_PLL.o
+ .debug_macro   0x00000000       0x2e ./src/DR_PLL.o
  .group         0x00000000        0xc ./src/DR_Systick.o
  .group         0x00000000        0xc ./src/DR_Systick.o
  .group         0x00000000        0xc ./src/DR_Systick.o
@@ -56,6 +89,7 @@ RamAHB32         0x2007c000         0x00008000         xrw
 
 Linker script and memory map
 
+LOAD ./src/DR_GPIO.o
 LOAD ./src/DR_PLL.o
 LOAD ./src/DR_Systick.o
 LOAD ./src/cr_startup_lpc175x_6x.o
@@ -311,18 +345,16 @@ OUTPUT(Proyect_X.axf elf32-littlearm)
  .debug_ranges  0x00000028       0x70 ./src/cr_startup_lpc175x_6x.o
  .debug_ranges  0x00000098       0x10 ./src/main.o
 
-.debug_macro    0x00000000      0xd60
+.debug_macro    0x00000000      0x296
  .debug_macro   0x00000000       0x29 ./src/DR_PLL.o
- .debug_macro   0x00000029      0xa9c ./src/DR_PLL.o
- .debug_macro   0x00000ac5       0x2e ./src/DR_PLL.o
- .debug_macro   0x00000af3      0x112 ./src/DR_PLL.o
- .debug_macro   0x00000c05       0x23 ./src/DR_Systick.o
- .debug_macro   0x00000c28       0x10 ./src/DR_Systick.o
- .debug_macro   0x00000c38       0x1d ./src/cr_startup_lpc175x_6x.o
- .debug_macro   0x00000c55       0x1a ./src/crp.o
- .debug_macro   0x00000c6f       0x34 ./src/crp.o
- .debug_macro   0x00000ca3       0x3b ./src/main.o
- .debug_macro   0x00000cde       0x82 ./src/main.o
+ .debug_macro   0x00000029      0x112 ./src/DR_PLL.o
+ .debug_macro   0x0000013b       0x23 ./src/DR_Systick.o
+ .debug_macro   0x0000015e       0x10 ./src/DR_Systick.o
+ .debug_macro   0x0000016e       0x1d ./src/cr_startup_lpc175x_6x.o
+ .debug_macro   0x0000018b       0x1a ./src/crp.o
+ .debug_macro   0x000001a5       0x34 ./src/crp.o
+ .debug_macro   0x000001d9       0x3b ./src/main.o
+ .debug_macro   0x00000214       0x82 ./src/main.o
 
 .debug_line     0x00000000      0x5c8
  .debug_line    0x00000000      0x1af ./src/DR_PLL.o
@@ -331,16 +363,16 @@ OUTPUT(Proyect_X.axf elf32-littlearm)
  .debug_line    0x000003e1       0xb1 ./src/crp.o
  .debug_line    0x00000492      0x136 ./src/main.o
 
-.debug_str      0x00000000     0x3b84
+.debug_str      0x00000000     0x3b83
  .debug_str     0x00000000     0x334e ./src/DR_PLL.o
                                0x338b (size before relaxing)
- .debug_str     0x0000334e       0xcb ./src/DR_Systick.o
-                               0x2eff (size before relaxing)
- .debug_str     0x00003419      0x226 ./src/cr_startup_lpc175x_6x.o
+ .debug_str     0x0000334e       0xca ./src/DR_Systick.o
+                               0x2efe (size before relaxing)
+ .debug_str     0x00003418      0x226 ./src/cr_startup_lpc175x_6x.o
                                0x2fa8 (size before relaxing)
- .debug_str     0x0000363f       0xe9 ./src/crp.o
+ .debug_str     0x0000363e       0xe9 ./src/crp.o
                                0x2eb5 (size before relaxing)
- .debug_str     0x00003728      0x45c ./src/main.o
+ .debug_str     0x00003727      0x45c ./src/main.o
                                0x37f6 (size before relaxing)
 
 .comment        0x00000000       0x75
@@ -389,6 +421,10 @@ EINT1_IRQHandler                                  ./src/cr_startup_lpc175x_6x.o
 EINT2_IRQHandler                                  ./src/cr_startup_lpc175x_6x.o
 EINT3_IRQHandler                                  ./src/cr_startup_lpc175x_6x.o
 ENET_IRQHandler                                   ./src/cr_startup_lpc175x_6x.o
+GPIO_Dir                                          ./src/DR_GPIO.o
+GPIO_Get                                          ./src/DR_GPIO.o
+GPIO_Mode                                         ./src/DR_GPIO.o
+GPIO_Set                                          ./src/DR_GPIO.o
 HardFault_Handler                                 ./src/cr_startup_lpc175x_6x.o
 I2C0_IRQHandler                                   ./src/cr_startup_lpc175x_6x.o
 I2C1_IRQHandler                                   ./src/cr_startup_lpc175x_6x.o
@@ -412,6 +448,7 @@ SPI_IRQHandler                                    ./src/cr_startup_lpc175x_6x.o
 SSP0_IRQHandler                                   ./src/cr_startup_lpc175x_6x.o
 SSP1_IRQHandler                                   ./src/cr_startup_lpc175x_6x.o
 SVC_Handler                                       ./src/cr_startup_lpc175x_6x.o
+Set_Pinsel                                        ./src/DR_GPIO.o
 SysTick_Handler                                   ./src/DR_Systick.o
 SysTick_Init                                      ./src/DR_Systick.o
                                                   ./src/main.o

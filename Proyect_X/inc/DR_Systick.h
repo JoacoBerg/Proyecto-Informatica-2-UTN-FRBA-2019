@@ -14,7 +14,7 @@
 typedef struct{
 
 	union {
-			__RW uint32_t _STCTRL;
+			__RW uint32_t STCTRL;
 		struct{
 			__RW uint32_t ENABLE:1;			//enable del modulo
 			__RW uint32_t TICKINT:1;		//habilitar interrupt (para hacer con pulling usar COUNTFLAG)

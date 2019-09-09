@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../src/DR_GPIO.c \
 ../src/DR_PLL.c \
 ../src/DR_Systick.c \
 ../src/cr_startup_lpc175x_6x.c \
@@ -11,6 +12,7 @@ C_SRCS += \
 ../src/main.c 
 
 OBJS += \
+./src/DR_GPIO.o \
 ./src/DR_PLL.o \
 ./src/DR_Systick.o \
 ./src/cr_startup_lpc175x_6x.o \
@@ -18,6 +20,7 @@ OBJS += \
 ./src/main.o 
 
 C_DEPS += \
+./src/DR_GPIO.d \
 ./src/DR_PLL.d \
 ./src/DR_Systick.d \
 ./src/cr_startup_lpc175x_6x.d \

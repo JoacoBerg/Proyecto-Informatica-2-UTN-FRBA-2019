@@ -1,0 +1,5 @@
+DR_GPIO.c:11:6:Set_Pinsel	24	static
+DR_GPIO.c:21:6:GPIO_Mode	24	static
+DR_GPIO.c:32:6:GPIO_Dir	24	static
+DR_GPIO.c:42:6:GPIO_Set	24	static
+DR_GPIO.c:52:10:GPIO_Get	16	static
