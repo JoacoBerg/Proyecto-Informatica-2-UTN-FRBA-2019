@@ -5,6 +5,21 @@
 #include "DR_tipos.h"
 
 
+//Estados de FIODIR:
+#define		OUTPUT	1
+#define		INPUT	0
+
+//Estados de PINSEL:
+#define		PINSEL_GPIO		0
+#define		PINSEL_FUNC1	1
+#define		PINSEL_FUNC2	2
+#define		PINSEL_FUNC3	3
+
+//Estados de PINMODE
+#define		PINMODE_PULLUP 		0
+#define		PINMODE_REPEAT 		1
+#define		PINMODE_NONE 		2
+#define		PINMODE_PULLDOWN 	3
 
 
 //Registros generales:
@@ -40,7 +55,7 @@ typedef struct
 
 void Set_Pinsel(uint32_t Puerto, uint32_t Pin,uint32_t Configurar);	//tambien llamada PINSEL por el resto de la catedra
 void GPIO_Mode(uint32_t Puerto, uint32_t Pin,uint32_t Configurar);		//pull up or pull down
-void GPIO_Dir(uint32_t Puerto, uint32_t Pin,uint32_t Dir);				//0: Entrada; 1: Salida
+void GPIO_Dir(uint32_t Puerto, uint32_t Pin,uint32_t Dir);				//0: INPUT; 1: OUTPUT
 uint32_t GPIO_Get(uint32_t Puerto, uint32_t Pin);						//lectura del GPIO
 void GPIO_Set (uint32_t Puerto, uint32_t Pin, uint32_t Estado);			//escritura del GPIO
 

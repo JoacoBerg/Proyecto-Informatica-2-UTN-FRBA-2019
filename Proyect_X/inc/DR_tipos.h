@@ -45,6 +45,24 @@ typedef		int					int32_t;
 typedef		short int			int16_t;
 typedef		char				int8_t;
 
+
+//	LED RGB
+#define LEDR 0,22
+#define LEDG 3,25
+#define LEDB 3,26
+
+#define LED_ON 0
+#define LED_OFF 1
+
+#define LOW		0
+#define HIGH	1
+
+#define OUTPUT	1
+#define INPUT	0
+
+
+
+
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES
  **********************************************************************************************************************************/

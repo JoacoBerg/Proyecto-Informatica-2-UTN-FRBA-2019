@@ -7,6 +7,7 @@ C_SRCS += \
 ../src/DR_GPIO.c \
 ../src/DR_PLL.c \
 ../src/DR_Systick.c \
+../src/UltraLib.c \
 ../src/cr_startup_lpc175x_6x.c \
 ../src/crp.c \
 ../src/main.c 
@@ -15,6 +16,7 @@ OBJS += \
 ./src/DR_GPIO.o \
 ./src/DR_PLL.o \
 ./src/DR_Systick.o \
+./src/UltraLib.o \
 ./src/cr_startup_lpc175x_6x.o \
 ./src/crp.o \
 ./src/main.o 
@@ -23,6 +25,7 @@ C_DEPS += \
 ./src/DR_GPIO.d \
 ./src/DR_PLL.d \
 ./src/DR_Systick.d \
+./src/UltraLib.d \
 ./src/cr_startup_lpc175x_6x.d \
 ./src/crp.d \
 ./src/main.d 
