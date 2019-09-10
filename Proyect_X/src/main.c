@@ -29,17 +29,21 @@ int main(void) {
     InicializarPLL();
     SysTick_Init();
     Tanks_Init();
-    // Enter an infinite loop, just incrementing a counter
+
+
     while(1) {
+		for (int i=0;i<500000;i++){
+			//Tank_OFF(PWM_DIVISOR);
+			Tank_Forward(750);
+		}
+
 		for (int i=0;i<500000;i++){
 			Tank_Forward(PWM_DIVISOR);
 		}
 		for (int i=0;i<500000;i++){
-			Tank_Forward(250);
-		}
-		for (int i=0;i<500000;i++){
 			Tank_Brake();
 		}
+
 		for (int i=0;i<500000;i++){
 			Tank_Left(PWM_DIVISOR);
 		}
