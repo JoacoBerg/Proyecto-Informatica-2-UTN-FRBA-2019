@@ -8,7 +8,7 @@
 //-----------------------------------------------------------------------------------
 
 
-void Set_Pinsel(uint32_t Puerto, uint32_t Pin, uint32_t Funcion){	//tambien llamada PINSEL por el resto de la catedra
+void GPIO_Pinsel(uint32_t Puerto, uint32_t Pin, uint32_t Funcion){	//tambien llamada PINSEL por el resto de la catedra
 
 	PINSEL[(Puerto*2) + (Pin/16)]&=~(3<<((Pin%16) * 2));
 

@@ -53,7 +53,7 @@ typedef struct
 
 } gpio_t;
 
-void Set_Pinsel(uint32_t Puerto, uint32_t Pin,uint32_t Configurar);	//tambien llamada PINSEL por el resto de la catedra
+void GPIO_Pinsel(uint32_t Puerto, uint32_t Pin,uint32_t Configurar);	//tambien llamada PINSEL por el resto de la catedra
 void GPIO_Mode(uint32_t Puerto, uint32_t Pin,uint32_t Configurar);		//pull up or pull down
 void GPIO_Dir(uint32_t Puerto, uint32_t Pin,uint32_t Dir);				//0: INPUT; 1: OUTPUT
 uint32_t GPIO_Get(uint32_t Puerto, uint32_t Pin);						//lectura del GPIO
