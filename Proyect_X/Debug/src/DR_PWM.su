@@ -1,2 +1,0 @@
-DR_PWM.c:60:6:PWM_Init	8	static
-DR_PWM.c:118:6:updatePulseWidth	16	static
