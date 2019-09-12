@@ -1,4 +1,4 @@
-# Proyect_INFO2_2019
+# Proyecto INFO2 2019
 Un follow the line para automatizar envios a diferentes puntos
 
 ## Tener en cuenta:
