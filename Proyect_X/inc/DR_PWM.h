@@ -92,7 +92,7 @@ typedef struct{
 	__RW uint32_t PWM1CTCR;
 }pwm1_t;
 //#define Systick ((__RW systick_t *) 0xE000E010)
-#define PWM ( (__RW pwm1_t *) 0x40018000)
+#define PWM ( (__RW pwm1_t *) 0x40018000UL)
 #define PWMPRESCALE (25-1) //25 PCLK cycles to increment TC by 1 i.e. 1 Micro-second
 
 #define PWM1 1

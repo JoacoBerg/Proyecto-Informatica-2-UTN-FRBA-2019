@@ -19,6 +19,7 @@
 #include "DR_PLL.h"
 #include "Tanks.h"
 #include <DR_Systick.h>
+#include "DR_ADC.h"
 // TODO: insert other definitions and declarations here
 
 int main(void) {
@@ -28,28 +29,13 @@ int main(void) {
     // Force the counter to be placed into memory
     InicializarPLL();
     SysTick_Init();
-    Tanks_Init();
+    //Tanks_Init();
+    ADC_init();
 
 
     while(1) {
 		for (int i=0;i<500000;i++){
-			//Tank_OFF(PWM_DIVISOR);
-			Tank_Forward(750);
-		}
-		for (int i=0;i<500000;i++){
-			Tank_Forward(PWM_DIVISOR);
-		}
-		for (int i=0;i<500000;i++){
-			Tank_Brake();
-		}
-		for (int i=0;i<500000;i++){
-			Tank_Left(PWM_DIVISOR);
-		}
-		for (int i=0;i<500000;i++){
-			Tank_Right(PWM_DIVISOR);
-		}
-		for (int i=0;i<500000;i++){
-			Tank_Coast(PWM_DIVISOR);
+			ADC->START= 1;
 		}
 
     }
