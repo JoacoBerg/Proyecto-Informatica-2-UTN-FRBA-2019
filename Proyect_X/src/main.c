@@ -13,6 +13,7 @@
 #include "LPC17xx.h"
 #endif
 
+//test cris
 #include <cr_section_macros.h>
 
 // TODO: insert other include files here
