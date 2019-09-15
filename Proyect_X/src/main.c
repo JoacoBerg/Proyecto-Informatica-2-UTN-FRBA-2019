@@ -20,6 +20,7 @@
 #include "Tanks.h"
 #include "DR_IR.h"
 #include <DR_Systick.h>
+#include "Maq_Follow_the_line.h"
 // TODO: insert other definitions and declarations here
 #define SERVO PWM6
 
