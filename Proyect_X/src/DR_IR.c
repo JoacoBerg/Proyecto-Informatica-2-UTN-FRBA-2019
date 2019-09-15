@@ -112,13 +112,13 @@ void Mfollowtheline()
 
 				if(IR_2 == 0 && IR_3 == 1)
 				{
-					Tank_Right((PWM_DIVISOR*3)/4);
+					Tank_Right((PWM_DIVISOR)/2);
 					estado = X01X;
 
 				}
 				if(IR_2 == 1 && IR_3 == 0)
 				{
-					Tank_Left((PWM_DIVISOR*3)/4);
+					Tank_Left((PWM_DIVISOR)/2);
 					estado = X10X;
 
 				}
@@ -136,7 +136,7 @@ void Mfollowtheline()
 
 				if(IR_2 == 1 && IR_3 == 1)
 				{
-					Tank_Forward((PWM_DIVISOR*3)/4);
+					Tank_Forward((PWM_DIVISOR)/2);
 					estado = X11X;
 
 				}
@@ -147,7 +147,7 @@ void Mfollowtheline()
 
 				if(IR_2 == 1 && IR_3 == 1)
 				{
-					Tank_Forward((PWM_DIVISOR*3)/4);
+					Tank_Forward((PWM_DIVISOR)/2);
 					estado = X11X;
 
 				}
@@ -158,7 +158,7 @@ void Mfollowtheline()
 
 				if(1==Boton())
 				{
-					Tank_Forward((PWM_DIVISOR*3)/4);
+					Tank_Forward((PWM_DIVISOR)/2);
 					estado = X11X;
 
 				}
@@ -169,7 +169,7 @@ void Mfollowtheline()
 
 				if(1==Boton())
 				{
-					Tank_Forward((PWM_DIVISOR*3)/4);
+					Tank_Forward((PWM_DIVISOR)/2);
 					estado = X11X;
 
 				}

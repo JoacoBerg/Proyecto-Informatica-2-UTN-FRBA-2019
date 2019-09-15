@@ -120,10 +120,12 @@ void Tank_Backward(uint32_t motorSpeed){
 
 void Tank_Left(uint32_t motorSpeed){
   MotorA_DirectionF(motorSpeed);
-  MotorB_DirectionB(motorSpeed);
+  MotorB_Brake();
+  //MotorB_DirectionB(motorSpeed);
 }
 
 void Tank_Right(uint32_t motorSpeed){
-  MotorA_DirectionB(motorSpeed);
-  MotorB_DirectionF(motorSpeed);
+  //MotorA_DirectionB(motorSpeed);
+	MotorA_Brake();
+	MotorB_DirectionF(motorSpeed);
 }
