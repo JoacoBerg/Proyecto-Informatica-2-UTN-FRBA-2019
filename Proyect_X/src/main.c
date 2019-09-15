@@ -18,6 +18,7 @@
 // TODO: insert other include files here
 #include "DR_PLL.h"
 #include "Tanks.h"
+#include "DR_IR.h"
 #include <DR_Systick.h>
 // TODO: insert other definitions and declarations here
 #define SERVO PWM6
@@ -30,15 +31,22 @@ int main(void) {
     InicializarPLL();
     SysTick_Init();
     Tanks_Init();
+    InitIR();
 
 
     while(1) {
+
+    	Mfollowtheline();
+
+
+
+    	/*
     	updatePulseWidth(SERVO, PWM_DIVISOR/20);
     	for(int i=0;i<5000000;i++){}
     	updatePulseWidth(SERVO, (PWM_DIVISOR/20)*2);
     	for(int i=0;i<5000000;i++){}
 
-    	/*
+
 		for (int i=0;i<500000;i++){
 			//Tank_OFF(PWM_DIVISOR);
 			Tank_Forward(750);
