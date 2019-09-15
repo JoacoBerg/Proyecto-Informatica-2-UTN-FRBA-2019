@@ -7,8 +7,6 @@
  Description : main definition
 ===============================================================================
 */
-
-//hola
 #ifdef __USE_CMSIS
 #include "LPC17xx.h"
 #endif
@@ -18,7 +16,9 @@
 // TODO: insert other include files here
 #include "DR_PLL.h"
 #include "Tanks.h"
+#include "DR_IR.h"
 #include <DR_Systick.h>
+#include "Maq_Follow_the_line.h"
 // TODO: insert other definitions and declarations here
 
 
@@ -30,31 +30,12 @@ int main(void) {
     InicializarPLL();
     SysTick_Init();
     Tanks_Init();
+    InitIR();
 
 
     while(1) {
-
-    	/*
-		for (int i=0;i<500000;i++){
-			//Tank_OFF(PWM_DIVISOR);
-			Tank_Forward(750);
-		}
-		for (int i=0;i<500000;i++){
-			Tank_Forward(PWM_DIVISOR);
-		}
-		for (int i=0;i<500000;i++){
-			Tank_Brake();
-		}
-		for (int i=0;i<500000;i++){
-			Tank_Left(PWM_DIVISOR);
-		}
-		for (int i=0;i<500000;i++){
-			Tank_Right(PWM_DIVISOR);
-		}
-		for (int i=0;i<500000;i++){
-			Tank_Coast(PWM_DIVISOR);
-		}
-	*/
+    	Mfollowtheline();
+    	LecturaIRs(IRx4);
     }
     return 0 ;
 }
