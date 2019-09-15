@@ -7,7 +7,7 @@
 #include "DR_PLL.h"
 #include "DR_GPIO.h"
 
-#define PWM_DIVISOR 1000
+#define PWM_DIVISOR 20000// en vez de 1000 lo ponemos en 20000 para que tenga un ciclo de 20 ms para el servo
 
 void updatePulseWidth(uint8_t num, uint32_t pulseWidth);
 void PWM_Init(void);

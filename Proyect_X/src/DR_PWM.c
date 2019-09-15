@@ -67,7 +67,7 @@ void PWM_Init(void)
 
 
 	PCLKSEL0 &= ~(3<<12);			// Borrar lo que haya ecrito ahi
-	PCLKSEL0 |= (1<<12);			// Habilitar el Clock
+	//PCLKSEL0 |= (1<<12);			// PCLK_peripheral = CCLK
 
 
 	PWM->PWM1PR = PWMPRESCALE;		/* Prescalar */
