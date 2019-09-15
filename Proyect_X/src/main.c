@@ -7,8 +7,6 @@
  Description : main definition
 ===============================================================================
 */
-
-//hola
 #ifdef __USE_CMSIS
 #include "LPC17xx.h"
 #endif
@@ -22,7 +20,7 @@
 #include <DR_Systick.h>
 #include "Maq_Follow_the_line.h"
 // TODO: insert other definitions and declarations here
-#define SERVO PWM6
+
 
 int main(void) {
 
@@ -36,39 +34,8 @@ int main(void) {
 
 
     while(1) {
-
     	Mfollowtheline();
     	LecturaIRs(IRx4);
-
-
-
-    	/*
-    	updatePulseWidth(SERVO, PWM_DIVISOR/20);
-    	for(int i=0;i<5000000;i++){}
-    	updatePulseWidth(SERVO, (PWM_DIVISOR/20)*2);
-    	for(int i=0;i<5000000;i++){}
-
-
-		for (int i=0;i<500000;i++){
-			//Tank_OFF(PWM_DIVISOR);
-			Tank_Forward(750);
-		}
-		for (int i=0;i<500000;i++){
-			Tank_Forward(PWM_DIVISOR);
-		}
-		for (int i=0;i<500000;i++){
-			Tank_Brake();
-		}
-		for (int i=0;i<500000;i++){
-			Tank_Left(PWM_DIVISOR);
-		}
-		for (int i=0;i<500000;i++){
-			Tank_Right(PWM_DIVISOR);
-		}
-		for (int i=0;i<500000;i++){
-			Tank_Coast(PWM_DIVISOR);
-		}
-	*/
     }
     return 0 ;
 }
