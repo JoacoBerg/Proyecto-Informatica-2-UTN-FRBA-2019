@@ -11,7 +11,7 @@
  *** INCLUDES
  **********************************************************************************************************************************/
 #include <DR_IR.h>
-#include "funciones-GPIO.h"
+
 
 /***********************************************************************************************************************************
  *** DEFINES PRIVADOS AL MODULO
@@ -61,24 +61,24 @@ void InitIR(void)
 
 
 		//IR1
-		Set_Pinsel(IR1, 0);		//Funcion del pin
-		Set_Mode(IR1, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		Set_Dir(IR1, 0);		//0: Entrada | 1: Salida
+		GPIO_Pinsel(IR1, 0);		//Funcion del pin
+		GPIO_Mode(IR1, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+		GPIO_Dir(IR1, 0);		//0: Entrada | 1: Salida
 
 		//IR2
-		Set_Pinsel(IR2, 0);		//Funcion del pin
-		Set_Mode(IR2, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		Set_Dir(IR2, 0);		//0: Entrada | 1: Salida
+		GPIO_Pinsel(IR2, 0);		//Funcion del pin
+		GPIO_Mode(IR2, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+		GPIO_Dir(IR2, 0);		//0: Entrada | 1: Salida
 
 		//IR3
-		Set_Pinsel(IR3, 0);		//Funcion del pin
-		Set_Mode(IR3, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		Set_Dir(IR3, 0);		//0: Entrada | 1: Salida
+		GPIO_Pinsel(IR3, 0);		//Funcion del pin
+		GPIO_Mode(IR3, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+		GPIO_Dir(IR3, 0);		//0: Entrada | 1: Salida
 
 		//IR4
-		Set_Pinsel(IR4, 0);		//Funcion del pin
-		Set_Mode(IR4, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		Set_Dir(IR4, 0);		//0: Entrada | 1: Salida
+		GPIO_Pinsel(IR4, 0);		//Funcion del pin
+		GPIO_Mode(IR4, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+		GPIO_Dir(IR4, 0);		//0: Entrada | 1: Salida
 
 	}
 
