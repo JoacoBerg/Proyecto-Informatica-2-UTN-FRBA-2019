@@ -1,0 +1,134 @@
+/**
+*	\file funciones.c
+*	\brief
+*	\details Descripcion detallada del archivo
+*	\author CrisafienGerman
+*	\date 15-09-2019 18:56:46
+*/
+
+
+#include "Maq_Giro.h"
+#include "DR_IR.h"
+#include "DR_tipos.h"
+#include "Tanks.h"
+
+//Implementacion Switch-Case
+
+/**
+*	\fn void maquina_estado()
+*	\brief Implementacion Switch-Case
+*	\details
+*	\author CrisafienGerman
+*	\date 15-09-2019 18:56:46
+*/
+uint8_t Maq_Giro(uint8_t orient)
+{
+		static int estado = RESET;
+
+		switch(estado)
+		{
+			case IZQUIERDA:
+
+				if(!IR_2 && !IR_3)
+				{
+
+					estado = CUARENTAYCINCOGRADOS;
+
+				}
+
+				break;
+
+			case RESET:
+
+				if(orient == IZQUIERDA)
+				{
+					FIzquierda();
+					estado = IZQUIERDA;
+
+				}
+				if(orient == DERECHA)
+				{
+					FDerecha();
+					estado = DERECHA;
+
+				}
+
+				break;
+
+			case DERECHA:
+
+				if(!IR_2 && !IR_3)
+				{
+
+					estado = CUARENTAYCINCOGRADOS;
+
+				}
+
+				break;
+
+			case CUARENTAYCINCOGRADOS:
+
+				if(IR_2 && IR_3)
+				{
+					Frenar();
+					estado = RESET;
+					return EXITO;
+
+				}
+
+				break;
+
+			default: estado = RESET;
+		}
+
+		return ENPROCESO;
+
+}
+
+//Funciones asociadas a los eventos
+
+/**
+*	\fn int esIzquierda(void)
+*	\brief Resumen
+*	\details Detalles
+*	\author CrisafienGerman
+*	\date 15-09-2019 18:56:46
+*/
+
+
+//Funciones asociadas a las acciones
+
+/**
+*	\fn void Frenar(void)
+*	\brief Resumen
+*	\details Detalles
+*	\author CrisafienGerman
+*	\date 15-09-2019 18:56:46
+*/
+void Frenar(void)
+{
+	Tank_Brake();
+}
+
+/**
+*	\fn void FIzquierda(void)
+*	\brief Resumen
+*	\details Detalles
+*	\author CrisafienGerman
+*	\date 15-09-2019 18:56:46
+*/
+void FIzquierda(void){
+	Tank_Left(PWM_DIVISOR);
+}
+
+/**
+*	\fn void FDerecha(void)
+*	\brief Resumen
+*	\details Detalles
+*	\author CrisafienGerman
+*	\date 15-09-2019 18:56:46
+*/
+void FDerecha(void){
+	Tank_Right(PWM_DIVISOR);
+}
+
