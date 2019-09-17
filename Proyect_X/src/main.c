@@ -18,7 +18,7 @@
 #include "Tanks.h"
 #include "DR_IR.h"
 #include <DR_Systick.h>
-#include "Maq_Follow_the_line.h"
+#include <Maq_FollowTheLine.h>
 // TODO: insert other definitions and declarations here
 
 
@@ -34,7 +34,7 @@ int main(void) {
 
 
     while(1) {
-    	Mfollowtheline();
+    	Maq_FollowTheLine();
     	LecturaIRs(IRx4);
     }
     return 0 ;

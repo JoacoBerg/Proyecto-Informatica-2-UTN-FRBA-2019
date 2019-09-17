@@ -10,8 +10,8 @@
 /***********************************************************************************************************************************
  *** INCLUDES
  **********************************************************************************************************************************/
-#include "Maq_Follow_the_line.h"
 #include <DR_IR.h>
+#include <Maq_FollowTheLine.h>
 #include "Tanks.h"
 
 /***********************************************************************************************************************************
@@ -58,10 +58,18 @@
 //------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------
 
-void Mfollowtheline()
+//Declaracion de estados
+#define 	X11X	0
+#define 	X10X	1
+#define 	X01X	2
+#define 	RESET	3
+#define		APAGAR  4
+#define 	ALARMA	5
+
+uint8_t Maq_FollowTheLine(void)
 {
 		//static int cruces = 0;
-		static int estado = RESET;
+		static uint8_t estado = RESET;
 
 		switch(estado)
 		{
@@ -140,6 +148,7 @@ void Mfollowtheline()
 
 			default: estado = RESET;
 		}
+		return ENPROCESO;
 }
 
 //Funciones asociadas a los eventos

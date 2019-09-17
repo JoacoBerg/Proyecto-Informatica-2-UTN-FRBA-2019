@@ -10,20 +10,14 @@
 #define TRUE  1
 #define FALSE  0
 
-#define ENPROCESO 0
-#define EXITO 1
 
 
 
 //declaracion de la maquina
 uint8_t Maq_Giro(uint8_t orient);
 
-
-//Declaracion de estados
-#define 	IZQUIERDA	0
-#define 	RESET	1
-#define 	DERECHA	2
-#define 	CUARENTAYCINCOGRADOS	3
+#define 	IZQ			0
+#define 	DER			1
 
 //Prototipos de los eventos
 int esIzquierda(void);

@@ -21,9 +21,19 @@
 *	\author CrisafienGerman
 *	\date 15-09-2019 18:56:46
 */
+
+
+//Declaracion de estados
+#define 	IZQUIERDA				0
+#define 	RESET					1
+#define 	DERECHA					2
+#define 	CUARENTAYCINCOGRADOS	3
+
+
+
 uint8_t Maq_Giro(uint8_t orient)
 {
-		static int estado = RESET;
+		static uint8_t estado = RESET;
 
 		switch(estado)
 		{
@@ -40,13 +50,13 @@ uint8_t Maq_Giro(uint8_t orient)
 
 			case RESET:
 
-				if(orient == IZQUIERDA)
+				if(orient == IZQ)
 				{
 					FIzquierda();
 					estado = IZQUIERDA;
 
 				}
-				if(orient == DERECHA)
+				if(orient == DER)
 				{
 					FDerecha();
 					estado = DERECHA;
