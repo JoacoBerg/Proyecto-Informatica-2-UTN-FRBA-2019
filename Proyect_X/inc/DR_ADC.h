@@ -19,7 +19,7 @@ typedef struct{
 	union{
 		__RW uint32_t AD0CR;
 		struct{
-			__RW uint32_t SEL_ADC0:1;
+			__RW uint32_t SEL_ADC0:1;	//habilita el adc que vamos a usar
 			__RW uint32_t SEL_ADC1:1;
 			__RW uint32_t SEL_ADC2:1;
 			__RW uint32_t SEL_ADC3:1;
@@ -27,10 +27,10 @@ typedef struct{
 			__RW uint32_t SEL_ADC5:1;
 			__RW uint32_t SEL_ADC6:1;
 			__RW uint32_t SEL_ADC7:1;
-			__RW uint32_t CLKDIV:8;
+			__RW uint32_t CLKDIV:8;		//sirve para setear la freq en base al PCLK
 			__RW uint32_t BURST:1;
 			__R uint32_t RESERVED_1:4;
-			__RW uint32_t PDN:1;
+			__RW uint32_t PDN:1;		//sirve para prender o apagar el modulo (bajo consumo)
 			__R uint32_t RESERVED_2:2;
 			__RW uint32_t START:3;
 			__RW uint32_t EDGE:1;
@@ -38,10 +38,10 @@ typedef struct{
 		};
 	};
 
-	__RW uint32_t ADGR;
+	__RW uint32_t ADGR;			//en CHN podemos ver cual de los ADC interrumpio
 	__R uint32_t RESERVED_0;
 	union{
-		__RW uint32_t ADINTEN;
+		__RW uint32_t ADINTEN;	//habilita la interrupcion del ADC que vamos a usar
 		struct{
 			__RW uint32_t ADINTEN0:1;
 			__RW uint32_t ADINTEN1:1;
@@ -57,7 +57,7 @@ typedef struct{
 		};
 	};
 
-	__R uint32_t ADDR0;
+	__R uint32_t ADDR0;		//guarda el resultado de cada ADC
 	__R uint32_t ADDR1;
 	__R uint32_t ADDR2;
 	__R uint32_t ADDR3;
