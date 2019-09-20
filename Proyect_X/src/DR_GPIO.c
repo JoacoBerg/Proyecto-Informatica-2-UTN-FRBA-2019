@@ -51,8 +51,13 @@ void GPIO_Set(uint32_t Puerto, uint32_t Pin, uint32_t Estado){	//escritura del G
 
 uint32_t GPIO_Get(uint32_t Puerto, uint32_t Pin){	//lectura del GPIO
 
-	if(GPIOs[Puerto].FIOPIN & (1<<Pin))
+	if(GPIOs[Puerto].FIOPIN & (1<<Pin))	//creo q se puede volar el if y retornar directamente
 		return 1;
 	else
 		return 0;
 }
+
+/* para gpioget
+ * se puede agregar en get un flag de activo en alto o activo en bajo.
+ * En caso de que sea activo en bajo se puede comparar este flag y en caso de que sea 1 0 cero invertir el resultado
+ * */
