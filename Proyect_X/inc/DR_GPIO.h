@@ -24,33 +24,31 @@
 
 //Registros generales:
 //0x4002C000UL : Direccion de inicio de los registros PINSEL
-#define		PINSEL		( ( uint32_t  * ) 0x4002C000UL )
+#define		PINSEL		( (__RW uint32_t  * ) 0x4002C000UL )
 //FTM para asignar solo utilizando PINSEL=...; Utilidad = Evita utilizar punteros
 //0x2009C000UL : Direccion de inicio de los registros de GPIOs
-#define		GPIOs		( ( gpio_t  * ) 0x2009C000UL )
+#define		GPIOs		( (__RW gpio_t  * ) 0x2009C000UL )
 //0x400FC0C4UL : Direccion de inicio del registro de habilitación de dispositivos:
-#define 	DIR_PCONP	( ( uint32_t  * ) 0x400FC0C4UL )
+#define 	DIR_PCONP	( (__RW uint32_t  * ) 0x400FC0C4UL )
 
 //0x400FC1A8UL : Direccion de inicio de los registros de seleccion de los clks de los dispositivos:
 //#define		PCLKSEL		( ( uint32_t  * ) 0x400FC1A8UL )
 
 //0x4002C040UL : Direccion de inicio de los registros de modo de los pines del GPIO
-#define		PINMODE		( ( uint32_t  * ) 0x4002C040UL )
+#define		PINMODE		( (__RW uint32_t  * ) 0x4002C040UL )
 //0xE000E100UL : Direccion de inicio de los registros de habilitación (set) de interrupciones en el NVIC:
-#define		ISER		( ( uint32_t  * ) 0xE000E100UL )
+#define		ISER		( (__RW uint32_t  * ) 0xE000E100UL )
 //0xE000E180UL : Direccion de inicio de los registros de deshabilitacion (clear) de interrupciones en el NVIC:
-#define		ICER		( ( uint32_t  * ) 0xE000E180UL )
+#define		ICER		( (__RW uint32_t  * ) 0xE000E180UL )
 
 //Estructura para manejar los GPIOs:
-typedef struct
-{
-	uint32_t	FIODIR;
-	uint32_t	RESERVED[3];//Espacio en blanco entre FIODIR y FIOMASK
-	uint32_t 	FIOMASK;
-	uint32_t 	FIOPIN;
-	uint32_t 	FIOSET;
-	uint32_t 	FIOCLR;
-
+typedef struct {
+	__RW uint32_t	FIODIR;
+	__R  uint32_t	RESERVED[3];//Espacio en blanco entre FIODIR y FIOMASK
+	__RW uint32_t 	FIOMASK;
+	__RW uint32_t 	FIOPIN;
+	__RW uint32_t 	FIOSET;
+	__RW uint32_t 	FIOCLR;
 } gpio_t;
 
 void GPIO_Pinsel(uint32_t Puerto, uint32_t Pin,uint32_t Configurar);	//tambien llamada PINSEL por el resto de la catedra
