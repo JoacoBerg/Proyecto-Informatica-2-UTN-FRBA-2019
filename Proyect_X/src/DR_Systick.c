@@ -5,9 +5,11 @@
  *      Author: gif30
  */
 #include <DR_Systick.h>
+#define TIEMPO_ADC 1000
+#include "DR_ADC.h"
 
 void SysTick_Init(void){
-	Systick->STRELOAD = (Systick->STCALIB / 4) - 1; //Base de tiempo dada por 10ms/4: El -1 es porque cuenta uno de mas el STCURR
+	Systick->STRELOAD = (Systick->STCALIB / 10) - 1; //Base de tiempo dada por 10ms/10: El -1 es porque cuenta uno de mas el STCURR
 	Systick->STCURR = 0; //esto es para limpiar el timer
 
 	Systick->ENABLE = 1; //activa el modulo
@@ -16,5 +18,10 @@ void SysTick_Init(void){
 }
 
 void SysTick_Handler(void){
-
+static uint32_t time= TIEMPO_ADC;
+if(time)
+	time--;
+else{
+	time = TIEMPO_ADC;
+}
 }

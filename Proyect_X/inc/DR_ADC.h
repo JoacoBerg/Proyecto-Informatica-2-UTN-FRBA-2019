@@ -12,7 +12,7 @@
 #define DR_ADC_H_
 
 #define GPIO_ADC5 1, 31
-
+extern uint32_t RESULT_ADC;
 
 typedef struct{
 
@@ -38,7 +38,18 @@ typedef struct{
 		};
 	};
 
-	__RW uint32_t ADGR;			//en CHN podemos ver cual de los ADC interrumpio
+	union{
+		__RW uint32_t AD0GR;
+		struct{
+			__RW uint32_t RESERVED_5:4;
+			__RW uint32_t RESULT:12;
+			__RW uint32_t RESERVED_6:8;
+			__RW uint32_t CHN:3;			//en CHN podemos ver cual de los ADC interrumpio
+			__RW uint32_t RESERVED_7:3;
+			__RW uint32_t OVERRUN:1;
+			__RW uint32_t DONE:1;
+		};
+	};
 	__R uint32_t RESERVED_0;
 	union{
 		__RW uint32_t ADINTEN;	//habilita la interrupcion del ADC que vamos a usar
@@ -75,6 +86,7 @@ typedef struct{
 
 
 void ADC_init(void);
+void ADC_IRQHandler(void);
 
 #endif /* DR_ADC_H_ */
 
