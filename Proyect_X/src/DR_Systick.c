@@ -20,11 +20,12 @@ void SysTick_Init(void){
 }
 
 void SysTick_Handler(void){
-static uint32_t time= TIEMPO_ADC;
-if(time)
-	time--;
+static uint32_t timer= TIEMPO_ADC;
+if(timer)
+	timer--;
 else{
 	resultado = RESULT_ADC;
-	time = TIEMPO_ADC;
+	//ADC->START = 1;
+	timer = TIEMPO_ADC;
 }
 }

@@ -39,7 +39,7 @@ void ADC_IRQHandler(void){
 	if(ADC->CHN == 5){
 
 		sumas -= muestras[n];
-		muestras[n] = ADC->RESULT;
+		muestras[n] = (ADC->ADDR5 >> 4) & 0x0FFF;		//limpieza con el and y el desplazamiento porq tiene info por ahi
 		sumas += muestras[n];
 
 		RESULT_ADC = sumas/CANT_MUESTRAS;

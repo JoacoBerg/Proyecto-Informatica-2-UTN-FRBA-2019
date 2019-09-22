@@ -24,7 +24,12 @@ int main(void) {
 	EvalContinua4_init();
 
 	while(1)
-	EvalContinua4();
+/*	{
+		RED_OFF;
+		BLUE_ON;
+		GREEN_OFF;
+	}*/
+		EvalContinua4();
 
     return 0 ;
 }
