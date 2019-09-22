@@ -9,7 +9,7 @@
 #ifndef DR_SYSTICK_H_
 #define DR_SYSTICK_H_
 
-
+extern uint32_t resultado;
 
 typedef struct{
 
