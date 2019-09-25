@@ -36,7 +36,7 @@ int main(void) {
 
     while(1) {
     	int i=0;
-    	LecturaIRs(IRx4);
+    	//LecturaIRs(IRx4);
         if(i)
         	Maq_FollowTheLine();
         else{

@@ -63,11 +63,11 @@
 #define 	X10X	1
 #define 	X01X	2
 #define 	RESET	3
-#define		APAGAR  4
-#define 	ALARMA	5
+#define 	ALARMA	4
 
 
 #define		VELOCIDAD_FTL 50
+
 
 uint8_t Maq_FollowTheLine(void)
 {
@@ -90,13 +90,12 @@ uint8_t Maq_FollowTheLine(void)
 					estado = X10X;
 
 				}
-				/*
-				if(Cruce())
+				if(IR_1 == 1 && IR_2 == 1 && IR_3 == 1 && IR_4 == 1)
 				{
-					CruceAdd();
-					estado = X11X;
+					estado = RESET;
+					return EXITO;
 
-				}*/
+				}
 
 				break;
 
@@ -124,28 +123,11 @@ uint8_t Maq_FollowTheLine(void)
 
 			case RESET:
 
-				if(1==Boton())
-				{
-					Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
-
-				}
-
-				break;
-
-			case APAGAR:
-
-				if(1==Boton())
-				{
-					Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
-
-				}
 
 				break;
 
 			case ALARMA:
-				while(1){}
+				return FALLO;
 
 				break;
 
@@ -155,11 +137,6 @@ uint8_t Maq_FollowTheLine(void)
 }
 
 //Funciones asociadas a los eventos
-
-int Boton(void)
-{
-		return 1;
-}
 
 /*
 int Cruce(void)
