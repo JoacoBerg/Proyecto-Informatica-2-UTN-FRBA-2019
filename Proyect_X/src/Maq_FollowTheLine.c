@@ -71,29 +71,34 @@
 
 uint8_t Maq_FollowTheLine(void)
 {
-		//static int cruces = 0;
+		static uint8_t cruces = 0;
 		static uint8_t estado = RESET;
 
 		switch(estado)
 		{
 			case X11X:
 
-				if(IR_2 == 0 && IR_3 == 1)
+				if(IR_IZQ_IN == 0 && IR_DER_IN == 1)
 				{
 					Tank_Right(VELOCIDAD_FTL);
 					estado = X01X;
 
 				}
-				if(IR_2 == 1 && IR_3 == 0)
+				if(IR_IZQ_IN == 1 && IR_DER_IN == 0)
 				{
 					Tank_Left(VELOCIDAD_FTL);
 					estado = X10X;
 
 				}
-				if(IR_1 == 1 && IR_2 == 1 && IR_3 == 1 && IR_4 == 1)
+				if(IR_IZQ_OUT == 0 && IR_IZQ_IN == 1 && IR_DER_IN == 1 && IR_DER_OUT == 0){
+					cruces = 1;
+				}
+				if(IR_IZQ_OUT == 1 && IR_IZQ_IN == 1 && IR_DER_IN == 1 && IR_DER_OUT == 1 && cruces)	//pregunta por el cruce
 				{
 					estado = RESET;
+					cruces = 0;
 					return EXITO;
+
 
 				}
 
@@ -101,7 +106,7 @@ uint8_t Maq_FollowTheLine(void)
 
 			case X10X:
 
-				if(IR_2 == 1 && IR_3 == 1)
+				if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
 				{
 					Tank_Forward(VELOCIDAD_FTL);
 					estado = X11X;
@@ -112,7 +117,7 @@ uint8_t Maq_FollowTheLine(void)
 
 			case X01X:
 
-				if(IR_2 == 1 && IR_3 == 1)
+				if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
 				{
 					Tank_Forward(VELOCIDAD_FTL);
 					estado = X11X;

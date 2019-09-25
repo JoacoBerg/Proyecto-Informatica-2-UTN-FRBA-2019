@@ -41,7 +41,7 @@ uint8_t Maq_Giro(uint8_t orient)
 		{
 			case IZQUIERDA:
 
-				if(!IR_2 && !IR_3)
+				if(!IR_IZQ_IN && !IR_DER_IN)
 				{
 
 					estado = CUARENTAYCINCOGRADOS;
@@ -69,7 +69,7 @@ uint8_t Maq_Giro(uint8_t orient)
 
 			case DERECHA:
 
-				if(!IR_2 && !IR_3)
+				if(!IR_IZQ_IN && !IR_DER_IN)
 				{
 
 					estado = CUARENTAYCINCOGRADOS;
@@ -80,7 +80,7 @@ uint8_t Maq_Giro(uint8_t orient)
 
 			case CUARENTAYCINCOGRADOS:
 
-				if(IR_2 && IR_3)
+				if(IR_IZQ_IN && IR_DER_IN)
 				{
 					Frenar();
 					estado = RESET;
