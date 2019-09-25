@@ -8,7 +8,7 @@
 
 void Leds_init(uint32_t Puerto , uint32_t pin){
 	GPIO_Pinsel(Puerto, pin, 0); //funcion GPIO configurada en pins
-	GPIO_Mode(Puerto, pin, 0); //pull down
+	GPIO_Mode(Puerto, pin, 0); //pull up
 	GPIO_Dir(Puerto, pin, 1); //OUTPUT
 }
 
@@ -17,7 +17,7 @@ void EvalContinua4_init()
     // Force the counter to be placed into memory
     InicializarPLL();
     SysTick_Init();
-    ADC_init();
+  //  ADC_init();
     Leds_init(PUERTO_RED , PIN_RED);
     Leds_init(PUERTO_BLUE , PIN_BLUE);
     Leds_init(PUERTO_GREEN , PIN_GREEN);
