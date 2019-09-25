@@ -29,7 +29,7 @@
 #define 	DERECHA					2
 #define 	CUARENTAYCINCOGRADOS	3
 
-#define		VELOCIDAD_GIRO	50
+#define		VELOCIDAD_GIRO	100
 
 
 //

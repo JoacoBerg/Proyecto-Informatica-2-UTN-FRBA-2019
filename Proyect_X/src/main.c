@@ -39,6 +39,7 @@ int main(void) {
     Boton_init();
     //Servo init no existe, ya que el tanque se encarga de eso
     while(1) {
+    	LecturaIRs(IRx4);
     	testing();
     }
     return 0 ;
@@ -53,17 +54,13 @@ void testing_servos(void){
 }
 void testing(void){
 	static int i=0;
-	//LecturaIRs(IRx4);
-    if(i == 1){
-    	if(Maq_FollowTheLine())
-    		i = 2;
-    }
-   	else if( i == 0){
-   		if(Maq_Giro(IZQ))
+   	if( i == 0){
+   		//if(Maq_Giro(IZQ))
+   		if(Maq_FollowTheLine())
    			i = 1;
    	}
-    else if(i == 2){
-    	if(BOTON)
+    else if(i == 1){
+    	for(uint32_t i=0;i<5000000;i++){}
     		i = 0;
     }
 }

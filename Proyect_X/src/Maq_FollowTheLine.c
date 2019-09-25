@@ -66,7 +66,7 @@
 #define 	ALARMA	4
 
 
-#define		VELOCIDAD_FTL 50
+#define		VELOCIDAD_FTL 75
 
 
 uint8_t Maq_FollowTheLine(void)
@@ -95,6 +95,7 @@ uint8_t Maq_FollowTheLine(void)
 				}
 				if(IR_IZQ_OUT == 1 && IR_IZQ_IN == 1 && IR_DER_IN == 1 && IR_DER_OUT == 1 && cruces)	//pregunta por el cruce
 				{
+					Tank_Brake();
 					estado = RESET;
 					cruces = 0;
 					return EXITO;
@@ -128,6 +129,7 @@ uint8_t Maq_FollowTheLine(void)
 
 			case RESET:
 
+				estado = X11X;
 
 				break;
 

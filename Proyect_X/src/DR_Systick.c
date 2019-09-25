@@ -24,7 +24,7 @@ void SysTick_Handler(void){
 		timer--;
 	else
 	{
-		LecturaIRs(IRx4);
+		//LecturaIRs(IRx4);
 		timer = 1;
 	}
 
