@@ -40,7 +40,8 @@ int main(void) {
     //Servo init no existe, ya que el tanque se encarga de eso
     while(1) {
     	LecturaIRs(IRx4);
-    	testing();
+    	//testing();
+    	ftl();
     }
     return 0 ;
 }

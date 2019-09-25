@@ -47,7 +47,8 @@
 //------------------------------------------------------------------------------------------------------------------
 
 uint8_t Maq_FollowTheLine(void);
-int Boton(void);
+uint8_t ftl(void);
+
 //int Cruce(void);
 //void CruceAdd(void);
 

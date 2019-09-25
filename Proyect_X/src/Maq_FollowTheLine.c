@@ -13,6 +13,7 @@
 #include <DR_IR.h>
 #include <Maq_FollowTheLine.h>
 #include "Tanks.h"
+#include "DR_tipos.h"
 
 /***********************************************************************************************************************************
  *** DEFINES PRIVADOS AL MODULO
@@ -66,41 +67,34 @@
 #define 	ALARMA	4
 
 
-#define		VELOCIDAD_FTL 75
+#define		VELOCIDAD_FTL 100
+
 
 
 uint8_t Maq_FollowTheLine(void)
 {
-		static uint8_t cruces = 0;
+	return 1;
+}
+
+uint8_t ftl(void)	//se encarga del interior
+{
+		//static int cruces = 0;
 		static uint8_t estado = RESET;
 
 		switch(estado)
 		{
 			case X11X:
 
-				if(IR_IZQ_IN == 0 && IR_DER_IN == 1)
+				if(IR_IZQ_IN == 1 && IR_DER_IN == 0)
 				{
 					Tank_Right(VELOCIDAD_FTL);
 					estado = X01X;
-
 				}
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 0)
+
+				if(IR_IZQ_IN == 0 && IR_DER_IN == 1)
 				{
 					Tank_Left(VELOCIDAD_FTL);
 					estado = X10X;
-
-				}
-				if(IR_IZQ_OUT == 0 && IR_IZQ_IN == 1 && IR_DER_IN == 1 && IR_DER_OUT == 0){
-					cruces = 1;
-				}
-				if(IR_IZQ_OUT == 1 && IR_IZQ_IN == 1 && IR_DER_IN == 1 && IR_DER_OUT == 1 && cruces)	//pregunta por el cruce
-				{
-					Tank_Brake();
-					estado = RESET;
-					cruces = 0;
-					return EXITO;
-
-
 				}
 
 				break;
@@ -129,13 +123,14 @@ uint8_t Maq_FollowTheLine(void)
 
 			case RESET:
 
-				estado = X11X;
+				Tank_Forward(VELOCIDAD_FTL);
+					estado = X11X;
 
 				break;
 
 			case ALARMA:
-				return FALLO;
 
+				return FALLO;
 				break;
 
 			default: estado = RESET;
@@ -145,12 +140,9 @@ uint8_t Maq_FollowTheLine(void)
 
 //Funciones asociadas a los eventos
 
-/*
-int Cruce(void)
-{}
-void CruceAdd(void)
-{}
-*/
+
+//Funciones asociadas a los eventos
+
 
 //------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------
