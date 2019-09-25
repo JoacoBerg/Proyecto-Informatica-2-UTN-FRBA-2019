@@ -66,6 +66,9 @@
 #define		APAGAR  4
 #define 	ALARMA	5
 
+
+#define		VELOCIDAD_FTL 50
+
 uint8_t Maq_FollowTheLine(void)
 {
 		//static int cruces = 0;
@@ -77,13 +80,13 @@ uint8_t Maq_FollowTheLine(void)
 
 				if(IR_2 == 0 && IR_3 == 1)
 				{
-					Tank_Right((PWM_DIVISOR)/2);
+					Tank_Right(VELOCIDAD_FTL);
 					estado = X01X;
 
 				}
 				if(IR_2 == 1 && IR_3 == 0)
 				{
-					Tank_Left((PWM_DIVISOR)/2);
+					Tank_Left(VELOCIDAD_FTL);
 					estado = X10X;
 
 				}
@@ -101,7 +104,7 @@ uint8_t Maq_FollowTheLine(void)
 
 				if(IR_2 == 1 && IR_3 == 1)
 				{
-					Tank_Forward((PWM_DIVISOR)/2);
+					Tank_Forward(VELOCIDAD_FTL);
 					estado = X11X;
 
 				}
@@ -112,7 +115,7 @@ uint8_t Maq_FollowTheLine(void)
 
 				if(IR_2 == 1 && IR_3 == 1)
 				{
-					Tank_Forward((PWM_DIVISOR)/2);
+					Tank_Forward(VELOCIDAD_FTL);
 					estado = X11X;
 
 				}
@@ -123,7 +126,7 @@ uint8_t Maq_FollowTheLine(void)
 
 				if(1==Boton())
 				{
-					Tank_Forward((PWM_DIVISOR)/2);
+					Tank_Forward(VELOCIDAD_FTL);
 					estado = X11X;
 
 				}
@@ -134,7 +137,7 @@ uint8_t Maq_FollowTheLine(void)
 
 				if(1==Boton())
 				{
-					Tank_Forward((PWM_DIVISOR)/2);
+					Tank_Forward(VELOCIDAD_FTL);
 					estado = X11X;
 
 				}
