@@ -29,8 +29,10 @@
 #define 	DERECHA					2
 #define 	CUARENTAYCINCOGRADOS	3
 
+#define		VELOCIDAD_GIRO	50
 
 
+//
 uint8_t Maq_Giro(uint8_t orient)
 {
 		static uint8_t estado = RESET;
@@ -128,7 +130,7 @@ void Frenar(void)
 *	\date 15-09-2019 18:56:46
 */
 void FIzquierda(void){
-	Tank_Left(PWM_DIVISOR);
+	Tank_Left(VELOCIDAD_GIRO);
 }
 
 /**
@@ -139,6 +141,6 @@ void FIzquierda(void){
 *	\date 15-09-2019 18:56:46
 */
 void FDerecha(void){
-	Tank_Right(PWM_DIVISOR);
+	Tank_Right(VELOCIDAD_GIRO);
 }
 

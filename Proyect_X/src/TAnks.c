@@ -25,14 +25,16 @@ void Tanks_Init(){
 	Tank_OFF();
 }
 
+//========================== MOTOR A
+
 void MotorA_DirectionB(uint32_t motorSpeed){
-	updatePulseWidth(T_ENA, motorSpeed);
+	updatePulseWidth(T_ENA, (motorSpeed*PWM_DIVISOR)/100);
 	GPIO_Set(T_IN1, LOW);
 	GPIO_Set(T_IN2, HIGH);
 }
 
 void MotorA_DirectionF(uint32_t motorSpeed){
-	updatePulseWidth(T_ENA, motorSpeed);
+	updatePulseWidth(T_ENA, (motorSpeed*PWM_DIVISOR)/100);
 	GPIO_Set(T_IN1, HIGH);
 	GPIO_Set(T_IN2, LOW);
 }
@@ -60,13 +62,13 @@ void MotorA_OFF(){
 //========================== MOTOR B
 
 void MotorB_DirectionB(uint32_t motorSpeed){
-	updatePulseWidth(T_ENB, motorSpeed);
+	updatePulseWidth(T_ENB, (motorSpeed*PWM_DIVISOR)/100);
 	GPIO_Set(T_IN3, LOW);
 	GPIO_Set(T_IN4, HIGH);
 }
 
 void MotorB_DirectionF(uint32_t motorSpeed){
-	updatePulseWidth(T_ENB, motorSpeed);
+	updatePulseWidth(T_ENB, (motorSpeed*PWM_DIVISOR)/100);
 	GPIO_Set(T_IN3, HIGH);
 	GPIO_Set(T_IN4, LOW);
 }

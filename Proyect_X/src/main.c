@@ -19,6 +19,7 @@
 #include "DR_IR.h"
 #include <DR_Systick.h>
 #include <Maq_FollowTheLine.h>
+#include "Maq_Giro.h"
 // TODO: insert other definitions and declarations here
 
 
@@ -34,8 +35,15 @@ int main(void) {
 
 
     while(1) {
-    	Maq_FollowTheLine();
+    	int i=0;
     	LecturaIRs(IRx4);
+        if(i)
+        	Maq_FollowTheLine();
+        else{
+        	if(Maq_Giro(IZQ)){
+        		i=1;
+        	}
+        }
     }
     return 0 ;
 }
