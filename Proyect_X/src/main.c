@@ -26,6 +26,7 @@
 
 void testing(void);
 void testing_servos(void);
+void testing_tanks(void);
 
 int main(void) {
 
@@ -41,9 +42,20 @@ int main(void) {
     while(1) {
     	LecturaIRs(IRx4);
     	//testing();
-    	ftl();
+    	//ftl();
+    	//testing_servos();
+    	testing_tanks();
     }
     return 0 ;
+}
+
+void testing_tanks(void){
+	for(int i=0;i<500000;i++)
+		Tank_Forward(45);
+	for(int i=0;i<500000;i++)
+		Tank_Forward(80);
+	for(int i=0;i<500000;i++)
+		Tank_Forward(100);
 }
 
 
