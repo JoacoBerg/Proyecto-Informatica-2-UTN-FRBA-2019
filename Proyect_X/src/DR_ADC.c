@@ -16,7 +16,7 @@ void ADC_init(void){
 	PCLKSEL0 &= ~(3<<24);	//pongo la frequencia mas baja 100/4MHz = 25MHz | PCLK_peripheral = CCLK/4
 	//PCLKSEL0 |= (1<<24);	//USAR PARA CAMBIAR A OTRA DIVISION
 
-	ADC->CLKDIV = 1; // 12/13 Hz = CLKDIV = (fclkADC/65 - fADC)/fADC, fADC=200KHz , fclkADC=25MHz
+	ADC->CLKDIV = 1; // 12/13 Hz (que es aproximadamente 1Hz) = CLKDIV = (fclkADC/65 - fADC)/fADC, fADC=200KHz , fclkADC=25MHz
 
 
 
@@ -29,23 +29,23 @@ void ADC_init(void){
 
 	ADC->START = 1;		//lo hacemos arrancar
 
-	for (int i=0;i<CANT_MUESTRAS;i++)
+	for (int i=0;i<CANT_MUESTRAS;i++)	//inicializa vector en 0
 		muestras[i]=0;
 }
 
 void ADC_IRQHandler(void){
 	static uint8_t n = CANT_MUESTRAS-1;
 	static uint32_t sumas = 0;
-	if(ADC->CHN == 5){
+	if(ADC->CHN == 5){	//hecho con el filtro de media movil (se promedian los ultimos 10 valores)
 
-		sumas -= muestras[n];
+		sumas -= muestras[n];		//cuando se hace el promedio, se le resta a la suma anterior el valor medido mas antiguo
 		muestras[n] = (ADC->ADDR5 >> 4) & 0x0FFF;		//limpieza con el and y el desplazamiento porq tiene info por ahi
-		sumas += muestras[n];
+		sumas += muestras[n];		//sumamos el valor medido mas nuevo para
 
 		RESULT_ADC = sumas/CANT_MUESTRAS;
 
 		if(n)
-			n--;
+			n--;	//un contador en base a la cantidad de muestras para promediar
 		else
 			n= CANT_MUESTRAS-1;
 
