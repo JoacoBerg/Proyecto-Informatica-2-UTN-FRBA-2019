@@ -24,10 +24,6 @@ int main(void) {
 	EvalContinua4_init();
 
 	while(1)
-	{
 		EvalContinua4();
-	}
-	
-
     return 0;
 }
