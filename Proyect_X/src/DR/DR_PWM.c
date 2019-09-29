@@ -117,28 +117,39 @@ void PWM_Init(void)
 
 void updatePulseWidth(uint8_t num, uint32_t pulseWidth)
 {
-	if(num==PWM1){
-		PWM->PWM1MR1 = pulseWidth;	//Update MR1 with new value
-		PWM->LER_ENA1 = 1;			//Load the MR1 new value at start of next cycle
-	}
-	if(num==PWM2){
-		PWM->PWM1MR2 = pulseWidth;
-		PWM->LER_ENA2 = 1;
-	}
-	if(num==PWM3){
-		PWM->PWM1MR3 = pulseWidth;
-		PWM->LER_ENA3 = 1;
-	}
-	if(num==PWM4){
-		PWM->PWM1MR4 = pulseWidth;
-		PWM->LER_ENA4 = 1;
-	}
-	if(num==PWM5){
-		PWM->PWM1MR5 = pulseWidth;
-		PWM->LER_ENA5 = 1;
-	}
-	if(num==PWM6){
-		PWM->PWM1MR6 = pulseWidth;
-		PWM->LER_ENA6 = 1;
+	switch(num){
+
+		case PWM1:
+			PWM->PWM1MR1 = pulseWidth;	//Update MR1 with new value
+			PWM->LER_ENA1 = 1;			//Load the MR1 new value at start of next cycle
+			break;
+
+		case PWM2:
+			PWM->PWM1MR2 = pulseWidth;
+			PWM->LER_ENA2 = 1;
+			break;
+
+		case PWM3:
+			PWM->PWM1MR3 = pulseWidth;
+			PWM->LER_ENA3 = 1;
+			break;
+
+		case PWM4:
+			PWM->PWM1MR4 = pulseWidth;
+			PWM->LER_ENA4 = 1;
+			break;
+
+		case PWM5:
+			PWM->PWM1MR5 = pulseWidth;
+			PWM->LER_ENA5 = 1;
+			break;
+
+		case PWM6:
+			PWM->PWM1MR6 = pulseWidth;
+			PWM->LER_ENA6 = 1;
+			break;
+
+		default:
+			break;
 	}
 }
