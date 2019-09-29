@@ -85,13 +85,13 @@ uint8_t ftl(void)	//se encarga del interior
 		{
 			case X11X:
 
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 0)
+				if(IR_IZQ_IN == 0 && IR_DER_IN == 1)
 				{
 					Tank_Right(VELOCIDAD_FTL);
 					estado = X01X;
 				}
 
-				if(IR_IZQ_IN == 0 && IR_DER_IN == 1)
+				if(IR_IZQ_IN == 1 && IR_DER_IN == 0)
 				{
 					Tank_Left(VELOCIDAD_FTL);
 					estado = X10X;

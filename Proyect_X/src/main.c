@@ -42,18 +42,21 @@ int main(void) {
     while(1) {
     	LecturaIRs(IRx4);
     	//testing();
-    	//ftl();
+    	ftl();
     	//testing_servos();
-    	testing_tanks();
+    	//Tank_Forward(100);
+    	//testing_tanks();
     }
     return 0 ;
 }
 
 void testing_tanks(void){
 	for(int i=0;i<500000;i++)
-		Tank_Forward(45);
+		Tank_Brake();
 	for(int i=0;i<500000;i++)
-		Tank_Forward(80);
+		Tank_Left(100);
+	for(int i=0;i<500000;i++)
+		Tank_Right(100);
 	for(int i=0;i<500000;i++)
 		Tank_Forward(100);
 }
@@ -68,8 +71,8 @@ void testing_servos(void){
 void testing(void){
 	static int i=0;
    	if( i == 0){
-   		//if(Maq_Giro(IZQ))
-   		if(Maq_FollowTheLine())
+   		if(Maq_Giro(IZQ))
+   		//if(Maq_FollowTheLine())
    			i = 1;
    	}
     else if(i == 1){
