@@ -11,8 +11,8 @@
  *** MODULO
  **********************************************************************************************************************************/
 
-#ifndef TIPOS_H_
-#define TIPOS_H_
+#ifndef DR_TIPOS_H_
+#define DR_TIPOS_H_
 
 #define ENPROCESO 0
 #define EXITO 1
@@ -61,11 +61,11 @@ typedef		char				int8_t;
 #define LOW		0
 #define HIGH	1
 
-#define OUTPUT	1
-#define INPUT	0
 
 
 
+#define 	ALTO	1
+#define 	BAJO	0
 
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES
@@ -75,4 +75,4 @@ typedef		char				int8_t;
  *** PROTOTIPOS DE FUNCIONES GLOBALES
  **********************************************************************************************************************************/
 
-#endif /* TIPOS_H_ */
+#endif /* DR_TIPOS_H_ */

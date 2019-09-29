@@ -8,10 +8,10 @@
 #ifndef BOTON_H_
 #define BOTON_H_
 
+#include <DR_PINSEL.h>
 #include "DR_PLL.h"
 #include <DR_Systick.h>
-#include <TIPOS.h>
-#include "DR_GPIO.h"
+#include <DR_tipos.h>
 
 #define BOTON_PORT 0
 #define BOTON_PIN 24

@@ -3,9 +3,9 @@
 //STCURR - 0xE000 E018
 //diferencia 4 -->estan por bytes el hexa
 
-#include <TIPOS.h>
+#include <DR_PINSEL.h>
+#include <DR_tipos.h>
 #include "DR_PLL.h"
-#include "DR_GPIO.h"
 
 #define PWM_DIVISOR 20000// en vez de 1000 lo ponemos en 20000 para que tenga un ciclo de 20 ms para el servo
 

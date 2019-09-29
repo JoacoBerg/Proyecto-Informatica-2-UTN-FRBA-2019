@@ -1,10 +1,10 @@
 #include "Boton.h"
-
+#include "DR_GPIO.h"
 void Boton_init()
 {
-	GPIO_Pinsel( BOTON_PORT, BOTON_PIN, PINSEL_GPIO);  //funcion GPIO configurada en pin
-	GPIO_Mode( BOTON_PORT, BOTON_PIN, PINMODE_PULLDOWN); //pull up
-	GPIO_Dir( BOTON_PORT, BOTON_PIN, INPUT); // input
+	SetPinsel( BOTON_PORT, BOTON_PIN, PINSEL_GPIO);  //funcion GPIO configurada en pin
+	SetPinMode( BOTON_PORT, BOTON_PIN, PINMODE_PULLDOWN); //pull up
+	SetPinDir( BOTON_PORT, BOTON_PIN, INPUT); // input
 }
 
 

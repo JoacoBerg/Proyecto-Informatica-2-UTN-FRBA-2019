@@ -62,33 +62,33 @@ void InitIR(void)
 
 
 		//IR1
-		GPIO_Pinsel(IR1, 0);		//Funcion del pin
-		GPIO_Mode(IR1, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		GPIO_Dir(IR1, 0);		//0: Entrada | 1: Salida
+		SetPinsel(IR1, 0);		//Funcion del pin
+		SetPinMode(IR1, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+		SetPinDir(IR1, 0);		//0: Entrada | 1: Salida
 
 		//IR2
-		GPIO_Pinsel(IR2, 0);		//Funcion del pin
-		GPIO_Mode(IR2, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		GPIO_Dir(IR2, 0);		//0: Entrada | 1: Salida
+		SetPinsel(IR2, 0);		//Funcion del pin
+		SetPinMode(IR2, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+		SetPinDir(IR2, 0);		//0: Entrada | 1: Salida
 
 		//IR3
-		GPIO_Pinsel(IR3, 0);		//Funcion del pin
-		GPIO_Mode(IR3, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		GPIO_Dir(IR3, 0);		//0: Entrada | 1: Salida
+		SetPinsel(IR3, 0);		//Funcion del pin
+		SetPinMode(IR3, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+		SetPinDir(IR3, 0);		//0: Entrada | 1: Salida
 
 		//IR4
-		GPIO_Pinsel(IR4, 0);		//Funcion del pin
-		GPIO_Mode(IR4, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		GPIO_Dir(IR4, 0);		//0: Entrada | 1: Salida
+		SetPinsel(IR4, 0);		//Funcion del pin
+		SetPinMode(IR4, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+		SetPinDir(IR4, 0);		//0: Entrada | 1: Salida
 
 	}
 
 void LecturaIRs(int* IRx4)
 {
-	(IRx4[0]) = GPIO_Get(IR1);
-	(IRx4[1]) = GPIO_Get(IR2);
-	(IRx4[2]) = GPIO_Get(IR3);
-	(IRx4[3]) = GPIO_Get(IR4);
+	(IRx4[0]) = GetPin(IR1);
+	(IRx4[1]) = GetPin(IR2);
+	(IRx4[2]) = GetPin(IR3);
+	(IRx4[3]) = GetPin(IR4);
 	return;
 }
 

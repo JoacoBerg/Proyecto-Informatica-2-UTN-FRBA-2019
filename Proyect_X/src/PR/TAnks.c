@@ -1,26 +1,27 @@
 #include "Tanks.h"
+#include "DR_GPIO.h"
 
 //========================== MOTOR A
 void Tanks_Init(){
 
 	PWM_Init();
 
-	GPIO_Pinsel(T_IN1, PINSEL_GPIO);
-	GPIO_Mode(T_IN1,PINMODE_PULLUP);
-	GPIO_Dir(T_IN1,OUTPUT);
+	SetPinsel(T_IN1, PINSEL_GPIO);
+	SetPinMode(T_IN1,PINMODE_PULLUP);
+	SetPinDir(T_IN1,OUTPUT);
 
-	GPIO_Pinsel(T_IN2, PINSEL_GPIO);
-	GPIO_Mode(T_IN2,PINMODE_PULLUP);
-	GPIO_Dir(T_IN2,OUTPUT);
+	SetPinsel(T_IN2, PINSEL_GPIO);
+	SetPinMode(T_IN2,PINMODE_PULLUP);
+	SetPinDir(T_IN2,OUTPUT);
 
 
-	GPIO_Pinsel(T_IN3, PINSEL_GPIO);
-	GPIO_Mode(T_IN3,PINMODE_PULLUP);
-	GPIO_Dir(T_IN3,OUTPUT);
+	SetPinsel(T_IN3, PINSEL_GPIO);
+	SetPinMode(T_IN3,PINMODE_PULLUP);
+	SetPinDir(T_IN3,OUTPUT);
     
-	GPIO_Pinsel(T_IN4, PINSEL_GPIO);
-	GPIO_Mode(T_IN4,PINMODE_PULLUP);
-	GPIO_Dir(T_IN4,OUTPUT);
+	SetPinsel(T_IN4, PINSEL_GPIO);
+	SetPinMode(T_IN4,PINMODE_PULLUP);
+	SetPinDir(T_IN4,OUTPUT);
 
 	Tank_OFF();
 }
@@ -29,26 +30,26 @@ void Tanks_Init(){
 
 void MotorA_DirectionB(uint32_t motorSpeed){
 	updatePulseWidth(T_ENA, (motorSpeed*PWM_DIVISOR)/100);
-	GPIO_Set(T_IN1, LOW);
-	GPIO_Set(T_IN2, HIGH);
+	SetPin(T_IN1, LOW);
+	SetPin(T_IN2, HIGH);
 }
 
 void MotorA_DirectionF(uint32_t motorSpeed){
 	updatePulseWidth(T_ENA, (motorSpeed*PWM_DIVISOR)/100);
-	GPIO_Set(T_IN1, HIGH);
-	GPIO_Set(T_IN2, LOW);
+	SetPin(T_IN1, HIGH);
+	SetPin(T_IN2, LOW);
 }
 
 void MotorA_Brake(){
 	updatePulseWidth(T_ENA, PWM_DIVISOR);
-	GPIO_Set(T_IN1, HIGH);
-	GPIO_Set(T_IN2, HIGH);
+	SetPin(T_IN1, HIGH);
+	SetPin(T_IN2, HIGH);
 }
 
 void MotorA_Coast(){
 	updatePulseWidth(T_ENA, PWM_DIVISOR);
-	GPIO_Set(T_IN1, LOW);
-	GPIO_Set(T_IN2, LOW);
+	SetPin(T_IN1, LOW);
+	SetPin(T_IN2, LOW);
 }
 
 void MotorA_OFF(){
@@ -63,26 +64,26 @@ void MotorA_OFF(){
 
 void MotorB_DirectionB(uint32_t motorSpeed){
 	updatePulseWidth(T_ENB, (motorSpeed*PWM_DIVISOR)/100);
-	GPIO_Set(T_IN3, LOW);
-	GPIO_Set(T_IN4, HIGH);
+	SetPin(T_IN3, LOW);
+	SetPin(T_IN4, HIGH);
 }
 
 void MotorB_DirectionF(uint32_t motorSpeed){
 	updatePulseWidth(T_ENB, (motorSpeed*PWM_DIVISOR)/100);
-	GPIO_Set(T_IN3, HIGH);
-	GPIO_Set(T_IN4, LOW);
+	SetPin(T_IN3, HIGH);
+	SetPin(T_IN4, LOW);
 }
 
 void MotorB_Brake(){
 	updatePulseWidth(T_ENB, PWM_DIVISOR);
-	GPIO_Set(T_IN3, HIGH);
-	GPIO_Set(T_IN4, HIGH);
+	SetPin(T_IN3, HIGH);
+	SetPin(T_IN4, HIGH);
 }
 
 void MotorB_Coast(){
 	updatePulseWidth(T_ENB, PWM_DIVISOR);
-	GPIO_Set(T_IN3, LOW);
-	GPIO_Set(T_IN4, LOW);
+	SetPin(T_IN3, LOW);
+	SetPin(T_IN4, LOW);
 }
 
 void MotorB_OFF(){

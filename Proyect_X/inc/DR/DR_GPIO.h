@@ -1,47 +1,30 @@
+/*******************************************************************************************************************************//**
+ *
+ * @file		Infotronic.h
+ * @brief		Macros, tipos , prototipos, de la aplicacion
+ * @date		23-03-16
+ * @author		Marcelo Trujillo
+ *
+ **********************************************************************************************************************************/
 
-#ifndef funciones_GPIO_h
-#define funciones_GPIO_h
+/***********************************************************************************************************************************
+ *** MODULO
+ **********************************************************************************************************************************/
 
-#include <TIPOS.h>
+#ifndef DR_GPIOS_H_
+#define DR_GPIOS_H_
+/***********************************************************************************************************************************
+ *** INCLUDES GLOBALES
+ **********************************************************************************************************************************/
 
+/***********************************************************************************************************************************
+ *** DEFINES GLOBALES
+ **********************************************************************************************************************************/
+#include "DR_tipos.h"
 
-//Estados de FIODIR:
-#define		OUTPUT	1
-#define		INPUT	0
-
-//Estados de PINSEL:
-#define		PINSEL_GPIO		0
-#define		PINSEL_FUNC1	1
-#define		PINSEL_FUNC2	2
-#define		PINSEL_FUNC3	3
-
-//Estados de PINMODE
-#define		PINMODE_PULLUP 		0
-#define		PINMODE_REPEAT 		1
-#define		PINMODE_NONE 		2
-#define		PINMODE_PULLDOWN 	3
-
-
-//Registros generales:
-//0x4002C000UL : Direccion de inicio de los registros PINSEL
-#define		PINSEL		( (__RW uint32_t  * ) 0x4002C000UL )
-//FTM para asignar solo utilizando PINSEL=...; Utilidad = Evita utilizar punteros
-//0x2009C000UL : Direccion de inicio de los registros de GPIOs
-#define		GPIOs		( (__RW gpio_t  * ) 0x2009C000UL )
-//0x400FC0C4UL : Direccion de inicio del registro de habilitación de dispositivos:
-#define 	DIR_PCONP	( (__RW uint32_t  * ) 0x400FC0C4UL )
-
-//0x400FC1A8UL : Direccion de inicio de los registros de seleccion de los clks de los dispositivos:
-//#define		PCLKSEL		( ( uint32_t  * ) 0x400FC1A8UL )
-
-//0x4002C040UL : Direccion de inicio de los registros de modo de los pines del GPIO
-#define		PINMODE		( (__RW uint32_t  * ) 0x4002C040UL )
-//0xE000E100UL : Direccion de inicio de los registros de habilitación (set) de interrupciones en el NVIC:
-#define		ISER		( (__RW uint32_t  * ) 0xE000E100UL )
-//0xE000E180UL : Direccion de inicio de los registros de deshabilitacion (clear) de interrupciones en el NVIC:
-#define		ICER		( (__RW uint32_t  * ) 0xE000E180UL )
-
-//Estructura para manejar los GPIOs:
+/***********************************************************************************************************************************
+ *** MACROS GLOBALES
+ **********************************************************************************************************************************/
 typedef struct {
 	__RW uint32_t	FIODIR;
 	__R  uint32_t	RESERVED[3];//Espacio en blanco entre FIODIR y FIOMASK
@@ -51,10 +34,47 @@ typedef struct {
 	__RW uint32_t 	FIOCLR;
 } gpio_t;
 
-void GPIO_Pinsel(uint32_t Puerto, uint32_t Pin,uint32_t Configurar);	//tambien llamada PINSEL por el resto de la catedra
-void GPIO_Mode(uint32_t Puerto, uint32_t Pin,uint32_t Configurar);		//pull up or pull down
-void GPIO_Dir(uint32_t Puerto, uint32_t Pin,uint32_t Dir);				//0: INPUT; 1: OUTPUT
-uint32_t GPIO_Get(uint32_t Puerto, uint32_t Pin);						//lectura del GPIO
-void GPIO_Set (uint32_t Puerto, uint32_t Pin, uint32_t Estado);			//escritura del GPIO
+//0x2009C000UL : Direccion de inicio de los registros de GPIOs
+#define		GPIOs		( (__RW gpio_t  * ) 0x2009C000UL )
 
-#endif
+//0x4002C040UL : Direccion de inicio de los registros de modo de los pines del GPIO
+#define		PINMODE		( (__RW uint32_t  * ) 0x4002C040UL )
+
+//open collector open drain
+#define	 PINMODE_OD		( ( __RW uint32_t * )  0x4002C068UL )
+
+
+
+
+//Estados de PinDir
+#define OUTPUT	1
+#define INPUT	0
+
+//Estados de PinMode
+#define		PINMODE_PULLUP 			0
+#define		PINMODE_REPEAT			1
+#define		PINMODE_HIGH_IMP 		2
+#define		PINMODE_PULLDOWN 		3
+
+//Estados de PinMode_OD
+
+/***********************************************************************************************************************************
+ *** TIPO DE DATOS GLOBALES
+ **********************************************************************************************************************************/
+
+/***********************************************************************************************************************************
+ *** VARIABLES GLOBALES
+ **********************************************************************************************************************************/
+
+/***********************************************************************************************************************************
+ *** PROTOTIPOS DE FUNCIONES GLOBALES
+ **********************************************************************************************************************************/
+
+
+void SetPinDir(uint32_t Puerto, uint32_t Pin,uint32_t Dir);				//0: INPUT; 1: OUTPUT
+void SetPinMode(uint32_t Puerto, uint32_t Pin,uint32_t Modo);		//pull up or pull down
+void SetPinMode_OD(uint32_t Puerto, uint32_t Pin,uint32_t Modo);		//pull up or pull down
+void SetPin (uint32_t Puerto, uint32_t Pin, uint32_t Estado);			//escritura del GPIO
+uint32_t GetPin(uint32_t Puerto, uint32_t Pin);						//lectura del GPIO
+
+#endif /* DR_GPIOS_H_ */
