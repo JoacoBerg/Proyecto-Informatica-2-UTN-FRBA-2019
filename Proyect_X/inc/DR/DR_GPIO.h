@@ -2,7 +2,7 @@
 #ifndef funciones_GPIO_h
 #define funciones_GPIO_h
 
-#include "DR_tipos.h"
+#include <TIPOS.h>
 
 
 //Estados de FIODIR:

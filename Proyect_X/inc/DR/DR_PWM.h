@@ -3,7 +3,7 @@
 //STCURR - 0xE000 E018
 //diferencia 4 -->estan por bytes el hexa
 
-#include "DR_tipos.h"
+#include <TIPOS.h>
 #include "DR_PLL.h"
 #include "DR_GPIO.h"
 

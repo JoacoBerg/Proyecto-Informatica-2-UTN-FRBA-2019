@@ -5,7 +5,7 @@
 *	\author German
 *	\date 17-09-2019 18:07:28
 */
-#include "DR_tipos.h"
+#include <TIPOS.h>
 
 //Declaracion de constantes
 #define TRUE  1

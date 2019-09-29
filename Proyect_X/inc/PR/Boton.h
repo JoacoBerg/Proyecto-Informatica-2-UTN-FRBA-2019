@@ -10,8 +10,8 @@
 
 #include "DR_PLL.h"
 #include <DR_Systick.h>
+#include <TIPOS.h>
 #include "DR_GPIO.h"
-#include "DR_tipos.h"
 
 #define BOTON_PORT 0
 #define BOTON_PIN 24

@@ -1,6 +1,6 @@
 #ifndef KITINIC_H_
 #define KITINIC_H_
-#include"DR_tipos.h"
+#include <TIPOS.h>
 	//!< ///////////////////   PCONP   //////////////////////////
 	//!<  Power Control for Peripherals register (PCONP - 0x400F C0C4) [pag. 62 user manual LPC1769]
 	//!< 0x400FC0C4UL : Direccion de inicio del registro de habilitación de dispositivos:

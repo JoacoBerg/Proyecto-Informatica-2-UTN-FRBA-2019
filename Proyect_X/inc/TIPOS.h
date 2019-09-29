@@ -11,8 +11,8 @@
  *** MODULO
  **********************************************************************************************************************************/
 
-#ifndef DR_TIPOS_H_
-#define DR_TIPOS_H_
+#ifndef TIPOS_H_
+#define TIPOS_H_
 
 #define ENPROCESO 0
 #define EXITO 1
@@ -75,4 +75,4 @@ typedef		char				int8_t;
  *** PROTOTIPOS DE FUNCIONES GLOBALES
  **********************************************************************************************************************************/
 
-#endif /* DR_TIPOS_H_ */
+#endif /* TIPOS_H_ */

@@ -7,9 +7,9 @@
 */
 
 
+#include <TIPOS.h>
 #include "Maq_Giro.h"
 #include "DR_IR.h"
-#include "DR_tipos.h"
 #include "Tanks.h"
 
 //Implementacion Switch-Case
