@@ -1,18 +1,21 @@
+
 /*******************************************************************************************************************************//**
  *
- * @file		DR_ir.c
- * @brief		Descripcion del modulo
- * @date		9 sep. 2019
- * @author		Ing. Marcelo Trujillo
+ * @file		Inicializacion.c
+ * @brief		Inicializaciones del Kit de Info II Infotronic
+ * @date		23/03/16
+ * @author		Marcelo Trujillo
  *
  **********************************************************************************************************************************/
 
 /***********************************************************************************************************************************
  *** INCLUDES
  **********************************************************************************************************************************/
-#include <DR_IR.h>
-#include "Tanks.h"
-#include "DR_GPIO.h"
+#include <DR_Salidas.h>
+#include "DR_Entradas.h"
+#include "DR_PLL.h"
+#include "DR_SysTick.h"
+
 
 
 /***********************************************************************************************************************************
@@ -36,61 +39,34 @@
  **********************************************************************************************************************************/
 
 /***********************************************************************************************************************************
- *** VARIABLES GLOBALES PRIVADAS AL MODULO
+ *** VARIABLES GLOBLES PRIVADAS AL MODULO
  **********************************************************************************************************************************/
 
 /***********************************************************************************************************************************
  *** PROTOTIPO DE FUNCIONES PRIVADAS AL MODULO
  **********************************************************************************************************************************/
 
- /***********************************************************************************************************************************
+/***********************************************************************************************************************************
  *** FUNCIONES PRIVADAS AL MODULO
  **********************************************************************************************************************************/
 
- /***********************************************************************************************************************************
+/***********************************************************************************************************************************
  *** FUNCIONES GLOBALES AL MODULO
  **********************************************************************************************************************************/
-#define IR4 0,25
-#define IR3 0,26
-#define IR2 1,30
-#define IR1 1,31
 
-int IRx4[4]; //estado de
-
-void InitIR(void)
-	{
-
-
-
-		//IR1
-		SetPinsel(IR1, 0);		//Funcion del pin
-		SetPinMode(IR1, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		SetPinDir(IR1, 0);		//0: Entrada | 1: Salida
-
-		//IR2
-		SetPinsel(IR2, 0);		//Funcion del pin
-		SetPinMode(IR2, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		SetPinDir(IR2, 0);		//0: Entrada | 1: Salida
-
-		//IR3
-		SetPinsel(IR3, 0);		//Funcion del pin
-		SetPinMode(IR3, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		SetPinDir(IR3, 0);		//0: Entrada | 1: Salida
-
-		//IR4
-		SetPinsel(IR4, 0);		//Funcion del pin
-		SetPinMode(IR4, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		SetPinDir(IR4, 0);		//0: Entrada | 1: Salida
-
-	}
-
-void LecturaIRs(int* IRx4)
+/**
+ \fn  void Inicializar ( void )
+ \brief funcion principal
+ \param void
+ \return void
+ */
+void Inicializacion ( void )
 {
-	(IRx4[0]) = GetPin(IR1);
-	(IRx4[1]) = GetPin(IR2);
-	(IRx4[2]) = GetPin(IR3);
-	(IRx4[3]) = GetPin(IR4);
-	return;
+	//!< Se configura en primer lugar el PLL:
+	//!< Estabiliza el oscilador interno del micro en 100MHz
+	InicializarPLL( );
+	SysTick_Init ( );
+
+	InicializarEntradas( );
+	InicializarSalidas( );
 }
-
-

@@ -1,8 +1,8 @@
 /*******************************************************************************************************************************//**
  *
- * @file		Maq_Follow_the_line.c
+ * @file		DR_Timers.c
  * @brief		Descripcion del modulo
- * @date		15 sep. 2019
+ * @date		9 de jun. de 2017
  * @author		Ing. Marcelo Trujillo
  *
  **********************************************************************************************************************************/
@@ -10,9 +10,7 @@
 /***********************************************************************************************************************************
  *** INCLUDES
  **********************************************************************************************************************************/
-#include <DR_IR.h>
-#include <Maq_FollowTheLine.h>
-#include "Tanks.h"
+#include "DR_Timers.h"
 #include "DR_tipos.h"
 
 /***********************************************************************************************************************************
@@ -34,6 +32,11 @@
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PUBLICAS
  **********************************************************************************************************************************/
+volatile 	uint32_t Tmr_Run[ N_TIMERS ];
+volatile 	uint8_t  TMR_Events[ N_TIMERS ];
+void 	 	(* TMR_handlers [N_TIMERS]) (void);
+volatile 	uint8_t  TMR_StandBy[ N_TIMERS ];
+volatile 	uint8_t  Tmr_Base[ N_TIMERS ];
 
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PRIVADAS AL MODULO
@@ -50,104 +53,44 @@
  /***********************************************************************************************************************************
  *** FUNCIONES GLOBALES AL MODULO
  **********************************************************************************************************************************/
-
-
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------MAQUINA DE ESTADOS DE FOLLOW THE LINE---------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-
-//Declaracion de estados
-#define 	X11X	0
-#define 	X10X	1
-#define 	X01X	2
-#define 	RESET	3
-#define 	ALARMA	4
-
-
-#define		VELOCIDAD_FTL 100
-
-
-
-uint8_t Maq_FollowTheLine(void){
-	return 1;
-}
-
-uint8_t ftl(void)	//se encarga del interior
+/**
+	\fn void Timer_Check(void)
+	\brief Decremento periodico de los contadores
+ 	\details Decrementa los contadores de los timers en ejecucion. Debe ser llamada periodicamente con la base de tiempos
+	\return void
+*/
+void AnalizarTimers(void)
 {
-		//static int cruces = 0;
-		static uint8_t estado = RESET;
-
-		switch(estado)
+	uint32_t i;
+	for(i=0; i< N_TIMERS ; i++)
+	{
+		if(Tmr_Run[ i ])
 		{
-			case X11X:
-
-				if(IR_IZQ_IN == 0 && IR_DER_IN == 1)
-				{
-					Tank_Right(VELOCIDAD_FTL);
-					estado = X01X;
-				}
-
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 0)
-				{
-					Tank_Left(VELOCIDAD_FTL);
-					estado = X10X;
-				}
-
-				break;
-
-			case X10X:
-
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
-				{
-					Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
-
-				}
-
-				break;
-
-			case X01X:
-
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
-				{
-					Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
-
-				}
-
-				break;
-
-			case RESET:
-
-				Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
-
-				break;
-
-			case ALARMA:
-
-				return FALLO;
-				break;
-
-			default: estado = RESET;
+			if ( !TMR_StandBy[ i ] )
+			{
+				Tmr_Run[ i ]--;
+				if(!Tmr_Run[ i ])
+					TMR_Events[ i ] = 1;
+			}
 		}
-		return ENPROCESO;
+	}
 }
 
-//Funciones asociadas a los eventos
-
-
-//Funciones asociadas a los eventos
-
-
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------FIN MAQUINA DE ESTADOS DE FOLLOW THE LINE---------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-
-
+/**
+	\fn void Timer_Event(void)
+	\brief Chequeo de timers vencidos
+ 	\details Llama a los callbacks de los timers vencidos. Debe llamarse desde el lazo principal del programa
+	\return void
+*/
+void TimerEvent(void)
+{
+	uint8_t i;
+	for( i=0 ; i < N_TIMERS ; i++ )
+	{
+		if(TMR_Events[ i ])
+		{
+			TMR_handlers[ i ]( );
+			TMR_Events[ i ] = 0;
+		}
+	}
+}

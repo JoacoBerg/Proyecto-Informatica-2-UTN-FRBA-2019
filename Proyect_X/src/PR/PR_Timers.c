@@ -1,8 +1,8 @@
 /*******************************************************************************************************************************//**
  *
- * @file		Maq_Follow_the_line.c
- * @brief		Descripcion del modulo
- * @date		15 sep. 2019
+ * @file		PR_Timers.c
+ * @brief		Maquinaria de timers
+ * @date		2 de jun. de 2017
  * @author		Ing. Marcelo Trujillo
  *
  **********************************************************************************************************************************/
@@ -10,14 +10,16 @@
 /***********************************************************************************************************************************
  *** INCLUDES
  **********************************************************************************************************************************/
-#include <DR_IR.h>
-#include <Maq_FollowTheLine.h>
-#include "Tanks.h"
-#include "DR_tipos.h"
+#include "PR_Timers.h"
+#include "DR_Timers.h"
 
 /***********************************************************************************************************************************
  *** DEFINES PRIVADOS AL MODULO
  **********************************************************************************************************************************/
+
+#define 	DECIMAS			40
+#define 	SEGUNDOS		10
+#define 	MINUTOS			60
 
 /***********************************************************************************************************************************
  *** MACROS PRIVADAS AL MODULO
@@ -50,104 +52,136 @@
  /***********************************************************************************************************************************
  *** FUNCIONES GLOBALES AL MODULO
  **********************************************************************************************************************************/
-
-
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------MAQUINA DE ESTADOS DE FOLLOW THE LINE---------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-
-//Declaracion de estados
-#define 	X11X	0
-#define 	X10X	1
-#define 	X01X	2
-#define 	RESET	3
-#define 	ALARMA	4
-
-
-#define		VELOCIDAD_FTL 100
-
-
-
-uint8_t Maq_FollowTheLine(void){
-	return 1;
-}
-
-uint8_t ftl(void)	//se encarga del interior
+/**
+	\fn void TimerStart(uint8_t event, timer_t t, void (*handler)(void))
+	\brief Inicia un timer
+ 	\details Inicia el timer \a e al transcurrir el tiempo especificado por \a t se llama a la funcion apuntada por \a handler
+ 	\param [in] event Numero de evento entre 0 y 31
+ 	\param [in] t Tiempo del evento. Dependiente de la base de tiempos
+ 	\param [in] handler Callback del evento
+	\return void
+*/
+void TimerStart(uint8_t event, uint32_t time, Timer_Handler handler , uint8_t base )
 {
-		//static int cruces = 0;
-		static uint8_t estado = RESET;
+	switch ( base )
+	{
+		case DEC:
+			time *= DECIMAS;
+			break;
+		case SEG:
+			time *= ( SEGUNDOS * DECIMAS );
+			break;
+		case MIN:
+			time *= ( MINUTOS * SEGUNDOS * DECIMAS );
+			break;
+	}
 
-		switch(estado)
-		{
-			case X11X:
+	Tmr_Base[event] = base;
 
-				if(IR_IZQ_IN == 0 && IR_DER_IN == 1)
-				{
-					Tank_Right(VELOCIDAD_FTL);
-					estado = X01X;
-				}
-
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 0)
-				{
-					Tank_Left(VELOCIDAD_FTL);
-					estado = X10X;
-				}
-
-				break;
-
-			case X10X:
-
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
-				{
-					Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
-
-				}
-
-				break;
-
-			case X01X:
-
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
-				{
-					Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
-
-				}
-
-				break;
-
-			case RESET:
-
-				Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
-
-				break;
-
-			case ALARMA:
-
-				return FALLO;
-				break;
-
-			default: estado = RESET;
-		}
-		return ENPROCESO;
+	if(time != 0)	//el tiempo no es 0, lo cargo
+	{
+		Tmr_Run[event] = time;
+		TMR_Events[event] = 0;
+	}
+	else	//el tiempo es cero, el timer vence automáticamente
+	{
+		Tmr_Run[event] = 0;
+		TMR_Events[event] = 1;
+	}
+	TMR_handlers[event] = handler;
 }
 
-//Funciones asociadas a los eventos
+/**
+	\fn void SetTimer( uint8_t event , timer_t t )
+	\brief Inicia un timer
+ 	\details Reinicia el timer con el valor t (no lo resetea)
+ 	\param [in] event Numero de evento entre 0 y 31
+ 	\param [in] t Tiempo del evento. Dependiente de la base de tiempos
+ 	\return void
+*/
+void SetTimer( uint8_t event, uint32_t time )
+{
+	switch ( Tmr_Base[event] )
+	{
+		case DEC:
+			time *= DECIMAS;
+			break;
+		case SEG:
+			time *= ( SEGUNDOS * DECIMAS );
+			break;
+		case MIN:
+			time *= ( MINUTOS * SEGUNDOS * DECIMAS );
+			break;
+	}
+	Tmr_Run[event] = time;
+}
 
+/**
+	\fn  GetTimer( uint8_t event )
+	\brief Toma el valor al vuelo del timer en cuestion
+ 	\details Lee el timer
+ 	\param [in] event Numero de evento entre 0 y 31
+ 	\return valor del timer
+*/
+uint32_t GetTimer( uint8_t event )
+{
+	uint32_t time = Tmr_Run[event];
 
-//Funciones asociadas a los eventos
+	switch ( Tmr_Base[event] )
+	{
+		case DEC:
+			time /= DECIMAS;
+			break;
+		case SEG:
+			time /= ( SEGUNDOS * DECIMAS );
+			break;
+		case MIN:
+			time /= ( MINUTOS * SEGUNDOS * DECIMAS );
+			break;
+	}
+	return time;
+}
 
+/**
+	\fn  StandByTimer( uint8_t event , uint8_t accion)
+	\brief Detiene/Arranca el timer, NO lo resetea
+ 	\details lo pone o lo saca de stand by
+ 	\param [in] event Numero de evento entre 0 y 31
+ 	\param [in] accion RUN lo arranca, PAUSE lo pone en stand by
+ 	\return void
+*/
+void StandByTimer( uint8_t event , uint8_t accion)
+{
+	TMR_StandBy[ event ] = accion;
+}
 
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------FIN MAQUINA DE ESTADOS DE FOLLOW THE LINE---------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
+/**
+	\fn void Timer_Stop(Eventos e)
+	\brief Detiene un timer
+ 	\details Detiene el timer \a e
+ 	\param [in] e Numero de evento entre 0 y 31
+	\return void
+*/
+void TimerStop(uint8_t event)
+{
+	Tmr_Run[ event ] = 0;
+	TMR_Events[ event ] = 0;
+	TMR_handlers[ event ] = NULL;
+	Tmr_Base[ event ] = 0;
+	TMR_StandBy[ event ] = RUN;
+}
 
+/**
+	\fn void Timer_Close(void)
+	\brief Detiene los timers
+ 	\details Detiene todos los timers
+	\return void
+*/
+void TimerClose(void)
+{
+	uint32_t i;
+
+	for( i=0 ; i < N_TIMERS ; i++ )
+		TimerStop( i );
+}
 

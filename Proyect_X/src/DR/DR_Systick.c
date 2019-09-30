@@ -4,7 +4,9 @@
  *  Created on: 6 sep. 2019
  *      Author: gif30
  */
+#include <DR_Salidas.h>
 #include <DR_Systick.h>
+#include "DR_Entradas.h"
 
 void SysTick_Init(void){
 	Systick->STRELOAD = (Systick->STCALIB / 10) - 1; //Base de tiempo dada por 10ms/10: El -1 es porque cuenta uno de mas el STCURR
@@ -17,16 +19,11 @@ void SysTick_Init(void){
 
 void SysTick_Handler(void){
 
-	//Hace la lectura de los IR cada 1 milisegundo
-	static uint32_t timer = 1;
+	//cada 1 milisegundo
 
-	if(timer)
-		timer--;
-	else
-	{
-		//LecturaIRs(IRx4);
-		timer = 1;
-	}
+	DebounceEntradas( );
+	RefrescoSalidas( );
+	AnalizarTimers( );
 
 
 }

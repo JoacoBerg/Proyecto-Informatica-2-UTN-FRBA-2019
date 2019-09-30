@@ -1,6 +1,6 @@
 /*******************************************************************************************************************************//**
  *
- * @file		DR_Salidas.c
+ * @file		PR_Entradas.c
  * @brief		Descripcion del modulo
  * @date		14 de nov. de 2017
  * @author		Ing. Marcelo Trujillo
@@ -10,9 +10,7 @@
 /***********************************************************************************************************************************
  *** INCLUDES
  **********************************************************************************************************************************/
-#include <PR_Salidas.h>
-#include "DR_PINSEL.h"
-#include "DR_GPIO.h"
+#include "PR_Entradas.h"
 
 /***********************************************************************************************************************************
  *** DEFINES PRIVADOS AL MODULO
@@ -33,7 +31,6 @@
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PUBLICAS
  **********************************************************************************************************************************/
-__RW uint32_t BufferSalidas;		//!< Buffer de las salidas de los relays
 
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PRIVADAS AL MODULO
@@ -51,39 +48,22 @@ __RW uint32_t BufferSalidas;		//!< Buffer de las salidas de los relays
  *** FUNCIONES GLOBALES AL MODULO
  **********************************************************************************************************************************/
 /**
-	\fn  void RefrescoSalidas ( void )
-	\brief Refresca el estadp de las salidas delos relays
+	\fn  uint8_t Entradas ( uint8_t nEntrada )
+	\brief Valor de una de las entradas digitales
  	\author Ing. Marcelo Trujillo
  	\date 14 de nov. de 2017
- 	\param void
- 	\return void
+ 	\param [in] numero de entrada
+		<ul>
+			<li> Numeros de entrada en las siguientes macros
+			<ol>
+			<li> ENTRADA0 : 0
+			<li> ENTRADA1 : 1
+			<li> ENTRADA2 : 2
+			</ol>
+		</ul>
+	\return tipo y descripcion de retorno
 */
-void RefrescoSalidas ( void )
+uint8_t LeerEntrada ( uint8_t nEntrada )
 {
-	SetPin ( OUT0 , ( BufferSalidas >> 0 ) & 1 );
-	SetPin ( OUT1 , ( BufferSalidas >> 1 ) & 1 );
-	SetPin ( OUT2 , ( BufferSalidas >> 2 ) & 1 );
-	SetPin ( OUT3 , ( BufferSalidas >> 3 ) & 1 );
-}
-
-/**
-	\fn  void InicializarSalidas( void )
-	\brief Configura las salidas de los relays
- 	\author Ing. Marcelo Trujillo
- 	\date 14 de nov. de 2017
- 	\param void
- 	\return void
-*/
-void InicializarSalidas( void )
-{
-	//!< Inicializar Salidas Digitales
-	SetPinsel(OUT0,PINSEL_GPIO);
-	SetPinsel(OUT1,PINSEL_GPIO);
-	SetPinsel(OUT2,PINSEL_GPIO);
-	SetPinsel(OUT3,PINSEL_GPIO);
-
-	SetPinDir( OUT0 , OUTPUT);
-	SetPinDir( OUT1 , OUTPUT);
-	SetPinDir( OUT2 , OUTPUT);
-	SetPinDir( OUT3 , OUTPUT);
+	return ( BufferEntradas >> nEntrada ) & 1;
 }

@@ -1,8 +1,8 @@
 /*******************************************************************************************************************************//**
  *
- * @file		Maq_Follow_the_line.c
+ * @file		DR_Salidas.c
  * @brief		Descripcion del modulo
- * @date		15 sep. 2019
+ * @date		14 de nov. de 2017
  * @author		Ing. Marcelo Trujillo
  *
  **********************************************************************************************************************************/
@@ -10,10 +10,9 @@
 /***********************************************************************************************************************************
  *** INCLUDES
  **********************************************************************************************************************************/
-#include <DR_IR.h>
-#include <Maq_FollowTheLine.h>
-#include "Tanks.h"
-#include "DR_tipos.h"
+#include <DR_Salidas.h>
+#include "DR_PINSEL.h"
+#include "DR_GPIO.h"
 
 /***********************************************************************************************************************************
  *** DEFINES PRIVADOS AL MODULO
@@ -34,6 +33,7 @@
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PUBLICAS
  **********************************************************************************************************************************/
+__RW uint32_t BufferSalidas;		//!< Buffer de las salidas de los relays
 
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PRIVADAS AL MODULO
@@ -50,105 +50,40 @@
  /***********************************************************************************************************************************
  *** FUNCIONES GLOBALES AL MODULO
  **********************************************************************************************************************************/
-
-
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------MAQUINA DE ESTADOS DE FOLLOW THE LINE---------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-
-//Declaracion de estados
-#define 	X11X	0
-#define 	X10X	1
-#define 	X01X	2
-#define 	RESET	3
-#define 	ALARMA	4
-
-
-#define		VELOCIDAD_FTL 100
-
-
-
-uint8_t Maq_FollowTheLine(void)
+/**
+	\fn  void RefrescoSalidas ( void )
+	\brief Refresca el estadp de las salidas delos relays
+ 	\author Ing. Marcelo Trujillo
+ 	\date 14 de nov. de 2017
+ 	\param void
+ 	\return void
+*/
+void RefrescoSalidas ( void )
 {
-	return 1;
+	SetPin ( OUT0 , ( BufferSalidas >> 0 ) & 1 );
+	SetPin ( OUT1 , ( BufferSalidas >> 1 ) & 1 );
+	SetPin ( OUT2 , ( BufferSalidas >> 2 ) & 1 );
+	SetPin ( OUT3 , ( BufferSalidas >> 3 ) & 1 );
 }
 
-uint8_t ftl(void)	//se encarga del interior
+/**
+	\fn  void InicializarSalidas( void )
+	\brief Configura las salidas de los relays
+ 	\author Ing. Marcelo Trujillo
+ 	\date 14 de nov. de 2017
+ 	\param void
+ 	\return void
+*/
+void InicializarSalidas( void )
 {
-		//static int cruces = 0;
-		static uint8_t estado = RESET;
+	//!< Inicializar Salidas Digitales
+	SetPinsel(OUT0,PINSEL_GPIO);
+	SetPinsel(OUT1,PINSEL_GPIO);
+	SetPinsel(OUT2,PINSEL_GPIO);
+	SetPinsel(OUT3,PINSEL_GPIO);
 
-		switch(estado)
-		{
-			case X11X:
-
-				if(IR_IZQ_IN == 0 && IR_DER_IN == 1)
-				{
-					Tank_Right(VELOCIDAD_FTL);
-					estado = X01X;
-				}
-
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 0)
-				{
-					Tank_Left(VELOCIDAD_FTL);
-					estado = X10X;
-				}
-
-				break;
-
-			case X10X:
-
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
-				{
-					Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
-
-				}
-
-				break;
-
-			case X01X:
-
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
-				{
-					Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
-
-				}
-
-				break;
-
-			case RESET:
-
-				Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
-
-				break;
-
-			case ALARMA:
-
-				return FALLO;
-				break;
-
-			default: estado = RESET;
-		}
-		return ENPROCESO;
+	SetPinDir( OUT0 , OUTPUT);
+	SetPinDir( OUT1 , OUTPUT);
+	SetPinDir( OUT2 , OUTPUT);
+	SetPinDir( OUT3 , OUTPUT);
 }
-
-//Funciones asociadas a los eventos
-
-
-//Funciones asociadas a los eventos
-
-
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------FIN MAQUINA DE ESTADOS DE FOLLOW THE LINE---------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-
-
