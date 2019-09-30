@@ -16,11 +16,11 @@ void InitUltraFR(uint32_t portTRIG, uint32_t pinTRIG, uint32_t portECHO, uint32_
 	//ULTRASONICO 1
 	SetPin(portTRIG, pinTRIG, PINSEL_GPIO);
 	SetPinMode(portTRIG, pinTRIG, PINMODE_PULLUP);
-	SetPinDir(portTRIG, pinTRIG, OUTPUT);
+	SetPinDir(portTRIG, pinTRIG, PINDIR_OUTPUT);
 
 	SetPin(portECHO, pinECHO, PINSEL_GPIO);
 	SetPinMode(portECHO, pinECHO, PINMODE_PULLUP);
-	SetPinDir(portECHO, pinECHO, INPUT);
+	SetPinDir(portECHO, pinECHO, PINDIR_INPUT);
 }
 
 uint32_t DistanciaUS(uint32_t portTRIG, uint32_t pinTRIG, uint32_t portECHO, uint32_t pinECHO, ultra_s *u_gen) {

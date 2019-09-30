@@ -70,9 +70,9 @@ void DebounceEntradas (void){
 */
 void InicializarEntradas ( void )
 {
-	SetPinDir( 0, 0 , INPUT );
-	SetPinDir( 0, 0 , INPUT );
-	SetPinDir( 0, 0 , INPUT );
+	SetPinDir( 0, 0 , PINDIR_INPUT );
+	SetPinDir( 0, 0 , PINDIR_INPUT );
+	SetPinDir( 0, 0 , PINDIR_INPUT );
 
 	SetPinMode(  0, 0  , PINMODE_PULLUP );
 	SetPinMode(  0, 0  , PINMODE_PULLUP );

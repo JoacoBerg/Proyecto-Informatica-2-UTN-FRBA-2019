@@ -85,6 +85,10 @@ void SetPin(uint32_t Puerto, uint32_t Pin, uint32_t Estado){	//escritura del GPI
 
 uint32_t GetPin(uint32_t Puerto, uint32_t Pin){	//lectura del GPIO
 
-		return GPIOs[Puerto].FIOPIN & (1<<Pin);
+		if(GPIOs[Puerto].FIOPIN & (1<<Pin))
+			return 1;
+		else
+			return 0;
+
 }
 

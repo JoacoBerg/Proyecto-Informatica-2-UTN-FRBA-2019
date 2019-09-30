@@ -82,8 +82,8 @@ void InicializarSalidas( void )
 	SetPinsel(OUT2,PINSEL_GPIO);
 	SetPinsel(OUT3,PINSEL_GPIO);
 
-	SetPinDir( OUT0 , OUTPUT);
-	SetPinDir( OUT1 , OUTPUT);
-	SetPinDir( OUT2 , OUTPUT);
-	SetPinDir( OUT3 , OUTPUT);
+	SetPinDir( OUT0 , PINDIR_OUTPUT);
+	SetPinDir( OUT1 , PINDIR_OUTPUT);
+	SetPinDir( OUT2 , PINDIR_OUTPUT);
+	SetPinDir( OUT3 , PINDIR_OUTPUT);
 }

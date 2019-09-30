@@ -8,20 +8,20 @@ void Tanks_Init(){
 
 	SetPinsel(T_IN1, PINSEL_GPIO);
 	SetPinMode(T_IN1,PINMODE_PULLUP);
-	SetPinDir(T_IN1,OUTPUT);
+	SetPinDir(T_IN1,PINDIR_OUTPUT);
 
 	SetPinsel(T_IN2, PINSEL_GPIO);
 	SetPinMode(T_IN2,PINMODE_PULLUP);
-	SetPinDir(T_IN2,OUTPUT);
+	SetPinDir(T_IN2,PINDIR_OUTPUT);
 
 
 	SetPinsel(T_IN3, PINSEL_GPIO);
 	SetPinMode(T_IN3,PINMODE_PULLUP);
-	SetPinDir(T_IN3,OUTPUT);
+	SetPinDir(T_IN3,PINDIR_OUTPUT);
     
 	SetPinsel(T_IN4, PINSEL_GPIO);
 	SetPinMode(T_IN4,PINMODE_PULLUP);
-	SetPinDir(T_IN4,OUTPUT);
+	SetPinDir(T_IN4,PINDIR_OUTPUT);
 
 	Tank_OFF();
 }

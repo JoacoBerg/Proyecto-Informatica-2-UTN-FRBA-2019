@@ -47,14 +47,18 @@ typedef struct {
 
 
 //Estados de PinDir
-#define OUTPUT	1
-#define INPUT	0
+#define PINDIR_OUTPUT	1
+#define PINDIR_INPUT	0
 
 //Estados de PinMode
 #define		PINMODE_PULLUP 			0
 #define		PINMODE_REPEAT			1
 #define		PINMODE_HIGH_IMP 		2
 #define		PINMODE_PULLDOWN 		3
+
+#define 	PINMODE_OD_OFF			0
+#define 	PINMODE_OD_ON			1
+
 
 //Estados de PinMode_OD
 

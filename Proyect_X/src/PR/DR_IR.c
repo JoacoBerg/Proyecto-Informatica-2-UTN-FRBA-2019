@@ -63,24 +63,24 @@ void InitIR(void)
 
 
 		//IR1
-		SetPinsel(IR1, 0);		//Funcion del pin
-		SetPinMode(IR1, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		SetPinDir(IR1, 0);		//0: Entrada | 1: Salida
+		SetPinsel(IR1, PINSEL_GPIO);		//Funcion del pin
+		SetPinMode(IR1, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+		SetPinDir(IR1, PINDIR_INPUT);		//0: Entrada | 1: Salida
 
 		//IR2
-		SetPinsel(IR2, 0);		//Funcion del pin
-		SetPinMode(IR2, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		SetPinDir(IR2, 0);		//0: Entrada | 1: Salida
+		SetPinsel(IR2, PINSEL_GPIO);		//Funcion del pin
+		SetPinMode(IR2, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+		SetPinDir(IR2, PINDIR_INPUT);		//0: Entrada | 1: Salida
 
 		//IR3
-		SetPinsel(IR3, 0);		//Funcion del pin
-		SetPinMode(IR3, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		SetPinDir(IR3, 0);		//0: Entrada | 1: Salida
+		SetPinsel(IR3, PINSEL_GPIO);		//Funcion del pin
+		SetPinMode(IR3, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+		SetPinDir(IR3, PINDIR_INPUT);		//0: Entrada | 1: Salida
 
 		//IR4
-		SetPinsel(IR4, 0);		//Funcion del pin
-		SetPinMode(IR4, 1);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		SetPinDir(IR4, 0);		//0: Entrada | 1: Salida
+		SetPinsel(IR4, PINSEL_GPIO);		//Funcion del pin
+		SetPinMode(IR4, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+		SetPinDir(IR4, PINDIR_INPUT);		//0: Entrada | 1: Salida
 
 	}
 
