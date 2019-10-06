@@ -1,4 +1,5 @@
 #include "UltraLib.h"
+#include "DR_GPIO.h"
 
 void InitUltraFR(uint32_t portTRIG, uint32_t pinTRIG, uint32_t portECHO, uint32_t pinECHO, ultra_s *u_gen) {
 
@@ -13,13 +14,13 @@ void InitUltraFR(uint32_t portTRIG, uint32_t pinTRIG, uint32_t portECHO, uint32_
 	u_gen->dist_ant = 0;
 
 	//ULTRASONICO 1
-	GPIO_Set(portTRIG, pinTRIG, PINSEL_GPIO);
-	GPIO_Mode(portTRIG, pinTRIG, PINMODE_PULLUP);
-	GPIO_Dir(portTRIG, pinTRIG, OUTPUT);
+	SetPin(portTRIG, pinTRIG, PINSEL_GPIO);
+	SetPinMode(portTRIG, pinTRIG, PINMODE_PULLUP);
+	SetPinDir(portTRIG, pinTRIG, PINDIR_OUTPUT);
 
-	GPIO_Set(portECHO, pinECHO, PINSEL_GPIO);
-	GPIO_Mode(portECHO, pinECHO, PINMODE_PULLUP);
-	GPIO_Dir(portECHO, pinECHO, INPUT);
+	SetPin(portECHO, pinECHO, PINSEL_GPIO);
+	SetPinMode(portECHO, pinECHO, PINMODE_PULLUP);
+	SetPinDir(portECHO, pinECHO, PINDIR_INPUT);
 }
 
 uint32_t DistanciaUS(uint32_t portTRIG, uint32_t pinTRIG, uint32_t portECHO, uint32_t pinECHO, ultra_s *u_gen) {
@@ -29,17 +30,17 @@ uint32_t DistanciaUS(uint32_t portTRIG, uint32_t pinTRIG, uint32_t portECHO, uin
 	u_gen->cont1++;
 	switch (u_gen->cont1) {
 	case 1:
-		GPIO_Set(portTRIG, pinTRIG, OFF);
+		SetPin(portTRIG, pinTRIG, OFF);
 		break;
 	case 6:
-		GPIO_Set(portTRIG, pinTRIG, ON);
+		SetPin(portTRIG, pinTRIG, ON);
 		break;
 	case 16:
-		GPIO_Set(portTRIG, pinTRIG, OFF);
+		SetPin(portTRIG, pinTRIG, OFF);
 		break;
 	default:
 		if (u_gen->cont1 > 16) {
-			u_gen->dato = GPIO_Get(portECHO, pinECHO);
+			u_gen->dato = GetPin(portECHO, pinECHO);
 			if (1 == u_gen->dato && u_gen->status == 0) {
 				u_gen->duracion = u_gen->cont1;
 				u_gen->status = 1;

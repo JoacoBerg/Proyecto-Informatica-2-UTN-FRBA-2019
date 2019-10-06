@@ -1,7 +1,7 @@
 /*******************************************************************************************************************************//**
  *
  * @file		Infotronic.h
- * @brief		Declaracion de tipos Globales
+ * @brief		Macros, tipos , prototipos, de la aplicacion
  * @date		23-03-16
  * @author		Marcelo Trujillo
  *
@@ -11,13 +11,8 @@
  *** MODULO
  **********************************************************************************************************************************/
 
-#ifndef DR_TIPOS_H_
-#define DR_TIPOS_H_
-
-#define ENPROCESO 0
-#define EXITO 1
-#define FALLO 2
-
+#ifndef DR_GPIOS_H_
+#define DR_GPIOS_H_
 /***********************************************************************************************************************************
  *** INCLUDES GLOBALES
  **********************************************************************************************************************************/
@@ -25,47 +20,51 @@
 /***********************************************************************************************************************************
  *** DEFINES GLOBALES
  **********************************************************************************************************************************/
+#include "DR_tipos.h"
 
 /***********************************************************************************************************************************
  *** MACROS GLOBALES
  **********************************************************************************************************************************/
-#define     __R				volatile const  	// !< Modificador para solo lectura
-#define 	__W     		volatile 	       	// !<  Modificador para solo escritura
-#define 	__RW			volatile           	// !< Modificador lectura / escritura
-#define 	ON				1
-#define 	OFF				0
+typedef struct {
+	__RW uint32_t	FIODIR;
+	__R  uint32_t	RESERVED[3];//Espacio en blanco entre FIODIR y FIOMASK
+	__RW uint32_t 	FIOMASK;
+	__RW uint32_t 	FIOPIN;
+	__RW uint32_t 	FIOSET;
+	__RW uint32_t 	FIOCLR;
+} gpio_t;
 
-#ifndef 	NULL
-#define 	NULL				(( void *) 0)
-#endif
+//0x2009C000UL : Direccion de inicio de los registros de GPIOs
+#define		GPIOs		( (__RW gpio_t  * ) 0x2009C000UL )
+
+//0x4002C040UL : Direccion de inicio de los registros de modo de los pines del GPIO
+#define		PINMODE		( (__RW uint32_t  * ) 0x4002C040UL )
+
+//open collector open drain
+#define	 PINMODE_OD		( ( __RW uint32_t * )  0x4002C068UL )
+
+
+
+
+//Estados de PinDir
+#define PINDIR_OUTPUT	1
+#define PINDIR_INPUT	0
+
+//Estados de PinMode
+#define		PINMODE_PULLUP 			0
+#define		PINMODE_REPEAT			1
+#define		PINMODE_HIGH_IMP 		2
+#define		PINMODE_PULLDOWN 		3
+
+#define 	PINMODE_OD_OFF			0
+#define 	PINMODE_OD_ON			1
+
+
+//Estados de PinMode_OD
+
 /***********************************************************************************************************************************
  *** TIPO DE DATOS GLOBALES
  **********************************************************************************************************************************/
-
-typedef		unsigned int		uint32_t;
-typedef		short unsigned int	uint16_t;
-typedef		unsigned char		uint8_t ;
-typedef		int					int32_t;
-typedef		short int			int16_t;
-typedef		char				int8_t;
-
-
-//	LED RGB
-#define LEDR 0,22
-#define LEDG 3,25
-#define LEDB 3,26
-
-#define LED_ON 0
-#define LED_OFF 1
-
-#define LOW		0
-#define HIGH	1
-
-
-
-
-#define 	ALTO	1
-#define 	BAJO	0
 
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES
@@ -75,4 +74,11 @@ typedef		char				int8_t;
  *** PROTOTIPOS DE FUNCIONES GLOBALES
  **********************************************************************************************************************************/
 
-#endif /* DR_TIPOS_H_ */
+
+void SetPinDir(uint32_t Puerto, uint32_t Pin,uint32_t Dir);				//0: INPUT; 1: OUTPUT
+void SetPinMode(uint32_t Puerto, uint32_t Pin,uint32_t Modo);		//pull up or pull down
+void SetPinMode_OD(uint32_t Puerto, uint32_t Pin,uint32_t Modo);		//pull up or pull down
+void SetPin (uint32_t Puerto, uint32_t Pin, uint32_t Estado);			//escritura del GPIO
+uint32_t GetPin(uint32_t Puerto, uint32_t Pin);						//lectura del GPIO
+
+#endif /* DR_GPIOS_H_ */

@@ -4,7 +4,7 @@
  *  Created on: 6 sep. 2019
  *      Author: gif30
  */
-#include "DR_tipos.h"
+#include <DR_tipos.h>
 #include "DR_IR.h"
 #ifndef DR_SYSTICK_H_
 #define DR_SYSTICK_H_

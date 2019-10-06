@@ -1,9 +1,9 @@
 /*******************************************************************************************************************************//**
  *
- * @file		Infotronic.h
- * @brief		Declaracion de tipos Globales
- * @date		23-03-16
- * @author		Marcelo Trujillo
+ * @file		DR_Salidas.h
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		14 de nov. de 2017
+ * @author		Ing. Marcelo Trujillo
  *
  **********************************************************************************************************************************/
 
@@ -11,16 +11,13 @@
  *** MODULO
  **********************************************************************************************************************************/
 
-#ifndef DR_TIPOS_H_
-#define DR_TIPOS_H_
-
-#define ENPROCESO 0
-#define EXITO 1
-#define FALLO 2
+#ifndef DR_SALIDAS_H_
+#define DR_SALIDAS_H_
 
 /***********************************************************************************************************************************
  *** INCLUDES GLOBALES
  **********************************************************************************************************************************/
+#include "DR_tipos.h"
 
 /***********************************************************************************************************************************
  *** DEFINES GLOBALES
@@ -29,50 +26,25 @@
 /***********************************************************************************************************************************
  *** MACROS GLOBALES
  **********************************************************************************************************************************/
-#define     __R				volatile const  	// !< Modificador para solo lectura
-#define 	__W     		volatile 	       	// !<  Modificador para solo escritura
-#define 	__RW			volatile           	// !< Modificador lectura / escritura
-#define 	ON				1
-#define 	OFF				0
 
-#ifndef 	NULL
-#define 	NULL				(( void *) 0)
-#endif
 /***********************************************************************************************************************************
  *** TIPO DE DATOS GLOBALES
  **********************************************************************************************************************************/
-
-typedef		unsigned int		uint32_t;
-typedef		short unsigned int	uint16_t;
-typedef		unsigned char		uint8_t ;
-typedef		int					int32_t;
-typedef		short int			int16_t;
-typedef		char				int8_t;
-
-
-//	LED RGB
-#define LEDR 0,22
-#define LEDG 3,25
-#define LEDB 3,26
-
-#define LED_ON 0
-#define LED_OFF 1
-
-#define LOW		0
-#define HIGH	1
-
-
-
-
-#define 	ALTO	1
-#define 	BAJO	0
-
+#define OUT0 0,0
+#define OUT1 0,0
+#define OUT2 0,0
+#define OUT3 0,0
+#define OUT4 0,0
+#define OUT5 0,0
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES
  **********************************************************************************************************************************/
+extern volatile uint32_t BufferSalidas;		//!< Buffer de las salidas de los relays
 
 /***********************************************************************************************************************************
  *** PROTOTIPOS DE FUNCIONES GLOBALES
  **********************************************************************************************************************************/
+void RefrescoSalidas ( void );
+void InicializarSalidas( void );
 
-#endif /* DR_TIPOS_H_ */
+#endif /* DR_SALIDAS_H_ */

@@ -1,8 +1,8 @@
 /*******************************************************************************************************************************//**
  *
- * @file		Maq_Follow_the_line.c
+ * @file		DR_PWM1.c
  * @brief		Descripcion del modulo
- * @date		15 sep. 2019
+ * @date		8 sep. 2019
  * @author		Ing. Marcelo Trujillo
  *
  **********************************************************************************************************************************/
@@ -10,10 +10,7 @@
 /***********************************************************************************************************************************
  *** INCLUDES
  **********************************************************************************************************************************/
-#include <DR_IR.h>
-#include <Maq_FollowTheLine.h>
-#include "Tanks.h"
-#include "DR_tipos.h"
+#include <DR_PWM.h>
 
 /***********************************************************************************************************************************
  *** DEFINES PRIVADOS AL MODULO
@@ -50,105 +47,109 @@
  /***********************************************************************************************************************************
  *** FUNCIONES GLOBALES AL MODULO
  **********************************************************************************************************************************/
+/**
+	\fn  Nombre de la Funcion
+	\brief Descripcion
+ 	\author Ing. Marcelo Trujillo
+ 	\date 8 sep. 2019
+ 	\param [in] parametros de entrada
+ 	\param [out] parametros de salida
+	\return tipo y descripcion de retorno
+*/
 
-
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------MAQUINA DE ESTADOS DE FOLLOW THE LINE---------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-
-//Declaracion de estados
-#define 	X11X	0
-#define 	X10X	1
-#define 	X01X	2
-#define 	RESET	3
-#define 	ALARMA	4
-
-
-#define		VELOCIDAD_FTL 100
-
-
-
-uint8_t Maq_FollowTheLine(void)
+void PWM_Init(void)
 {
-	return 1;
+	/*Assuming that PLL0 has been setup with CCLK = 100Mhz and PCLK = 25Mhz.*/
+
+
+	PCONP |= (1<<6); 				// PowerPWM (PCPWM1 == 6)
+
+
+
+	PCLKSEL0 &= ~(3<<12);			// Borrar lo que haya ecrito ahi
+	//PCLKSEL0 |= (1<<12);			// PCLK_peripheral = CCLK
+
+
+	PWM->PWM1PR = PWMPRESCALE;		/* Prescalar */
+
+
+	PWM->PWM1MR0 = PWM_DIVISOR; 		//1000us = 1ms period duration 	//PWM_DIVISOR de todos
+	PWM->PWMMR0R = 1;				// Reset PWM TC on PWM1MR0 match
+
+	// update values in MR0
+	PWM->LER_ENA0 = 1;
+
+	//enable counters and PWM Mode
+	PWM->TCR_PWMENA = 1;
+	PWM->TCR_CountENA = 1;
+
+	// Y PWM->PWMSEL1???  			//no tiene modo double edge el PWM1.1
+	//PWM->PWMSEL2 = 0;				// Select Single Edge PWM
+	//PWM->PWMSEL3 = 0;
+	PWM->PWMSEL4 = 0;
+	PWM->PWMSEL5 = 0;
+	PWM->PWMSEL6 = 0;
+
+	//updatePulseWidth(PWM1,OFF);
+	//updatePulseWidth(PWM2,OFF);
+	//updatePulseWidth(PWM3,OFF);
+	updatePulseWidth(PWM4,OFF);
+	updatePulseWidth(PWM5,OFF);
+	updatePulseWidth(PWM6,OFF);
+
+	// enable PWM OUTPUT
+	//PWM->PWMENA1 = 1;
+	//PWM->PWMENA2 = 1;
+	//PWM->PWMENA3 = 1;
+	PWM->PWMENA4 = 1;
+	PWM->PWMENA5 = 1;
+	PWM->PWMENA6 = 1;
+	
+
+	//GPIO_Pinsel(GPIO_PWM1, PINSEL_FUNC1); 			//PWM1
+	//GPIO_Pinsel(GPIO_PWM2, PINSEL_FUNC1);				//PWM2
+	//GPIO_Pinsel(GPIO_PWM3, PINSEL_FUNC1);				//PWM3
+	SetPinsel(GPIO_PWM4, PINSEL_FUNC1);				//PWM4
+	SetPinsel(GPIO_PWM5, PINSEL_FUNC1);				//PWM5
+	SetPinsel(GPIO_PWM6, PINSEL_FUNC1);				//PWM6
 }
 
-uint8_t ftl(void)	//se encarga del interior
+
+void updatePulseWidth(uint8_t num, uint32_t pulseWidth)
 {
-		//static int cruces = 0;
-		static uint8_t estado = RESET;
+	switch(num){
 
-		switch(estado)
-		{
-			case X11X:
+		case PWM1:
+			PWM->PWM1MR1 = pulseWidth;	//Update MR1 with new value
+			PWM->LER_ENA1 = 1;			//Load the MR1 new value at start of next cycle
+			break;
 
-				if(IR_IZQ_IN == 0 && IR_DER_IN == 1)
-				{
-					Tank_Right(VELOCIDAD_FTL);
-					estado = X01X;
-				}
+		case PWM2:
+			PWM->PWM1MR2 = pulseWidth;
+			PWM->LER_ENA2 = 1;
+			break;
 
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 0)
-				{
-					Tank_Left(VELOCIDAD_FTL);
-					estado = X10X;
-				}
+		case PWM3:
+			PWM->PWM1MR3 = pulseWidth;
+			PWM->LER_ENA3 = 1;
+			break;
 
-				break;
+		case PWM4:
+			PWM->PWM1MR4 = pulseWidth;
+			PWM->LER_ENA4 = 1;
+			break;
 
-			case X10X:
+		case PWM5:
+			PWM->PWM1MR5 = pulseWidth;
+			PWM->LER_ENA5 = 1;
+			break;
 
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
-				{
-					Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
+		case PWM6:
+			PWM->PWM1MR6 = pulseWidth;
+			PWM->LER_ENA6 = 1;
+			break;
 
-				}
-
-				break;
-
-			case X01X:
-
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
-				{
-					Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
-
-				}
-
-				break;
-
-			case RESET:
-
-				Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
-
-				break;
-
-			case ALARMA:
-
-				return FALLO;
-				break;
-
-			default: estado = RESET;
-		}
-		return ENPROCESO;
+		default:
+			break;
+	}
 }
-
-//Funciones asociadas a los eventos
-
-
-//Funciones asociadas a los eventos
-
-
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------FIN MAQUINA DE ESTADOS DE FOLLOW THE LINE---------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-
-

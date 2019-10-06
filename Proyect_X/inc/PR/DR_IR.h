@@ -1,9 +1,9 @@
 /*******************************************************************************************************************************//**
  *
- * @file		Infotronic.h
- * @brief		Declaracion de tipos Globales
- * @date		23-03-16
- * @author		Marcelo Trujillo
+ * @file		DR_ir.h
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		9 sep. 2019
+ * @author		Ing. Marcelo Trujillo
  *
  **********************************************************************************************************************************/
 
@@ -11,68 +11,40 @@
  *** MODULO
  **********************************************************************************************************************************/
 
-#ifndef DR_TIPOS_H_
-#define DR_TIPOS_H_
-
-#define ENPROCESO 0
-#define EXITO 1
-#define FALLO 2
+#ifndef APLICATION_INC_DR_IR_H_
+#define APLICATION_INC_DR_IR_H_
 
 /***********************************************************************************************************************************
  *** INCLUDES GLOBALES
  **********************************************************************************************************************************/
+#include <DR_PINSEL.h>
 
 /***********************************************************************************************************************************
  *** DEFINES GLOBALES
  **********************************************************************************************************************************/
-
+#define IR_IZQ_OUT IRx4[0]	//IR 1
+#define IR_IZQ_IN IRx4[1]	//IR 2
+#define IR_DER_IN IRx4[2]	//IR 3
+#define IR_DER_OUT IRx4[3]	//IR 4
 /***********************************************************************************************************************************
  *** MACROS GLOBALES
  **********************************************************************************************************************************/
-#define     __R				volatile const  	// !< Modificador para solo lectura
-#define 	__W     		volatile 	       	// !<  Modificador para solo escritura
-#define 	__RW			volatile           	// !< Modificador lectura / escritura
-#define 	ON				1
-#define 	OFF				0
 
-#ifndef 	NULL
-#define 	NULL				(( void *) 0)
-#endif
 /***********************************************************************************************************************************
  *** TIPO DE DATOS GLOBALES
  **********************************************************************************************************************************/
 
-typedef		unsigned int		uint32_t;
-typedef		short unsigned int	uint16_t;
-typedef		unsigned char		uint8_t ;
-typedef		int					int32_t;
-typedef		short int			int16_t;
-typedef		char				int8_t;
-
-
-//	LED RGB
-#define LEDR 0,22
-#define LEDG 3,25
-#define LEDB 3,26
-
-#define LED_ON 0
-#define LED_OFF 1
-
-#define LOW		0
-#define HIGH	1
-
-
-
-
-#define 	ALTO	1
-#define 	BAJO	0
-
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES
  **********************************************************************************************************************************/
+extern int IRx4[4];
 
 /***********************************************************************************************************************************
  *** PROTOTIPOS DE FUNCIONES GLOBALES
  **********************************************************************************************************************************/
+void InitIR(void);
+void LecturaIRs(int*); //se le pasa un vectorde cuatro, donde la pos. 0 es el IR1, etc
+						// Declarado en InitIR() --> int IRx4[4];
 
-#endif /* DR_TIPOS_H_ */
+
+#endif /* APLICATION_INC_DR_IR_H_ */

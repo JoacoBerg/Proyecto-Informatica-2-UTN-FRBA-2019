@@ -1,9 +1,9 @@
 /*******************************************************************************************************************************//**
  *
- * @file		Infotronic.h
- * @brief		Declaracion de tipos Globales
- * @date		23-03-16
- * @author		Marcelo Trujillo
+ * @file		PR_Timers.h
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		2 de jun. de 2017
+ * @author		Ing. Marcelo Trujillo
  *
  **********************************************************************************************************************************/
 
@@ -11,61 +11,32 @@
  *** MODULO
  **********************************************************************************************************************************/
 
-#ifndef DR_TIPOS_H_
-#define DR_TIPOS_H_
-
-#define ENPROCESO 0
-#define EXITO 1
-#define FALLO 2
+#ifndef PRIMITIVAS_PR_TIMERS_H_
+#define PRIMITIVAS_PR_TIMERS_H_
 
 /***********************************************************************************************************************************
  *** INCLUDES GLOBALES
  **********************************************************************************************************************************/
+#include "DR_tipos.h"
+#include "DR_Timers.h"
 
 /***********************************************************************************************************************************
  *** DEFINES GLOBALES
  **********************************************************************************************************************************/
+#define 	DEC			0
+#define 	SEG			1
+#define 	MIN			2
+
+#define 	RUN			0
+#define 	PAUSE		1
 
 /***********************************************************************************************************************************
  *** MACROS GLOBALES
  **********************************************************************************************************************************/
-#define     __R				volatile const  	// !< Modificador para solo lectura
-#define 	__W     		volatile 	       	// !<  Modificador para solo escritura
-#define 	__RW			volatile           	// !< Modificador lectura / escritura
-#define 	ON				1
-#define 	OFF				0
 
-#ifndef 	NULL
-#define 	NULL				(( void *) 0)
-#endif
 /***********************************************************************************************************************************
  *** TIPO DE DATOS GLOBALES
  **********************************************************************************************************************************/
-
-typedef		unsigned int		uint32_t;
-typedef		short unsigned int	uint16_t;
-typedef		unsigned char		uint8_t ;
-typedef		int					int32_t;
-typedef		short int			int16_t;
-typedef		char				int8_t;
-
-
-//	LED RGB
-#define LEDR 0,22
-#define LEDG 3,25
-#define LEDB 3,26
-
-#define LED_ON 0
-#define LED_OFF 1
-
-#define LOW		0
-#define HIGH	1
-
-
-
-
-#define 	ALTO	1
-#define 	BAJO	0
 
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES
@@ -75,4 +46,11 @@ typedef		char				int8_t;
  *** PROTOTIPOS DE FUNCIONES GLOBALES
  **********************************************************************************************************************************/
 
-#endif /* DR_TIPOS_H_ */
+void TimerStart(uint8_t event, uint32_t time, Timer_Handler handler , uint8_t base );
+void SetTimer( uint8_t event, uint32_t time );
+uint32_t GetTimer( uint8_t event );
+void StandByTimer( uint8_t event , uint8_t accion);
+void TimerStop(uint8_t event);
+void TimerClose(void);
+
+#endif /* PRIMITIVAS_PR_TIMERS_H_ */
