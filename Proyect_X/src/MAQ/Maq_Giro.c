@@ -50,23 +50,6 @@ uint8_t Maq_Giro(uint8_t orient)
 
 				break;
 
-			case RESET:
-
-				if(orient == IZQ)
-				{
-					FIzquierda();
-					estado = IZQUIERDA;
-
-				}
-				if(orient == DER)
-				{
-					FDerecha();
-					estado = DERECHA;
-
-				}
-
-				break;
-
 			case DERECHA:
 
 				if(!IR_IZQ_IN && !IR_DER_IN)
@@ -89,7 +72,22 @@ uint8_t Maq_Giro(uint8_t orient)
 				}
 
 				break;
+			case RESET:
 
+				if(orient == IZQ)
+				{
+					FIzquierda();
+					estado = IZQUIERDA;
+
+				}
+				if(orient == DER)
+				{
+					FDerecha();
+					estado = DERECHA;
+
+				}
+
+				break;
 			default: estado = RESET;
 		}
 
