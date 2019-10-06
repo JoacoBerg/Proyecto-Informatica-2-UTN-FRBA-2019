@@ -20,11 +20,15 @@ void SysTick_Init(void){
 }
 
 void SysTick_Handler(void){
-static uint32_t time= TIEMPO_ADC;
-if(time)
-	time--;
-else{
-	resultado = RESULT_ADC;
-	time = TIEMPO_ADC;
-}
+
+	static uint32_t timer= TIEMPO_ADC;
+
+	if(timer)
+		timer--;
+
+	else{
+		resultado = RESULT_ADC; // por lo unico que esta esta linea es porque en el enunciado nos pedian que cada 1segundo se tome una muestra
+		//ADC->START = 1;
+		timer = TIEMPO_ADC;
+	}
 }
