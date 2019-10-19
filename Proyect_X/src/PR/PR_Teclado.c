@@ -3,7 +3,7 @@
 #include "DR_GPIO.h"
 #include "DR_PINSEL.h"
 
-#define NO_KEY 0
+#define NO_KEY 84
 #define CANT_REBOTES_TECLADO 4
 
 uint32_t CodigoActual = NO_KEY;  //entrada de teclado
@@ -14,7 +14,7 @@ uint8_t Tecla = NO_KEY; //tecla presionada debounced
 #define CANT_COLUMNS_TECLADO 2
 #define CANT_ROWS_TECLADO 4
 
-
+//EXPANSION 3
 uint8_t Teclado_COLUMNS[] = {    //OUTPUTS
     3, 25,
     1, 27
@@ -26,6 +26,8 @@ uint8_t Teclado_ROWS[] = {     //INPUTS
 	1, 19,
 	0, 20
 };
+
+
 
 
 void TecladoSW(void){
@@ -48,9 +50,7 @@ static uint8_t Estados_estables = 0;
         Tecla = CodigoAnterior;
     }
 
-    else if(Estados_estables > CANT_REBOTES_TECLADO){
-        //Nada
-    }
+    else if(Estados_estables > CANT_REBOTES_TECLADO){}
 
     else if(CodigoAnterior == CodigoActual){
         Estados_estables ++;

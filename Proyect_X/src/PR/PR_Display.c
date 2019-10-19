@@ -117,47 +117,47 @@ void Init_Display(void){
     	SetPinsel(COMM_D7S[(digit*2)], COMM_D7S[(digit*2)+1], PINSEL_GPIO);
         SetPinDir(COMM_D7S[(digit*2)], COMM_D7S[(digit*2)+1], PINDIR_OUTPUT);
         SetPinMode_OD(COMM_D7S[(digit*2)], COMM_D7S[(digit*2)+1], PINMODE_OD_OFF);
-        SetPin(COMM_D7S[(digit*2)], COMM_D7S[(digit*2)+1], HIGH);
+        SetPin(COMM_D7S[(digit*2)], COMM_D7S[(digit*2)+1], LOW);
     }
 
 
 	SetPinsel(D7S_A, PINSEL_GPIO);
     SetPinDir(D7S_A, PINDIR_OUTPUT);
     SetPinMode_OD(D7S_A, PINMODE_OD_OFF);
-    SetPin(D7S_A, HIGH);
+    SetPin(D7S_A, LOW);
 
 	SetPinsel(D7S_B, PINSEL_GPIO);
     SetPinDir(D7S_B, PINDIR_OUTPUT);
     SetPinMode_OD(D7S_B, PINMODE_OD_OFF);
-    SetPin(D7S_B, HIGH);
+    SetPin(D7S_B, LOW);
 
 	SetPinsel(D7S_C, PINSEL_GPIO);
     SetPinDir(D7S_C, PINDIR_OUTPUT);
     SetPinMode_OD(D7S_C, PINMODE_OD_OFF);
-    SetPin(D7S_C, HIGH);
+    SetPin(D7S_C, LOW);
 
 	SetPinsel(D7S_D, PINSEL_GPIO);
     SetPinDir(D7S_D, PINDIR_OUTPUT);
     SetPinMode_OD(D7S_D, PINMODE_OD_OFF);
-    SetPin(D7S_D, HIGH);
+    SetPin(D7S_D, LOW);
 
 	SetPinsel(D7S_E, PINSEL_GPIO);
     SetPinDir(D7S_E, PINDIR_OUTPUT);
     SetPinMode_OD(D7S_E, PINMODE_OD_OFF);
-    SetPin(D7S_E, HIGH);
+    SetPin(D7S_E, LOW);
 
 	SetPinsel(D7S_F, PINSEL_GPIO);
     SetPinDir(D7S_F, PINDIR_OUTPUT);
     SetPinMode_OD(D7S_F, PINMODE_OD_OFF);
-    SetPin(D7S_F, HIGH);
+    SetPin(D7S_F, LOW);
 
 	SetPinsel(D7S_G, PINSEL_GPIO);
     SetPinDir(D7S_G, PINDIR_OUTPUT);
     SetPinMode_OD(D7S_G, PINMODE_OD_OFF);
-    SetPin(D7S_G, HIGH);
+    SetPin(D7S_G, LOW);
 
 	SetPinsel(D7S_dp, PINSEL_GPIO);
     SetPinDir(D7S_dp, PINDIR_OUTPUT);
     SetPinMode_OD(D7S_dp, PINMODE_OD_OFF);
-    SetPin(D7S_dp, HIGH);
+    SetPin(D7S_dp, LOW);
 }

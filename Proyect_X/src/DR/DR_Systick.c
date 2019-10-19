@@ -8,6 +8,8 @@
 #include <DR_Systick.h>
 #include "DR_Entradas.h"
 #include "DR_Timers.h"
+#include "PR_Display.h"
+#include "PR_Teclado.h"
 
 void SysTick_Init(void){
 	Systick->STRELOAD = (Systick->STCALIB / 10) - 1; //Base de tiempo dada por 10ms/10: El -1 es porque cuenta uno de mas el STCURR
@@ -19,12 +21,22 @@ void SysTick_Init(void){
 }
 
 void SysTick_Handler(void){
-
+	BarridoDisplay();
+	TecladoSW();
 	//cada 1 milisegundo
 
-	DebounceEntradas( );
-	RefrescoSalidas( );
-	AnalizarTimers( );
-
+	//DebounceEntradas( );
+	//RefrescoSalidas( );
+	//AnalizarTimers( );
+	/*
+	static int i = 0;
+	static int n = 0;
+	i++;
+	if(i==1000){
+		Display7seg(n);
+		n++;
+		i=0;
+	}
+	*/
 
 }
