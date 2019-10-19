@@ -3,7 +3,7 @@
 #include "DR_GPIO.h"
 #include "DR_PINSEL.h"
 
-#define NO_KEY 84
+
 #define CANT_REBOTES_TECLADO 4
 
 uint32_t CodigoActual = NO_KEY;  //entrada de teclado

@@ -28,7 +28,9 @@ void SysTick_Handler(void){
 	//DebounceEntradas( );
 	//RefrescoSalidas( );
 	//AnalizarTimers( );
-	/*
+
+
+
 	static int i = 0;
 	static int n = 0;
 	i++;
@@ -37,6 +39,6 @@ void SysTick_Handler(void){
 		n++;
 		i=0;
 	}
-	*/
+
 
 }

@@ -22,6 +22,9 @@
 #include "Maq_Giro.h"
 #include "Boton.h"
 #include "DR_Servo.h"
+
+#include "DR_GPIO.h"
+#include "DR_PINSEL.h"
 #include "PR_Display.h"
 #include "PR_Teclado.h"
 // TODO: insert other definitions and declarations here
@@ -32,6 +35,10 @@ void testing_tanks(void);
 void testing_tanks2(void);
 void testing_ftl(void);
 
+void teclitecla_init(void);
+uint8_t teclitecla(void);
+
+
 int main(void) {
 
     // TODO: insert code here
@@ -40,7 +47,8 @@ int main(void) {
 	InicializarPLL();
     SysTick_Init();
     Init_Display();
-    Init_Teclado();
+    //teclitecla_init();
+    //Init_Teclado();
     /*
     Tanks_Init();
     InitIR();
@@ -48,9 +56,10 @@ int main(void) {
     */
     //Servo init no existe, ya que el tanque se encarga de eso
     while(1) {
+    	/*
     	uint32_t num = 0;
     	Display7seg(num);
-    	switch (Lectura_Teclado ()){
+    	switch (teclitecla()){
 			case 0:
 				if (num)
 					num --;
@@ -63,7 +72,7 @@ int main(void) {
 			default:
 				break;
     	}
-
+	*/
 
     	//LecturaIRs(IRx4);
     	//testing_giro();
@@ -79,7 +88,7 @@ int main(void) {
 #define TEC_1 2, 10
 #define TEC_2 0, 18
 
-teclitecla_init(void){
+void teclitecla_init(void){
 	SetPinsel(TEC_1, PINSEL_GPIO);
 	SetPinDir(TEC_1, PINDIR_INPUT);
 	SetPinMode(TEC_1, PINMODE_PULLUP);
