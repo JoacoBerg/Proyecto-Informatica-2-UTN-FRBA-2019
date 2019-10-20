@@ -28,7 +28,7 @@
 
 
 
-
+/*
 //EXPANSION 2
 //------------------------------------------------------------------
 
@@ -66,11 +66,11 @@ uint8_t COMM_Pins_D7S[] = {    //las tierras del display
 };
 
 //-----------------------------------------------------------------
+*/
 
 
 
 
-/*
 //EXPANSION 3
 //------------------------------------------------------------------
 
@@ -79,6 +79,10 @@ uint8_t COMM_Pins_D7S[] = {    //las tierras del display
 #define DBIN_1  1,29
 #define DBIN_2  4,28
 #define DBIN_3  1,23
+
+#define DCLK	0,19
+#define DRST	3,26
+#define DExp3_db 1,20
 
 #define CANT_SEG_PINS			4
 uint8_t SEG_Pins_D7S[] = {
@@ -90,17 +94,9 @@ uint8_t SEG_Pins_D7S[] = {
 
 
 #define CANT_DIGITOS			6      //cant digitos por display
-uint8_t COMM_Pins_D7S[] = {    //las tierras del display
-    2,7,
-    1,29,
-    4,28,
-    1,23,
-    1,20,
-    0,19 //digito 1 segun kit
-};
 
 //-----------------------------------------------------------------
-*/
+
 
 
 
@@ -140,9 +136,9 @@ void Display7seg_BCD(uint32_t val){ // val a cargar en el dsp asignado
 }
 
 void Display7seg_Binary(uint32_t val){ // val a cargar en el dsp asignado
-    uint8_t i = 0;
+	int i = 0;
     uint8_t aux[CANT_DIGITOS];
-    for(i=0;i<CANT_DIGITOS;i++){
+    for(i=CANT_DIGITOS-1;0<=i;i--){
         aux[i]= val%10;
         val=val/10;
     }
@@ -158,14 +154,28 @@ void Display7seg_Binary(uint32_t val){ // val a cargar en el dsp asignado
 void BarridoDisplay(void){
     static char time = REFRESH_TIME -1; // sistick para 1 ms
     if(!time){
-        static uint8_t digito = 0;
+
+        static int digito = 0;
         uint8_t auxiliar = BUFFER_D7S[digito];
-        Apagar_D7S();
-        SET_Digit(auxiliar, digito); //pinto no usar
-        if(digito < CANT_DIGITOS)
-            digito++;
-        else
-            digito = 0;
+
+         //pinto no usar
+        if(!digito){
+        	SetPin(DRST, HIGH);
+        	SetPin(DRST, HIGH);
+        	SetPin(DRST, HIGH);
+        	SetPin(DRST, HIGH);
+        	SetPin(DRST, LOW);
+        }
+        else{
+        	SetPin(DCLK, LOW);
+        	SetPin(DCLK, LOW);
+        	SetPin(DCLK, LOW);
+        	SetPin(DCLK, LOW);
+            SetPin(DCLK, HIGH);
+        }
+        SET_Digit(auxiliar);
+        digito++;
+        digito%= CANT_DIGITOS;
         time = REFRESH_TIME - 1;
     }
     else
@@ -174,27 +184,29 @@ void BarridoDisplay(void){
 
 //funciones internas del modulo
 //prende un digito con numD7s siendo el codigo D7S
-void SET_Digit(uint8_t numD7S, uint8_t dig){
-    SetPin( COMM_Pins_D7S[(dig*2)],COMM_Pins_D7S[(dig*2)+1],HIGH);
+void SET_Digit(uint8_t numD7S){
     for(uint8_t segment= 0;segment < CANT_SEG_PINS; segment++)
     	SetPin( SEG_Pins_D7S[(segment*2)],SEG_Pins_D7S[(segment*2)+1],  (numD7S>>segment) & 1 );
 }
 
-
-void Apagar_D7S(void){
-    SET_Digit(APAGAR_D7S, 0);
-    for (uint8_t i = 0;i<CANT_DIGITOS;i++)
-    	SetPin( COMM_Pins_D7S[(i*2)], COMM_Pins_D7S[(i*2)+1], LOW);
-}
-
 void Init_Display(void){
 
-    for(uint8_t digit = 0; digit < CANT_DIGITOS ;digit ++){ // OUTPUTS
-    	SetPinsel(COMM_Pins_D7S[(digit*2)], COMM_Pins_D7S[(digit*2)+1], PINSEL_GPIO);
-        SetPinDir(COMM_Pins_D7S[(digit*2)], COMM_Pins_D7S[(digit*2)+1], PINDIR_OUTPUT);
-        SetPinMode_OD(COMM_Pins_D7S[(digit*2)], COMM_Pins_D7S[(digit*2)+1], PINMODE_OD_OFF);
-        SetPin(COMM_Pins_D7S[(digit*2)], COMM_Pins_D7S[(digit*2)+1], LOW);
-    }
+	SetPinsel(DRST, PINSEL_GPIO);
+	SetPinDir(DRST, PINDIR_OUTPUT);
+	SetPinMode_OD(DRST, PINMODE_OD_OFF);
+	SetPin(DRST, HIGH);
+
+	SetPinsel(DCLK, PINSEL_GPIO);
+	SetPinDir(DCLK, PINDIR_OUTPUT);
+	SetPinMode_OD(DCLK, PINMODE_OD_OFF);
+	SetPin(DCLK, LOW);
+
+	SetPinsel(DExp3_db, PINSEL_GPIO);
+	SetPinDir(DExp3_db, PINDIR_OUTPUT);
+	SetPinMode_OD(DExp3_db, PINMODE_OD_OFF);
+	SetPin(DExp3_db, LOW);
+
+
 
     for(uint8_t segment= 0;segment < CANT_SEG_PINS; segment++){
     	SetPinsel( SEG_Pins_D7S[(segment*2)],SEG_Pins_D7S[(segment*2)+1], PINSEL_GPIO);
@@ -202,4 +214,5 @@ void Init_Display(void){
         SetPinMode_OD( SEG_Pins_D7S[(segment*2)],SEG_Pins_D7S[(segment*2)+1], PINMODE_OD_OFF);
         SetPin( SEG_Pins_D7S[(segment*2)],SEG_Pins_D7S[(segment*2)+1], LOW);
     }
+    SetPin(DRST, LOW);
 }

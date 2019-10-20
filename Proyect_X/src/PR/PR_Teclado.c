@@ -27,9 +27,9 @@ uint8_t Teclado_COLUMNS[] = {    //OUTPUTS
 
 uint8_t Teclado_ROWS[] = {     //INPUTS
     1, 25,
-    1, 22,
+	0, 20,
 	1, 19,
-	0, 20
+    1, 22
 };
 
 //setear varios botones a la vez
@@ -116,8 +116,6 @@ uint8_t check_teclas_Matrix(void){
 	}
 	return NO_KEY;
 }
-
-
 
 
 void ApagarTeclado(void){

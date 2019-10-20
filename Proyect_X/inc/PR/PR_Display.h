@@ -11,7 +11,7 @@
 
 void Display7seg_BCD(uint32_t val);
 void Display7seg_Binary(uint32_t val);
-void SET_Digit(uint8_t numD7S, uint8_t dig);
+void SET_Digit(uint8_t numD7S);
 void BarridoDisplay(void);
 void Apagar_D7S(void);
 void Init_Display(void);

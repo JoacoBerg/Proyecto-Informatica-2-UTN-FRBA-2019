@@ -27,7 +27,7 @@ void SysTick_Init(void){
 
 void SysTick_Handler(void){
 	BarridoDisplay();
-	BarridoTeclado(check_teclas_Array);
+	BarridoTeclado(check_teclas_Matrix);
 	//cada 1 milisegundo
 
 	//DebounceEntradas( );
@@ -36,13 +36,13 @@ void SysTick_Handler(void){
 
 
 	/*
-	static int i = 0;
+	static int i = 1000;
 	static int n = 0;
-	i++;
-	if(i==1000){
-		Display7seg(n);
+	i--;
+	if(!i){
+		Display7seg_Binary(n);
 		n++;
-		i=0;
+		i=1000;
 	}
 	*/
 

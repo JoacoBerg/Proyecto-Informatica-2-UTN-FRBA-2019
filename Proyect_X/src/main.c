@@ -46,7 +46,7 @@ int main(void) {
 	InicializarPLL();
     SysTick_Init();
     Init_Display();
-    Init_Teclado_Array();
+    Init_Teclado_Matrix();
     /*
     Tanks_Init();
     InitIR();
@@ -55,9 +55,10 @@ int main(void) {
     //Servo init no existe, ya que el tanque se encarga de eso
     uint32_t num = 0;
     while(1) {
-    	Display7seg_BCD(num);
+    	Display7seg_Binary(num);
+
     	switch (Lectura_Teclado()){
-			case 0:
+			case 6:
 				if (num)
 					num --;
 				break;
@@ -73,7 +74,6 @@ int main(void) {
 			default:
 				break;
     	}
-
 
     	//LecturaIRs(IRx4);
     	//testing_giro();
