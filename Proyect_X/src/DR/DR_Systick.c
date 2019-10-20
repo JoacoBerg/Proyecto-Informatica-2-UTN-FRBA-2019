@@ -11,6 +11,9 @@
 #include "PR_Display.h"
 #include "PR_Teclado.h"
 
+
+#include "DR_GPIO.h"
+
 void SysTick_Init(void){
 	Systick->STRELOAD = (Systick->STCALIB / 10) - 1; //Base de tiempo dada por 10ms/10: El -1 es porque cuenta uno de mas el STCURR
 	Systick->STCURR = 0; //esto es para limpiar el timer
@@ -20,9 +23,11 @@ void SysTick_Init(void){
 	Systick->CLKSOURCE = 1; //activa elige el clock del CPU en vez del clock externo por pin (STCLK)
 }
 
+
+
 void SysTick_Handler(void){
 	BarridoDisplay();
-	TecladoSW();
+	BarridoTeclado(check_teclas_Array);
 	//cada 1 milisegundo
 
 	//DebounceEntradas( );
@@ -30,7 +35,7 @@ void SysTick_Handler(void){
 	//AnalizarTimers( );
 
 
-
+	/*
 	static int i = 0;
 	static int n = 0;
 	i++;
@@ -39,6 +44,6 @@ void SysTick_Handler(void){
 		n++;
 		i=0;
 	}
-
+	*/
 
 }

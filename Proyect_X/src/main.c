@@ -35,8 +35,7 @@ void testing_tanks(void);
 void testing_tanks2(void);
 void testing_ftl(void);
 
-void teclitecla_init(void);
-uint8_t teclitecla(void);
+
 
 
 int main(void) {
@@ -47,24 +46,26 @@ int main(void) {
 	InicializarPLL();
     SysTick_Init();
     Init_Display();
-    //teclitecla_init();
-    //Init_Teclado();
+    Init_Teclado_Array();
     /*
     Tanks_Init();
     InitIR();
     Boton_init();
     */
     //Servo init no existe, ya que el tanque se encarga de eso
+    uint32_t num = 0;
     while(1) {
-    	/*
-    	uint32_t num = 0;
-    	Display7seg(num);
-    	switch (teclitecla()){
+    	Display7seg_BCD(num);
+    	switch (Lectura_Teclado()){
 			case 0:
 				if (num)
 					num --;
+				break;
 			case 1:
+
+				if (num < 999999)
 					num ++;
+				break;
 
 			case NO_KEY:
 				break;
@@ -72,7 +73,7 @@ int main(void) {
 			default:
 				break;
     	}
-	*/
+
 
     	//LecturaIRs(IRx4);
     	//testing_giro();
@@ -85,25 +86,15 @@ int main(void) {
     return 0 ;
 }
 
-#define TEC_1 2, 10
-#define TEC_2 0, 18
 
-void teclitecla_init(void){
-	SetPinsel(TEC_1, PINSEL_GPIO);
-	SetPinDir(TEC_1, PINDIR_INPUT);
-	SetPinMode(TEC_1, PINMODE_PULLUP);
 
-	SetPinsel(TEC_2, PINSEL_GPIO);
-	SetPinDir(TEC_2, PINDIR_INPUT);
-	SetPinMode(TEC_2, PINMODE_PULLUP);
-}
-uint8_t teclitecla(void){
-	if(LOW == GetPin(TEC_1))
-		return 0;
-	if(LOW == GetPin(TEC_2))
-		return 1;
-	return NO_KEY;
-}
+
+
+
+
+
+
+
 
 void testing_tanks(void){
 	for(int i=0;i<500000;i++)
@@ -143,6 +134,7 @@ void testing_servos(void){
 	for(int i=0;i<500000;i++)
 	    Servo_Cerrado();
 }
+
 
 void testing_giro(void){
 	static int i=0;

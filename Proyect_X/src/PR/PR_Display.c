@@ -3,8 +3,8 @@
 #include "DR_PINSEL.h"
 #include "DR_GPIO.h"
 
-#define CANT_DIGITOS			6      //cant digitos por display
-//#define CANT_DISPLAYS			1      //cant de displays de la placa
+
+
 
 #define REFRESH_TIME 2
 
@@ -22,6 +22,16 @@
 #define APAGAR_D7S      0x00
 //#define PUNTO_D7S       0x12
 
+
+
+
+
+
+
+
+//EXPANSION 2
+//------------------------------------------------------------------
+
 #define D7S_A  3,26
 #define D7S_B  1,18
 #define D7S_C  1,21
@@ -31,7 +41,22 @@
 #define D7S_G  0,20
 #define D7S_dp 1,19
 
-uint8_t COMM_D7S[] = {    //las tierras del display
+
+#define CANT_SEG_PINS			8
+uint8_t SEG_Pins_D7S[] = {
+	D7S_A,
+	D7S_B,
+	D7S_C,
+	D7S_D,
+	D7S_E,
+	D7S_F,
+	D7S_G,
+	D7S_dp
+};
+
+
+#define CANT_DIGITOS			6      //cant digitos por display
+uint8_t COMM_Pins_D7S[] = {    //las tierras del display
     2,7,
     1,29,
     4,28,
@@ -39,6 +64,49 @@ uint8_t COMM_D7S[] = {    //las tierras del display
     1,20,
     0,19 //digito 1 segun kit
 };
+
+//-----------------------------------------------------------------
+
+
+
+
+/*
+//EXPANSION 3
+//------------------------------------------------------------------
+
+
+#define DBIN_0  2,7
+#define DBIN_1  1,29
+#define DBIN_2  4,28
+#define DBIN_3  1,23
+
+#define CANT_SEG_PINS			4
+uint8_t SEG_Pins_D7S[] = {
+	DBIN_0,
+	DBIN_1,
+	DBIN_2,
+	DBIN_3,
+};
+
+
+#define CANT_DIGITOS			6      //cant digitos por display
+uint8_t COMM_Pins_D7S[] = {    //las tierras del display
+    2,7,
+    1,29,
+    4,28,
+    1,23,
+    1,20,
+    0,19 //digito 1 segun kit
+};
+
+//-----------------------------------------------------------------
+*/
+
+
+
+
+
+
 
 uint8_t Tabla_D7S[] = {
     CERO_D7S,
@@ -58,7 +126,7 @@ uint8_t Tabla_D7S[] = {
 uint8_t BUFFER_D7S[CANT_DIGITOS];     //
 
 //primitiva
-void Display7seg(uint32_t val){ // val a cargar en el dsp asignado
+void Display7seg_BCD(uint32_t val){ // val a cargar en el dsp asignado
     uint8_t i = 0;
     uint8_t aux[CANT_DIGITOS];
     for(i=0;i<CANT_DIGITOS;i++){
@@ -70,6 +138,20 @@ void Display7seg(uint32_t val){ // val a cargar en el dsp asignado
         BUFFER_D7S[i] = aux[i];
     /// opcional: rehabilitar la interrupcion
 }
+
+void Display7seg_Binary(uint32_t val){ // val a cargar en el dsp asignado
+    uint8_t i = 0;
+    uint8_t aux[CANT_DIGITOS];
+    for(i=0;i<CANT_DIGITOS;i++){
+        aux[i]= val%10;
+        val=val/10;
+    }
+    /// opcional: deshabilitar la interrupcion
+    for(i=0;i<CANT_DIGITOS;i++)
+        BUFFER_D7S[i] = aux[i];
+    /// opcional: rehabilitar la interrupcion
+}
+
 
 //systick
 ///HACER EL BARRIDO EN SERIO
@@ -93,71 +175,31 @@ void BarridoDisplay(void){
 //funciones internas del modulo
 //prende un digito con numD7s siendo el codigo D7S
 void SET_Digit(uint8_t numD7S, uint8_t dig){
-    SetPin( COMM_D7S[(dig*2)],COMM_D7S[(dig*2)+1],HIGH);
-    SetPin( D7S_A,  (numD7S>>0) & 1 );
-    SetPin( D7S_B,  (numD7S>>1) & 1 );
-    SetPin( D7S_C,  (numD7S>>2) & 1 );
-    SetPin( D7S_D,  (numD7S>>3) & 1 );
-    SetPin( D7S_E,  (numD7S>>4) & 1 );
-    SetPin( D7S_F,  (numD7S>>5) & 1 );
-    SetPin( D7S_G,  (numD7S>>6) & 1 );
-    SetPin( D7S_dp, (numD7S>>7) & 1 );
+    SetPin( COMM_Pins_D7S[(dig*2)],COMM_Pins_D7S[(dig*2)+1],HIGH);
+    for(uint8_t segment= 0;segment < CANT_SEG_PINS; segment++)
+    	SetPin( SEG_Pins_D7S[(segment*2)],SEG_Pins_D7S[(segment*2)+1],  (numD7S>>segment) & 1 );
 }
 
 
 void Apagar_D7S(void){
     SET_Digit(APAGAR_D7S, 0);
     for (uint8_t i = 0;i<CANT_DIGITOS;i++)
-    	SetPin( COMM_D7S[(i*2)], COMM_D7S[(i*2)+1], LOW);
+    	SetPin( COMM_Pins_D7S[(i*2)], COMM_Pins_D7S[(i*2)+1], LOW);
 }
 
 void Init_Display(void){
 
     for(uint8_t digit = 0; digit < CANT_DIGITOS ;digit ++){ // OUTPUTS
-    	SetPinsel(COMM_D7S[(digit*2)], COMM_D7S[(digit*2)+1], PINSEL_GPIO);
-        SetPinDir(COMM_D7S[(digit*2)], COMM_D7S[(digit*2)+1], PINDIR_OUTPUT);
-        SetPinMode_OD(COMM_D7S[(digit*2)], COMM_D7S[(digit*2)+1], PINMODE_OD_OFF);
-        SetPin(COMM_D7S[(digit*2)], COMM_D7S[(digit*2)+1], LOW);
+    	SetPinsel(COMM_Pins_D7S[(digit*2)], COMM_Pins_D7S[(digit*2)+1], PINSEL_GPIO);
+        SetPinDir(COMM_Pins_D7S[(digit*2)], COMM_Pins_D7S[(digit*2)+1], PINDIR_OUTPUT);
+        SetPinMode_OD(COMM_Pins_D7S[(digit*2)], COMM_Pins_D7S[(digit*2)+1], PINMODE_OD_OFF);
+        SetPin(COMM_Pins_D7S[(digit*2)], COMM_Pins_D7S[(digit*2)+1], LOW);
     }
 
-
-	SetPinsel(D7S_A, PINSEL_GPIO);
-    SetPinDir(D7S_A, PINDIR_OUTPUT);
-    SetPinMode_OD(D7S_A, PINMODE_OD_OFF);
-    SetPin(D7S_A, LOW);
-
-	SetPinsel(D7S_B, PINSEL_GPIO);
-    SetPinDir(D7S_B, PINDIR_OUTPUT);
-    SetPinMode_OD(D7S_B, PINMODE_OD_OFF);
-    SetPin(D7S_B, LOW);
-
-	SetPinsel(D7S_C, PINSEL_GPIO);
-    SetPinDir(D7S_C, PINDIR_OUTPUT);
-    SetPinMode_OD(D7S_C, PINMODE_OD_OFF);
-    SetPin(D7S_C, LOW);
-
-	SetPinsel(D7S_D, PINSEL_GPIO);
-    SetPinDir(D7S_D, PINDIR_OUTPUT);
-    SetPinMode_OD(D7S_D, PINMODE_OD_OFF);
-    SetPin(D7S_D, LOW);
-
-	SetPinsel(D7S_E, PINSEL_GPIO);
-    SetPinDir(D7S_E, PINDIR_OUTPUT);
-    SetPinMode_OD(D7S_E, PINMODE_OD_OFF);
-    SetPin(D7S_E, LOW);
-
-	SetPinsel(D7S_F, PINSEL_GPIO);
-    SetPinDir(D7S_F, PINDIR_OUTPUT);
-    SetPinMode_OD(D7S_F, PINMODE_OD_OFF);
-    SetPin(D7S_F, LOW);
-
-	SetPinsel(D7S_G, PINSEL_GPIO);
-    SetPinDir(D7S_G, PINDIR_OUTPUT);
-    SetPinMode_OD(D7S_G, PINMODE_OD_OFF);
-    SetPin(D7S_G, LOW);
-
-	SetPinsel(D7S_dp, PINSEL_GPIO);
-    SetPinDir(D7S_dp, PINDIR_OUTPUT);
-    SetPinMode_OD(D7S_dp, PINMODE_OD_OFF);
-    SetPin(D7S_dp, LOW);
+    for(uint8_t segment= 0;segment < CANT_SEG_PINS; segment++){
+    	SetPinsel( SEG_Pins_D7S[(segment*2)],SEG_Pins_D7S[(segment*2)+1], PINSEL_GPIO);
+        SetPinDir( SEG_Pins_D7S[(segment*2)],SEG_Pins_D7S[(segment*2)+1], PINDIR_OUTPUT);
+        SetPinMode_OD( SEG_Pins_D7S[(segment*2)],SEG_Pins_D7S[(segment*2)+1], PINMODE_OD_OFF);
+        SetPin( SEG_Pins_D7S[(segment*2)],SEG_Pins_D7S[(segment*2)+1], LOW);
+    }
 }
