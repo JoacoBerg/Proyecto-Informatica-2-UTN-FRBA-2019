@@ -79,6 +79,6 @@ void SetPinDir(uint32_t Puerto, uint32_t Pin,uint32_t Dir);				//0: INPUT; 1: OU
 void SetPinMode(uint32_t Puerto, uint32_t Pin,uint32_t Modo);		//pull up or pull down
 void SetPinMode_OD(uint32_t Puerto, uint32_t Pin,uint32_t Modo);		//pull up or pull down
 void SetPin (uint32_t Puerto, uint32_t Pin, uint32_t Estado);			//escritura del GPIO
-uint32_t GetPin(uint32_t Puerto, uint32_t Pin);						//lectura del GPIO
+uint32_t GetPin(uint8_t puerto , uint8_t bit , uint8_t actividad);						//lectura del GPIO
 
 #endif /* DR_GPIOS_H_ */

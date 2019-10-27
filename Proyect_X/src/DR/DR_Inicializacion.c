@@ -15,6 +15,7 @@
 #include "DR_Entradas.h"
 #include "DR_PLL.h"
 #include "DR_SysTick.h"
+#include "DR_Inicializacion.h"
 
 
 
@@ -64,8 +65,12 @@ void Inicializacion ( void )
 {
 	//!< Se configura en primer lugar el PLL:
 	//!< Estabiliza el oscilador interno del micro en 100MHz
-	InicializarPLL( );
-	SysTick_Init ( );
+	InicializarPLL();
+	SysTick_Init();
+
+	Tanks_Init();
+	//InitIR();
+	Boton_init();
 
 	InicializarEntradas( );
 	InicializarSalidas( );

@@ -50,38 +50,12 @@
  /***********************************************************************************************************************************
  *** FUNCIONES GLOBALES AL MODULO
  **********************************************************************************************************************************/
-#define IR4 0,25
-#define IR3 0,26
-#define IR2 1,30
-#define IR1 1,31
 
+/*
 int IRx4[4]; //estado de
 
 void InitIR(void)
 	{
-
-
-
-		//IR1
-		SetPinsel(IR1, PINSEL_GPIO);		//Funcion del pin
-		SetPinMode(IR1, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		SetPinDir(IR1, PINDIR_INPUT);		//0: Entrada | 1: Salida
-
-		//IR2
-		SetPinsel(IR2, PINSEL_GPIO);		//Funcion del pin
-		SetPinMode(IR2, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		SetPinDir(IR2, PINDIR_INPUT);		//0: Entrada | 1: Salida
-
-		//IR3
-		SetPinsel(IR3, PINSEL_GPIO);		//Funcion del pin
-		SetPinMode(IR3, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		SetPinDir(IR3, PINDIR_INPUT);		//0: Entrada | 1: Salida
-
-		//IR4
-		SetPinsel(IR4, PINSEL_GPIO);		//Funcion del pin
-		SetPinMode(IR4, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-		SetPinDir(IR4, PINDIR_INPUT);		//0: Entrada | 1: Salida
-
 	}
 
 void LecturaIRs(int* IRx4)
@@ -93,4 +67,4 @@ void LecturaIRs(int* IRx4)
 	return;
 }
 
-
+*/
