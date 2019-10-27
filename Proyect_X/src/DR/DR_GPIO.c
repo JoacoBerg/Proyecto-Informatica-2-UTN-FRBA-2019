@@ -82,7 +82,7 @@ void SetPin(uint32_t Puerto, uint32_t Pin, uint32_t Estado){	//escritura del GPI
 }
 
 
-
+/*
 uint32_t GetPin(uint32_t Puerto, uint32_t Pin){	//lectura del GPIO
 
 		if(GPIOs[Puerto].FIOPIN & (1<<Pin))
@@ -90,5 +90,16 @@ uint32_t GetPin(uint32_t Puerto, uint32_t Pin){	//lectura del GPIO
 		else
 			return 0;
 
+}*/
+
+uint32_t GetPin( uint8_t puerto , uint8_t bit , uint8_t actividad )
+{
+	__RW uint32_t *p = ( __RW uint32_t * )  0x2009C014 ;
+	uint8_t r;
+
+	r = ( *( p + puerto * 8 ) >> bit ) & 1;
+	if ( actividad )
+		return r;
+	return !r;
 }
 

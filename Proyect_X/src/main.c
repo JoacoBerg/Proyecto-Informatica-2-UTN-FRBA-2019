@@ -22,6 +22,7 @@
 #include "Maq_Giro.h"
 #include "Boton.h"
 #include "DR_Servo.h"
+#include "DR_Inicializacion.h"
 // TODO: insert other definitions and declarations here
 
 void testing_giro(void);
@@ -32,20 +33,13 @@ void testing_ftl(void);
 
 int main(void) {
 
-    // TODO: insert code here
+	Inicializacion ();
 
-    // Force the counter to be placed into memory
-    InicializarPLL();
-    SysTick_Init();
-    Tanks_Init();
-    InitIR();
-    Boton_init();
     //Servo init no existe, ya que el tanque se encarga de eso
     while(1) {
-    	LecturaIRs(IRx4);
-    	//testing_giro();
-    	//ftl();
-    	testing_ftl();
+    	//LecturaIRs(IRx4); --> no se usa mas
+    	//testing();
+    	ftl();
     	//testing_servos();
     	//Tank_Forward(100);
     	//testing_tanks2();

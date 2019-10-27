@@ -21,6 +21,17 @@
 
 #include "DR_tipos.h"
 
+#define IR1_l 0
+#define IR2_l 1
+#define IR3_l 2
+#define IR4_l 3
+#define IR5_l 4
+
+#define IR_IZQ_OUT LeerEntrada (IR1_l)
+#define IR_IZQ_IN LeerEntrada (IR2_l)
+#define IR_DER_IN LeerEntrada (IR3_l)
+#define IR_DER_OUT LeerEntrada (IR4_l)
+#define IR_OBSTACULO LeerEntrada (IR5_l)
 /***********************************************************************************************************************************
  *** DEFINES GLOBALES
  **********************************************************************************************************************************/
