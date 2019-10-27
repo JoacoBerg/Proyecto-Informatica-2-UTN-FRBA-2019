@@ -40,7 +40,7 @@ uint32_t DistanciaUS(uint32_t portTRIG, uint32_t pinTRIG, uint32_t portECHO, uin
 		break;
 	default:
 		if (u_gen->cont1 > 16) {
-			u_gen->dato = GetPin(portECHO, pinECHO);
+			u_gen->dato = GetPin(portECHO, pinECHO, 0);
 			if (1 == u_gen->dato && u_gen->status == 0) {
 				u_gen->duracion = u_gen->cont1;
 				u_gen->status = 1;

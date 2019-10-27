@@ -42,8 +42,8 @@ extern int IRx4[4];
 /***********************************************************************************************************************************
  *** PROTOTIPOS DE FUNCIONES GLOBALES
  **********************************************************************************************************************************/
-void InitIR(void);
-void LecturaIRs(int*); //se le pasa un vectorde cuatro, donde la pos. 0 es el IR1, etc
+//void InitIR(void);
+//void LecturaIRs(int*); //se le pasa un vectorde cuatro, donde la pos. 0 es el IR1, etc
 						// Declarado en InitIR() --> int IRx4[4];
 
 
