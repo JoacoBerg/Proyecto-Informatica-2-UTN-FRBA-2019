@@ -64,76 +64,110 @@
 #define 	X11X	0
 #define 	X10X	1
 #define 	X01X	2
-#define 	RESET	3
 #define 	ALARMA	4
 
+#define 	RESET	3
+
+#define		CRUCE			0
+#define		NOCRUCE			1
+#define		PRIMERCRUCE		2
 
 #define		VELOCIDAD_FTL 100
 
 
 
 uint8_t Maq_FollowTheLine(void){
-	return 1;
+	static uint8_t estado = RESET;
+
+	switch(estado){
+
+		case RESET:
+				ftl();
+				if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)		//DETECTAN CRUCE
+					estado = PRIMERCRUCE;
+				else
+				estado = NOCRUCE;
+
+			break;
+
+		case PRIMERCRUCE:
+				ftl();
+				if(IR_IZQ_OUT == 0 && IR_DER_OUT == 0)
+					estado = NOCRUCE;
+
+			break;
+
+		case NOCRUCE:
+				ftl();
+				if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1){		//DETECTAN CRUCE
+					Tank_Brake();
+					estado = RESET;
+					return EXITO;
+				}
+			break;
+		default: estado = RESET;
+	}
+	return ENPROCESO;
 }
 
 uint8_t ftl(void)	//se encarga del interior
 {
-		//static int cruces = 0;
-		static uint8_t estado = RESET;
+	//static int cruces = 0;
+	static uint8_t estado = RESET;
 
-		switch(estado)
-		{
-			case X11X:
+	switch(estado)
+	{
+		case X11X:
 
-				if(IR_IZQ_IN == 0 && IR_DER_IN == 1)
-				{
-					Tank_Right(VELOCIDAD_FTL);
-					estado = X01X;
-				}
+			if(IR_IZQ_IN == 0 && IR_DER_IN == 1)
+			{
+				Tank_Right(VELOCIDAD_FTL);
+				estado = X01X;
+			}
 
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 0)
-				{
-					Tank_Left(VELOCIDAD_FTL);
-					estado = X10X;
-				}
+			if(IR_IZQ_IN == 1 && IR_DER_IN == 0)
+			{
+				Tank_Left(VELOCIDAD_FTL);
+				estado = X10X;
+			}
 
-				break;
+			break;
 
-			case X10X:
+		case X10X:
 
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
-				{
-					Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
-
-				}
-
-				break;
-
-			case X01X:
-
-				if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
-				{
-					Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
-
-				}
-
-				break;
-
-			case RESET:
-
+			if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
+			{
 				Tank_Forward(VELOCIDAD_FTL);
-					estado = X11X;
+				estado = X11X;
 
-				break;
+			}
 
-			case ALARMA:
+			break;
 
-				return FALLO;
-				break;
+		case X01X:
 
-			default: estado = RESET;
+			if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
+			{
+				Tank_Forward(VELOCIDAD_FTL);
+				estado = X11X;
+
+			}
+
+			break;
+
+		case RESET:
+
+			Tank_Forward(VELOCIDAD_FTL);
+				estado = X11X;
+
+			break;
+
+		case ALARMA:
+
+			return FALLO;
+			break;
+
+		default: estado = RESET;
 		}
 		return ENPROCESO;
 }
