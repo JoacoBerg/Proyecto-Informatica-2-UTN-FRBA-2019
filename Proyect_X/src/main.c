@@ -33,13 +33,14 @@ void testing_ftl(void);
 
 int main(void) {
 
-+	Inicializacion ();
+	Inicializacion ();
 
     //Servo init no existe, ya que el tanque se encarga de eso
     while(1) {
-    	//LecturaIRs(IRx4); --> no se usa mas
     	//testing();
-    	ftl();
+    	//ftl();
+    	testing_ftl();
+    	//Maq_FollowTheLine();
     	//testing_servos();
     	//Tank_Forward(100);
     	//testing_tanks2();
@@ -106,7 +107,7 @@ void testing_ftl(void){
    			i = 1;
    	}
     else if(i == 1){
-    	for(uint32_t i=0;i<50000000;i++){}
+    	for(uint32_t i=0;i<5000000;i++){}
     		i = 0;
     }
 }

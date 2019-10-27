@@ -72,7 +72,7 @@
 #define		NOCRUCE			1
 #define		PRIMERCRUCE		2
 
-#define		VELOCIDAD_FTL 100
+#define		VELOCIDAD_FTL 90
 
 
 
@@ -82,28 +82,49 @@ uint8_t Maq_FollowTheLine(void){
 	switch(estado){
 
 		case RESET:
+			//ftl();
+			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)		//DETECTAN CRUCE
+			{
 				ftl();
-				if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)		//DETECTAN CRUCE
-					estado = PRIMERCRUCE;
-				else
+				estado = PRIMERCRUCE;
+			}
+			else
+			{
+				ftl();
 				estado = NOCRUCE;
+			}
 
 			break;
 
 		case PRIMERCRUCE:
+			//ftl();
+			if(IR_IZQ_OUT == 0 && IR_DER_OUT == 0)
+			{
+				estado = NOCRUCE;
 				ftl();
-				if(IR_IZQ_OUT == 0 && IR_DER_OUT == 0)
-					estado = NOCRUCE;
+			}
+
+			ftl();
+			/*Que pasa si detecta?*/
 
 			break;
 
 		case NOCRUCE:
+
+			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
+			{		//DETECTAN CRUCE
+				//Tank_Brake();
+				Tank_Backward(VELOCIDAD_FTL);
+				for(int i =0;i<100;i++){}
+				Tank_Brake();
+				estado = RESET;
+				return EXITO;
+			}
+			else
+			{
+				estado = NOCRUCE;
 				ftl();
-				if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1){		//DETECTAN CRUCE
-					Tank_Brake();
-					estado = RESET;
-					return EXITO;
-				}
+			}
 			break;
 		default: estado = RESET;
 	}
