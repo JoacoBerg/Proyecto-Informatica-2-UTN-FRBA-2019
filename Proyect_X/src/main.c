@@ -33,7 +33,7 @@ void testing_ftl(void);
 
 int main(void) {
 
-	Inicializacion ();
++	Inicializacion ();
 
     //Servo init no existe, ya que el tanque se encarga de eso
     while(1) {

@@ -66,19 +66,19 @@ void DebounceEntradas (void)
 	uint8_t in = 0, x;
 	uint8_t i;
 
-	if ( GetPin( IR1 , BAJO) )
+	if ( GetPin( IR1 , ALTO) )
 		in = 1;
 
-	if ( GetPin( IR2 , BAJO) )
+	if ( GetPin( IR2 , ALTO) )
 		in |= 0x02;
 
-	if ( GetPin( IR3 , BAJO) )
+	if ( GetPin( IR3 , ALTO) )
 		in |= 0x04;
 
-	if ( GetPin( IR4 , BAJO) )
+	if ( GetPin( IR4 , ALTO) )
 		in |= 0x08;
 
-	if ( GetPin( IR5 , BAJO) )
+	if ( GetPin( IR5 , ALTO) )
 		in |= 0x10;
 
 
