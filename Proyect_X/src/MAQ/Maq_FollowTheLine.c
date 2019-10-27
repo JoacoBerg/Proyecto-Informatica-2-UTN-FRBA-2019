@@ -14,6 +14,7 @@
 #include <Maq_FollowTheLine.h>
 #include "Tanks.h"
 #include "DR_tipos.h"
+#include "PR_Entradas.h"
 
 /***********************************************************************************************************************************
  *** DEFINES PRIVADOS AL MODULO
