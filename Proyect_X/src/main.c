@@ -23,6 +23,7 @@
 #include "Boton.h"
 #include "DR_Servo.h"
 #include "DR_Inicializacion.h"
+#include "DR_Timers.h"
 // TODO: insert other definitions and declarations here
 
 void testing_giro(void);
@@ -33,14 +34,20 @@ void testing_ftl(void);
 
 int main(void) {
 
-	Inicializacion ();
+   	Inicializacion ();
 
     //Servo init no existe, ya que el tanque se encarga de eso
     while(1) {
     	//testing();
-    	//ftl();
+
     	TimerEvent();
-    	testing_ftl();
+
+    	Flag_Control = 0;
+    	ftl();
+
+
+
+    	//testing_ftl();
     	//Maq_FollowTheLine();
     	//testing_servos();
     	//Tank_Forward(100);
@@ -109,7 +116,7 @@ void testing_ftl(void){
 
     if(i == 1){
 
-    	for(uint32_t i=0;i<500000;i++){}
+    	for(uint32_t i=0;i<5000000;i++){}
     		i = 0;
     }
 }

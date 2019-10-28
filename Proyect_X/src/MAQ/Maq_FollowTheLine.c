@@ -66,6 +66,7 @@
 #define 	X10X	1
 #define 	X01X	2
 #define 	ALARMA	4
+#define 	CONTROL 5
 
 #define 	RESET	3
 
@@ -76,11 +77,10 @@
 
 #define		VELOCIDAD_FTL 80
 
-void TimerFrenar(void)
-{
-	Tank_Coast();
-}
+//2do intento
+uint8_t Flag_Control = 0;
 
+/*
 uint8_t Maq_FollowTheLine(void){
 	static uint8_t estado = RESET;
 
@@ -88,6 +88,7 @@ uint8_t Maq_FollowTheLine(void){
 
 		case RESET:
 			ftl();
+			//Tank_Forward(VELOCIDAD_FTL);
 			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)		//DETECTAN CRUCE
 			{
 				ftl();
@@ -155,14 +156,75 @@ uint8_t Maq_FollowTheLine(void){
 	}
 	return ENPROCESO;
 }
+*/
 
-uint8_t ftl(void)	//se encarga del interior
+uint8_t Maq_FollowTheLine_v2(void)
 {
-	//static int cruces = 0;
 	static uint8_t estado = RESET;
 
 	switch(estado)
 	{
+		case RESET:
+
+			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
+			{
+				/**/
+			}
+
+			else
+			{
+				/**/
+			}
+
+			break;
+		case :
+			break
+
+		default:
+			estado = RESET;
+			break;
+	}
+	return ENPROCESO;
+}
+
+
+
+}
+
+
+uint8_t ftl(void)	//se encarga del interior
+{
+	//static int cruces = 0;
+	static uint8_t estado = CONTROL;
+
+	switch(estado)
+	{
+		case CONTROL:
+
+			if(Flag_Control == 1)
+			{
+				estado = RESET;
+			}
+			else
+			{
+				estado = CONTROL;
+				Tank_Brake();
+			}
+			break;
+
+		case RESET:
+
+			Tank_Forward(VELOCIDAD_FTL);
+				estado = X11X;
+
+			if(Flag_Control == 0)
+			{
+				estado = CONTROL;
+				Tank_Brake();
+			}
+
+			break;
+
 		case X11X:
 
 			if(IR_IZQ_IN == 0 && IR_DER_IN == 1)
@@ -176,6 +238,11 @@ uint8_t ftl(void)	//se encarga del interior
 				Tank_Left(VELOCIDAD_FTL);
 				estado = X10X;
 			}
+			if(Flag_Control == 0)
+				{
+					estado = CONTROL;
+					Tank_Brake();
+				}
 
 			break;
 
@@ -188,6 +255,12 @@ uint8_t ftl(void)	//se encarga del interior
 
 			}
 
+			if(Flag_Control == 0)
+				{
+					estado = CONTROL;
+					Tank_Brake();
+				}
+
 			break;
 
 		case X01X:
@@ -198,13 +271,11 @@ uint8_t ftl(void)	//se encarga del interior
 				estado = X11X;
 
 			}
-
-			break;
-
-		case RESET:
-
-			Tank_Forward(VELOCIDAD_FTL);
-				estado = X11X;
+			if(Flag_Control == 0)
+				{
+					estado = CONTROL;
+					Tank_Brake();
+				}
 
 			break;
 
@@ -213,10 +284,18 @@ uint8_t ftl(void)	//se encarga del interior
 			return FALLO;
 			break;
 
-		default: estado = RESET;
+		default: estado = CONTROL;
 		}
 		return ENPROCESO;
 }
+
+
+void TimerFrenar(void)
+{
+	Tank_Coast();
+}
+
+
 
 //Funciones asociadas a los eventos
 
