@@ -24,6 +24,7 @@
 #include "DR_Servo.h"
 #include "DR_Inicializacion.h"
 #include "DR_Timers.h"
+#include "PR_Timers.h"
 // TODO: insert other definitions and declarations here
 
 void testing_giro(void);
@@ -41,13 +42,18 @@ int main(void) {
     	//testing();
 
     	TimerEvent();
-    	//Flag_Control = 1;
+    	Flag_Control = 1;
     	ftl();
-    	testing_ftl();
+    	//testing_ftl();
     	//Maq_FollowTheLine();
     	//testing_servos();
     	//Tank_Forward(100);
     	//testing_tanks2();
+
+    	//Tank_Forward(80);
+    	//TimerStart(1, 3, TimerFrenar, SEG);
+    	//TimerClose();
+
     }
     return 0 ;
 }

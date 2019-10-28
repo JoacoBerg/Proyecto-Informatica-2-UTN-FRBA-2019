@@ -370,7 +370,7 @@ uint8_t ftl(void)	//se encarga del interior
 void TimerFrenar(void)
 {
 	Tank_Coast();
-	Tank_Brake();
+	//Tank_Brake();
 
 
 
