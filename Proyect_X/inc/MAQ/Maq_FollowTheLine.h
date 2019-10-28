@@ -47,8 +47,10 @@
 //------------------------------------------------------------------------------------------------------------------
 
 extern uint8_t Flag_Control;
+extern uint8_t Flag_MFTL2;
 
-uint8_t Maq_FollowTheLine(void);
+//uint8_t Maq_FollowTheLine(void);
+uint8_t Maq_FollowTheLine_v2(void);
 uint8_t ftl(void);
 void TimerFrenar(void);
 

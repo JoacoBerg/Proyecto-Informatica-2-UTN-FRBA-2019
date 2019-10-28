@@ -21,6 +21,7 @@ void Maq_General()
 				estado = path_get();
 				break;
 			
+			/*
 			case BASE:
 				if(Maq_Base())
 					estado = SELECTION;
@@ -30,7 +31,7 @@ void Maq_General()
 				if(Maq_Caja())
 					estado = SELECTION;
 				break;
-			
+			*/
 			case GIRO_IZQ:
 				if(Maq_Giro(IZQ))
 					estado = SELECTION;
@@ -42,7 +43,7 @@ void Maq_General()
 				break;
 			
 			case FORWARD:
-				if(Maq_FollowTheLine())
+				if(Maq_FollowTheLine_v2())
 					estado = SELECTION;
 				break;
 			

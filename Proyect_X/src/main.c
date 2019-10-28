@@ -41,13 +41,9 @@ int main(void) {
     	//testing();
 
     	TimerEvent();
-
-    	Flag_Control = 0;
+    	//Flag_Control = 1;
     	ftl();
-
-
-
-    	//testing_ftl();
+    	testing_ftl();
     	//Maq_FollowTheLine();
     	//testing_servos();
     	//Tank_Forward(100);
@@ -111,12 +107,14 @@ void testing_giro(void){
 void testing_ftl(void){
 	static int i=0;
 
-   	Maq_FollowTheLine();
-   	i = 1;
+	Flag_MFTL2 = ON;
+	int j = Maq_FollowTheLine_v2();
+   	if(j == EXITO)
+   		i = 1;
 
     if(i == 1){
-
-    	for(uint32_t i=0;i<5000000;i++){}
+    	Flag_MFTL2 = OFF;
+    	for(uint32_t i=0;i<50000000;i++){}
     		i = 0;
     }
 }

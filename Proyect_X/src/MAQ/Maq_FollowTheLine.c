@@ -65,20 +65,35 @@
 #define 	X11X	0
 #define 	X10X	1
 #define 	X01X	2
+#define 	RESET	3
 #define 	ALARMA	4
 #define 	CONTROL 5
 
-#define 	RESET	3
-
+/*
 #define		CRUCE			0
 #define		NOCRUCE			1
 #define		PRIMERCRUCE		2
 #define		ESPERANDO		4
+*/
 
+#define 	MAQOFF		0
+#define 	RESET2		1
+#define 	PRIMERCRUCE	2
+#define 	NOCRUCE		3
+
+
+
+//Velocidad del Auto
 #define		VELOCIDAD_FTL 80
 
-//2do intento
+
+
+//Interruptores de las maquinas de estado
 uint8_t Flag_Control = 0;
+uint8_t Flag_MFTL2 = 0;
+
+
+
 
 /*
 uint8_t Maq_FollowTheLine(void){
@@ -160,41 +175,103 @@ uint8_t Maq_FollowTheLine(void){
 
 uint8_t Maq_FollowTheLine_v2(void)
 {
-	static uint8_t estado = RESET;
+	static uint8_t estado2 = MAQOFF;
+	static uint8_t cruce = 0; //sirve para saber si arrancaste en un cruce
+							  // 0 = arranco en cruce
+							  // 1 = ya salio del primer cruce | no arranco en cruce
 
-	switch(estado)
+
+	switch(estado2)
 	{
-		case RESET:
+		case MAQOFF:
+			if(Flag_MFTL2 == ON)
+				estado2 = RESET2;
+
+			else
+				estado2 = MAQOFF;
+			break;
+
+		case RESET2:
 
 			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
 			{
-				/**/
+				Flag_Control = ON;
+				cruce = 0;
+				estado2 = PRIMERCRUCE;
 			}
 
-			else
+			if(IR_IZQ_OUT == 0 && IR_DER_OUT == 0)
 			{
-				/**/
+				Flag_Control = ON;
+				cruce = 1;
+				estado2 = NOCRUCE;
+			}
+			if(Flag_MFTL2 == 0)
+			{
+				estado2 = MAQOFF;
+			}
+			break;
+
+		case PRIMERCRUCE:
+			if(cruce == 0)
+			{
+				Flag_Control = ON;
+				estado2 = PRIMERCRUCE;
 			}
 
+			if(IR_IZQ_OUT == 0 && IR_DER_OUT == 0)
+			{
+				Flag_Control = ON;
+				cruce = 1;
+				estado2 = NOCRUCE;
+			}
+			if(Flag_MFTL2 == 0)
+			{
+				estado2 = MAQOFF;
+			}
 			break;
-		case :
-			break
+
+		case NOCRUCE:
+			if(cruce == 1)
+			{
+				Flag_Control = ON;
+				estado2 = NOCRUCE;
+			}
+
+			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
+			{
+
+				Tank_Brake();
+				Tank_Backward(VELOCIDAD_FTL);
+				TimerStart(1, 1, TimerFrenar, DEC);
+				cruce = 0;
+				estado2 = MAQOFF;
+				Flag_Control = OFF;
+				Flag_MFTL2 = OFF;
+				estado2 = MAQOFF;
+				//Timer para hacer que valla para atras 1 decima
+				//Tank_Coast();
+
+				//de segundo (y luego frena). Para que frene en el lugar
+				return EXITO;
+			}
+
+			if(Flag_MFTL2 == 0)
+			{
+				estado2 = MAQOFF;
+			}
+			break;
 
 		default:
-			estado = RESET;
+			estado2 = MAQOFF;
 			break;
 	}
 	return ENPROCESO;
 }
 
 
-
-}
-
-
 uint8_t ftl(void)	//se encarga del interior
 {
-	//static int cruces = 0;
 	static uint8_t estado = CONTROL;
 
 	switch(estado)
@@ -239,10 +316,10 @@ uint8_t ftl(void)	//se encarga del interior
 				estado = X10X;
 			}
 			if(Flag_Control == 0)
-				{
-					estado = CONTROL;
-					Tank_Brake();
-				}
+			{
+				estado = CONTROL;
+				Tank_Brake();
+			}
 
 			break;
 
@@ -256,10 +333,10 @@ uint8_t ftl(void)	//se encarga del interior
 			}
 
 			if(Flag_Control == 0)
-				{
-					estado = CONTROL;
-					Tank_Brake();
-				}
+			{
+				estado = CONTROL;
+				Tank_Brake();
+			}
 
 			break;
 
@@ -272,10 +349,10 @@ uint8_t ftl(void)	//se encarga del interior
 
 			}
 			if(Flag_Control == 0)
-				{
-					estado = CONTROL;
-					Tank_Brake();
-				}
+			{
+				estado = CONTROL;
+				Tank_Brake();
+			}
 
 			break;
 
@@ -293,6 +370,10 @@ uint8_t ftl(void)	//se encarga del interior
 void TimerFrenar(void)
 {
 	Tank_Coast();
+	Tank_Brake();
+
+
+
 }
 
 
