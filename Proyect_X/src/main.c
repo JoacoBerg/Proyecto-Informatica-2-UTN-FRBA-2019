@@ -42,9 +42,18 @@ int main(void) {
     	//testing();
 
     	TimerEvent();
-    	Flag_Control = 1;
-    	ftl();
-    	//testing_ftl();
+    	//Flag_Control = 1;
+
+
+
+    	ftl(); // hace que el auto siga una linea negra
+    	testing_ftl(); //aca esta la maquina de estados que estoy probando (que ademas prende y apaga la maquina que esta arriba --> ftl())
+    				   //esta maquina hace que cuando detecta un cruce frene y devuelva exito, y vuelva a arrancar
+
+
+
+
+
     	//Maq_FollowTheLine();
     	//testing_servos();
     	//Tank_Forward(100);
@@ -114,7 +123,7 @@ void testing_ftl(void){
 	static int i=0;
 
 	Flag_MFTL2 = ON;
-	int j = Maq_FollowTheLine_v2();
+	int j = Maq_FollowTheLine_v2(); //detecta cruces
    	if(j == EXITO)
    		i = 1;
 

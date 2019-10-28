@@ -240,19 +240,18 @@ uint8_t Maq_FollowTheLine_v2(void)
 
 			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
 			{
-
+				//ESTE ESTADO ES EL QUE NO ANDA
 				Tank_Brake();
-				Tank_Backward(VELOCIDAD_FTL);
-				TimerStart(1, 1, TimerFrenar, DEC);
+				Tank_Backward(VELOCIDAD_FTL); //hago que vaya 1 decima de segundo para atras para que frene en el lugar
+				//ESTE TIMER
+				TimerStart(1, 1, TimerFrenar, DEC); //Por lo que estuve probando, nunca interrumpe. Sige indefinidamente para atras
 				cruce = 0;
 				estado2 = MAQOFF;
 				Flag_Control = OFF;
 				Flag_MFTL2 = OFF;
 				estado2 = MAQOFF;
-				//Timer para hacer que valla para atras 1 decima
 				//Tank_Coast();
 
-				//de segundo (y luego frena). Para que frene en el lugar
 				return EXITO;
 			}
 
