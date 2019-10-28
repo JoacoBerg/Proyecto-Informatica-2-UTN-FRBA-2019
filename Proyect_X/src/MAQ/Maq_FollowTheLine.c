@@ -15,6 +15,7 @@
 #include "Tanks.h"
 #include "DR_tipos.h"
 #include "PR_Entradas.h"
+#include "PR_Timers.h"
 
 /***********************************************************************************************************************************
  *** DEFINES PRIVADOS AL MODULO
@@ -72,9 +73,12 @@
 #define		NOCRUCE			1
 #define		PRIMERCRUCE		2
 
-#define		VELOCIDAD_FTL 90
+#define		VELOCIDAD_FTL 80
 
-
+void TimerFrenar(void)
+{
+	Tank_Coast();
+}
 
 uint8_t Maq_FollowTheLine(void){
 	static uint8_t estado = RESET;
@@ -115,8 +119,7 @@ uint8_t Maq_FollowTheLine(void){
 			{		//DETECTAN CRUCE
 				//Tank_Brake();
 				Tank_Backward(VELOCIDAD_FTL);
-				for(int i =0;i<100;i++){}
-				Tank_Brake();
+				TimerStart(1, 1, TimerFrenar, DEC);
 				estado = RESET;
 				return EXITO;
 			}

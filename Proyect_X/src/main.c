@@ -39,6 +39,7 @@ int main(void) {
     while(1) {
     	//testing();
     	//ftl();
+    	TimerEvent();
     	testing_ftl();
     	//Maq_FollowTheLine();
     	//testing_servos();
@@ -107,7 +108,7 @@ void testing_ftl(void){
    			i = 1;
    	}
     else if(i == 1){
-    	for(uint32_t i=0;i<5000000;i++){}
+    	for(uint32_t i=0;i<500000;i++){}
     		i = 0;
     }
 }
