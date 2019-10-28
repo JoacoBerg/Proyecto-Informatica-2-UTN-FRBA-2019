@@ -72,6 +72,7 @@
 #define		CRUCE			0
 #define		NOCRUCE			1
 #define		PRIMERCRUCE		2
+#define		ESPERANDO		4
 
 #define		VELOCIDAD_FTL 80
 
@@ -86,7 +87,7 @@ uint8_t Maq_FollowTheLine(void){
 	switch(estado){
 
 		case RESET:
-			//ftl();
+			ftl();
 			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)		//DETECTAN CRUCE
 			{
 				ftl();
@@ -101,25 +102,31 @@ uint8_t Maq_FollowTheLine(void){
 			break;
 
 		case PRIMERCRUCE:
-			//ftl();
 			if(IR_IZQ_OUT == 0 && IR_DER_OUT == 0)
 			{
 				estado = NOCRUCE;
 				ftl();
 			}
+			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
+			{
+				ftl();
+				estado = ESPERANDO;
 
-			ftl();
-			/*Que pasa si detecta?*/
-
+			}
+			else
+			{
+				estado = ESPERANDO;
+				ftl();
+			}
 			break;
 
 		case NOCRUCE:
 
 			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
 			{		//DETECTAN CRUCE
-				//Tank_Brake();
+				Tank_Brake();
 				Tank_Backward(VELOCIDAD_FTL);
-				TimerStart(1, 1, TimerFrenar, DEC);
+				TimerStart(1, 1, TimerFrenar, DEC); // Timer para hacer que valla para atras 1 decima de segundo (y luego frena). Para que frene en el lugar
 				estado = RESET;
 				return EXITO;
 			}
@@ -129,6 +136,21 @@ uint8_t Maq_FollowTheLine(void){
 				ftl();
 			}
 			break;
+
+		case ESPERANDO:
+
+			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
+			{
+				ftl();
+				estado = ESPERANDO;
+			}
+			else
+			{
+				estado = NOCRUCE;
+				ftl();
+			}
+
+
 		default: estado = RESET;
 	}
 	return ENPROCESO;

@@ -103,11 +103,12 @@ void testing_giro(void){
 
 void testing_ftl(void){
 	static int i=0;
-   	if( i == 0){
-   		if(Maq_FollowTheLine())
-   			i = 1;
-   	}
-    else if(i == 1){
+
+   	Maq_FollowTheLine();
+   	i = 1;
+
+    if(i == 1){
+
     	for(uint32_t i=0;i<500000;i++){}
     		i = 0;
     }
