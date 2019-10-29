@@ -23,7 +23,7 @@ void SysTick_Handler(void){
 	//cada 1 milisegundo
 
 	DebounceEntradas( );
-	RefrescoSalidas( );
+	//RefrescoSalidas( );
 	AnalizarTimers( );
 
 

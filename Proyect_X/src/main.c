@@ -51,9 +51,6 @@ int main(void) {
     				   //esta maquina hace que cuando detecta un cruce frene y devuelva exito, y vuelva a arrancar
 
 
-
-
-
     	//Maq_FollowTheLine();
     	//testing_servos();
     	//Tank_Forward(100);
