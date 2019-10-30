@@ -76,10 +76,9 @@
 #define		ESPERANDO		4
 */
 
-#define 	MAQOFF		0
-#define 	RESET2		1
-#define 	PRIMERCRUCE	2
-#define 	NOCRUCE		3
+#define 	RESET2		0
+#define 	PRIMERCRUCE	1
+#define 	NOCRUCE		2
 
 
 
@@ -90,7 +89,7 @@
 
 //Interruptores de las maquinas de estado
 uint8_t Flag_Control = 0;
-uint8_t Flag_MFTL2 = 0;
+//uint8_t flag=0;
 
 
 
@@ -175,21 +174,12 @@ uint8_t Maq_FollowTheLine(void){
 
 uint8_t Maq_FollowTheLine_v2(void)
 {
-	static uint8_t estado2 = MAQOFF;
+	static uint8_t estado2 = RESET2;
 	static uint8_t cruce = 0; //sirve para saber si arrancaste en un cruce
 							  // 0 = arranco en cruce
 							  // 1 = ya salio del primer cruce | no arranco en cruce
-
-
-	switch(estado2)
+switch(estado2)
 	{
-		case MAQOFF:
-			if(Flag_MFTL2 == ON)
-				estado2 = RESET2;
-
-			else
-				estado2 = MAQOFF;
-			break;
 
 		case RESET2:
 
@@ -206,10 +196,6 @@ uint8_t Maq_FollowTheLine_v2(void)
 				cruce = 1;
 				estado2 = NOCRUCE;
 			}
-			if(Flag_MFTL2 == 0)
-			{
-				estado2 = MAQOFF;
-			}
 			break;
 
 		case PRIMERCRUCE:
@@ -225,10 +211,6 @@ uint8_t Maq_FollowTheLine_v2(void)
 				cruce = 1;
 				estado2 = NOCRUCE;
 			}
-			if(Flag_MFTL2 == 0)
-			{
-				estado2 = MAQOFF;
-			}
 			break;
 
 		case NOCRUCE:
@@ -243,26 +225,23 @@ uint8_t Maq_FollowTheLine_v2(void)
 				//ESTE ESTADO ES EL QUE NO ANDA
 				Tank_Brake();
 				Tank_Backward(VELOCIDAD_FTL); //hago que vaya 1 decima de segundo para atras para que frene en el lugar
-				//ESTE TIMER
-				TimerStart(1, 1, TimerFrenar, DEC); //Por lo que estuve probando, nunca interrumpe. Sige indefinidamente para atras
+				//if(flag != 1)
+			    //	{
+			    		TimerStart(1, 2, TimerFrenar, DEC);
+			    //		flag = 1;
+			    //	}
+
+				//TimerStart(1, 1, TimerFrenar, DEC); //Por lo que estuve probando, nunca interrumpe. Sige indefinidamente para atras
 				cruce = 0;
-				estado2 = MAQOFF;
+				estado2 = RESET2;
 				Flag_Control = OFF;
-				Flag_MFTL2 = OFF;
-				estado2 = MAQOFF;
 				//Tank_Coast();
-
 				return EXITO;
-			}
-
-			if(Flag_MFTL2 == 0)
-			{
-				estado2 = MAQOFF;
 			}
 			break;
 
 		default:
-			estado2 = MAQOFF;
+			estado2 = RESET2;
 			break;
 	}
 	return ENPROCESO;

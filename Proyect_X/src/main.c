@@ -25,6 +25,10 @@
 #include "DR_Inicializacion.h"
 #include "DR_Timers.h"
 #include "PR_Timers.h"
+
+#include "DR_GPIO.h"
+#include "DR_PINSEL.h"
+
 // TODO: insert other definitions and declarations here
 
 void testing_giro(void);
@@ -33,22 +37,44 @@ void testing_tanks(void);
 void testing_tanks2(void);
 void testing_ftl(void);
 
+void hand(void);
+
 int main(void) {
 
    	Inicializacion ();
 
+   	SetPinsel(0, 22, 0);
+   	SetPinDir(0, 22, 1);
+
+   	SetPin(0, 22, 1);
+
+   	SetPin(0, 22, 0);
+
     //Servo init no existe, ya que el tanque se encarga de eso
+
+   //	int flag1 = 0;
     while(1) {
     	//testing();
 
     	TimerEvent();
+
+    	/*
+    	if(flag1 != 1)
+    	{
+    		TimerStart(1, 2, hand, SEG);
+    		flag1 = 1;
+    	}
+    	*/
+
+
     	//Flag_Control = 1;
-
-
 
     	ftl(); // hace que el auto siga una linea negra
     	testing_ftl(); //aca esta la maquina de estados que estoy probando (que ademas prende y apaga la maquina que esta arriba --> ftl())
     				   //esta maquina hace que cuando detecta un cruce frene y devuelva exito, y vuelva a arrancar
+
+
+
 
 
     	//Maq_FollowTheLine();
@@ -62,6 +88,12 @@ int main(void) {
 
     }
     return 0 ;
+}
+
+
+void hand(void)
+{
+	SetPin(0, 22, 1);
 }
 
 void testing_tanks(void){
@@ -118,14 +150,11 @@ void testing_giro(void){
 
 void testing_ftl(void){
 	static int i=0;
-
-	Flag_MFTL2 = ON;
 	int j = Maq_FollowTheLine_v2(); //detecta cruces
    	if(j == EXITO)
    		i = 1;
 
     if(i == 1){
-    	Flag_MFTL2 = OFF;
     	for(uint32_t i=0;i<50000000;i++){}
     		i = 0;
     }
