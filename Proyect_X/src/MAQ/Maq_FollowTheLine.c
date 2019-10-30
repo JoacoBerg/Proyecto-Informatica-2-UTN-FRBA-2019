@@ -223,13 +223,10 @@ switch(estado2)
 			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
 			{
 				//ESTE ESTADO ES EL QUE NO ANDA
-				Tank_Brake();
-				Tank_Backward(VELOCIDAD_FTL); //hago que vaya 1 decima de segundo para atras para que frene en el lugar
-				//if(flag != 1)
-			    //	{
-			    		TimerStart(1, 2, TimerFrenar, DEC);
-			    //		flag = 1;
-			    //	}
+				//Tank_Brake();
+				Tank_Backward(100); //hago que vaya 1 decima de segundo para atras para que frene en el lugar
+				TimerStart(1, 6, TimerFrenar, DEC);
+
 
 				//TimerStart(1, 1, TimerFrenar, DEC); //Por lo que estuve probando, nunca interrumpe. Sige indefinidamente para atras
 				cruce = 0;
@@ -349,9 +346,6 @@ void TimerFrenar(void)
 {
 	Tank_Coast();
 	//Tank_Brake();
-
-
-
 }
 
 
