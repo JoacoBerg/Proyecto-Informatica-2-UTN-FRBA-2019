@@ -40,52 +40,46 @@ void testing_ftl(void);
 void hand(void);
 void hand2(void);
 
-
-int flag = 0;
+int flagT = 0;
 
 int main(void) {
 
    	Inicializacion ();
 
-   	SetPinsel(0, 22, 0);
-   	SetPinDir(0, 22, 1);
 
-   	SetPin(0, 22, 1);
-
-   	SetPin(0, 22, 0);
-
-    //Servo init no existe, ya que el tanque se encarga de eso
-
-   //	int flag1 = 0;
     while(1) {
     	//testing();
-
     	TimerEvent();
 
-    	Flag_Control = 1;
     	ftl(); // hace que el auto siga una linea negra
-    	//testing_ftl(); //aca esta la maquina de estados que estoy probando (que ademas prende y apaga la maquina que esta arriba --> ftl())
-    				   //esta maquina hace que cuando detecta un cruce frene y devuelva exito, y vuelva a arrancar
-
+    	testing_ftl();//esta maquina hace que cuando detecta un cruce frene y devuelva exito, y vuelva a arrancar
 
     	//Maq_FollowTheLine();
     	//testing_servos();
-    	//Tank_Forward(100);
     	//testing_tanks2();
-
-    	//Tank_Forward(80);
-    	//TimerStart(1, 3, TimerFrenar, SEG);
-    	//TimerClose();
-
     }
     return 0 ;
 }
 
-
-void hand(void)
+void testing_ftl(void)
 {
-	SetPin(0, 22, 1);
+
+	if(flagT == 0)
+	{
+		if(Maq_FollowTheLine_v2() == EXITO)
+		{
+			flagT = 1;
+			TimerStart(2, 3, hand2, SEG);
+		}
+	}
 }
+
+void hand2(void)
+{
+	flagT = 0;
+}
+
+
 
 void testing_tanks(void){
 	for(int i=0;i<500000;i++)
@@ -139,22 +133,4 @@ void testing_giro(void){
 }
 
 
-void testing_ftl(void)
-{
 
-	static int flag = 0;
-flag  =0;
-	if(flag == 0)
-	{
-		if(Maq_FollowTheLine_v2() == EXITO)
-		{
-			flag = 1;
-			//TimerStart(2, 3, hand2, SEG);
-		}
-	}
-}
-
-void hand2(void)
-{
-	flag = 0;
-}

@@ -61,7 +61,7 @@
 //------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------
 
-//Declaracion de estados
+//Declaracion de estados de ftl()
 #define 	X11X	0
 #define 	X10X	1
 #define 	X01X	2
@@ -69,13 +69,7 @@
 #define 	ALARMA	4
 #define 	CONTROL 5
 
-/*
-#define		CRUCE			0
-#define		NOCRUCE			1
-#define		PRIMERCRUCE		2
-#define		ESPERANDO		4
-*/
-
+//Declaracion de estados de Maq_FollowTheLine_v2()
 #define 	RESET2		0
 #define 	PRIMERCRUCE	1
 #define 	NOCRUCE		2
@@ -89,12 +83,215 @@
 
 //Interruptores de las maquinas de estado
 uint8_t Flag_Control = 0;
-//uint8_t flag=0;
+uint8_t flag_TB=0; //este flag sirve para que frene con el timer (este timer tiene injerencia en ftl())
 
 
 
 
+
+//Maquina que detecta cruces y llama a ftl()
+uint8_t Maq_FollowTheLine_v2(void)
+{
+	static uint8_t estado2 = RESET2;
+	static uint8_t cruce = 0; //sirve para saber si arrancaste en un cruce
+							  // 0 = arranco en cruce
+							  // 1 = ya salio del primer cruce | no arranco en cruce
+switch(estado2)
+	{
+
+		case RESET2:
+
+			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
+			{
+				Flag_Control = ON;
+				cruce = 0;
+				estado2 = PRIMERCRUCE;
+			}
+
+			if(IR_IZQ_OUT == 0 && IR_DER_OUT == 0)
+			{
+				Flag_Control = ON;
+				cruce = 1;
+				estado2 = NOCRUCE;
+			}
+			break;
+
+		case PRIMERCRUCE:
+			if(cruce == 0)
+			{
+				Flag_Control = ON;
+				estado2 = PRIMERCRUCE;
+			}
+
+			if(IR_IZQ_OUT == 0 && IR_DER_OUT == 0)
+			{
+				Flag_Control = ON;
+				cruce = 1;
+				estado2 = NOCRUCE;
+			}
+			break;
+
+		case NOCRUCE:
+			if(cruce == 1)
+			{
+				Flag_Control = ON;
+				estado2 = NOCRUCE;
+			}
+
+			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
+			{
+				Tank_Brake();
+				Tank_Backward(VELOCIDAD_FTL);
+				TimerStart(1, 1, TimerFrenar, DEC); //hago que vaya 1 decima de segundo para atras para que frene en el lugar
+				flag_TB = 1; //este flag sirve para que frene con el timer (este timer tiene injerencia en ftl())
+							 //si esta en 1 frena con el Timer
+				cruce = 0;
+				estado2 = RESET2;
+				Flag_Control = OFF;
+				return EXITO;
+			}
+			break;
+
+		default:
+			estado2 = RESET2;
+			break;
+	}
+	return ENPROCESO;
+}
+
+//Este es el codigo seguidor de lineas (solo utiliza ir del medio)
+uint8_t ftl(void)	//se encarga del interior
+{
+	static uint8_t estado = CONTROL;
+
+	switch(estado)
+	{
+		case CONTROL:
+
+			if(Flag_Control == 1)
+			{
+				estado = RESET;
+			}
+			else
+			{
+				estado = CONTROL;
+				if(flag_TB ==0) Tank_Brake(); //habria que probrar si la maquina deja de andar bien por no poner este Tank_Brake()
+											  //El if() esta para que no se active esta linea si hay un timer para frenar al auto
+											  //Maq_FollowTheLine_v2()
+			}
+			break;
+
+		case RESET:
+
+			Tank_Forward(VELOCIDAD_FTL);
+				estado = X11X;
+
+			if(Flag_Control == 0)
+			{
+				estado = CONTROL;
+				if(flag_TB ==0) Tank_Brake();
+			}
+
+			break;
+
+		case X11X:
+
+			if(IR_IZQ_IN == 0 && IR_DER_IN == 1)
+			{
+				Tank_Right(VELOCIDAD_FTL);
+				estado = X01X;
+			}
+
+			if(IR_IZQ_IN == 1 && IR_DER_IN == 0)
+			{
+				Tank_Left(VELOCIDAD_FTL);
+				estado = X10X;
+			}
+			if(Flag_Control == 0)
+			{
+				estado = CONTROL;
+				if(flag_TB ==0) Tank_Brake();
+			}
+
+			break;
+
+		case X10X:
+
+			if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
+			{
+				Tank_Forward(VELOCIDAD_FTL);
+				estado = X11X;
+
+			}
+
+			if(Flag_Control == 0)
+			{
+				estado = CONTROL;
+				if(flag_TB ==0) Tank_Brake();
+			}
+
+			break;
+
+		case X01X:
+
+			if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
+			{
+				Tank_Forward(VELOCIDAD_FTL);
+				estado = X11X;
+
+			}
+			if(Flag_Control == 0)
+			{
+				estado = CONTROL;
+				if(flag_TB ==0) Tank_Brake();
+			}
+
+			break;
+
+		case ALARMA:
+
+			return FALLO;
+			break;
+
+		default: estado = CONTROL;
+		}
+		return ENPROCESO;
+}
+
+
+void TimerFrenar(void)
+{
+	Tank_Brake();
+	flag_TB = 0; //este flag sirve para que frene con el timer (este timer tiene injerencia en ftl())
+}
+
+
+
+//Funciones asociadas a los eventos
+
+
+//Funciones asociadas a los eventos
+
+
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------FIN MAQUINA DE ESTADOS DE FOLLOW THE LINE---------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------
 /*
+
+
+CODIGOS DESCARTADOS
+
+
+
+#define		CRUCE			0
+#define		NOCRUCE			1
+#define		PRIMERCRUCE		2
+#define		ESPERANDO		4
+
+
 uint8_t Maq_FollowTheLine(void){
 	static uint8_t estado = RESET;
 
@@ -171,196 +368,4 @@ uint8_t Maq_FollowTheLine(void){
 	return ENPROCESO;
 }
 */
-
-uint8_t Maq_FollowTheLine_v2(void)
-{
-	static uint8_t estado2 = RESET2;
-	static uint8_t cruce = 0; //sirve para saber si arrancaste en un cruce
-							  // 0 = arranco en cruce
-							  // 1 = ya salio del primer cruce | no arranco en cruce
-switch(estado2)
-	{
-
-		case RESET2:
-
-			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
-			{
-				Flag_Control = ON;
-				cruce = 0;
-				estado2 = PRIMERCRUCE;
-			}
-
-			if(IR_IZQ_OUT == 0 && IR_DER_OUT == 0)
-			{
-				Flag_Control = ON;
-				cruce = 1;
-				estado2 = NOCRUCE;
-			}
-			break;
-
-		case PRIMERCRUCE:
-			if(cruce == 0)
-			{
-				Flag_Control = ON;
-				estado2 = PRIMERCRUCE;
-			}
-
-			if(IR_IZQ_OUT == 0 && IR_DER_OUT == 0)
-			{
-				Flag_Control = ON;
-				cruce = 1;
-				estado2 = NOCRUCE;
-			}
-			break;
-
-		case NOCRUCE:
-			if(cruce == 1)
-			{
-				Flag_Control = ON;
-				estado2 = NOCRUCE;
-			}
-
-			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
-			{
-				//ESTE ESTADO ES EL QUE NO ANDA
-				//Tank_Brake();
-				Tank_Backward(100); //hago que vaya 1 decima de segundo para atras para que frene en el lugar
-				TimerStart(1, 6, TimerFrenar, DEC);
-
-
-				//TimerStart(1, 1, TimerFrenar, DEC); //Por lo que estuve probando, nunca interrumpe. Sige indefinidamente para atras
-				cruce = 0;
-				estado2 = RESET2;
-				Flag_Control = OFF;
-				//Tank_Coast();
-				return EXITO;
-			}
-			break;
-
-		default:
-			estado2 = RESET2;
-			break;
-	}
-	return ENPROCESO;
-}
-
-
-uint8_t ftl(void)	//se encarga del interior
-{
-	static uint8_t estado = CONTROL;
-
-	switch(estado)
-	{
-		case CONTROL:
-
-			if(Flag_Control == 1)
-			{
-				estado = RESET;
-			}
-			else
-			{
-				estado = CONTROL;
-				Tank_Brake();
-			}
-			break;
-
-		case RESET:
-
-			Tank_Forward(VELOCIDAD_FTL);
-				estado = X11X;
-
-			if(Flag_Control == 0)
-			{
-				estado = CONTROL;
-				Tank_Brake();
-			}
-
-			break;
-
-		case X11X:
-
-			if(IR_IZQ_IN == 0 && IR_DER_IN == 1)
-			{
-				Tank_Right(VELOCIDAD_FTL);
-				estado = X01X;
-			}
-
-			if(IR_IZQ_IN == 1 && IR_DER_IN == 0)
-			{
-				Tank_Left(VELOCIDAD_FTL);
-				estado = X10X;
-			}
-			if(Flag_Control == 0)
-			{
-				estado = CONTROL;
-				Tank_Brake();
-			}
-
-			break;
-
-		case X10X:
-
-			if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
-			{
-				Tank_Forward(VELOCIDAD_FTL);
-				estado = X11X;
-
-			}
-
-			if(Flag_Control == 0)
-			{
-				estado = CONTROL;
-				Tank_Brake();
-			}
-
-			break;
-
-		case X01X:
-
-			if(IR_IZQ_IN == 1 && IR_DER_IN == 1)
-			{
-				Tank_Forward(VELOCIDAD_FTL);
-				estado = X11X;
-
-			}
-			if(Flag_Control == 0)
-			{
-				estado = CONTROL;
-				Tank_Brake();
-			}
-
-			break;
-
-		case ALARMA:
-
-			return FALLO;
-			break;
-
-		default: estado = CONTROL;
-		}
-		return ENPROCESO;
-}
-
-
-void TimerFrenar(void)
-{
-	Tank_Coast();
-	//Tank_Brake();
-}
-
-
-
-//Funciones asociadas a los eventos
-
-
-//Funciones asociadas a los eventos
-
-
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------FIN MAQUINA DE ESTADOS DE FOLLOW THE LINE---------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-
 
