@@ -258,7 +258,7 @@ uint8_t ftl(void)	//se encarga del interior
 		return ENPROCESO;
 }
 
-
+//Funcion de Handler de Timer1
 void TimerFrenar(void)
 {
 	Tank_Brake();
