@@ -13,14 +13,12 @@
 
 #include <cr_section_macros.h>
 
-// TODO: insert other include files here
 #include "DR_PLL.h"
 #include "Tanks.h"
 #include "DR_IR.h"
 #include <DR_Systick.h>
 #include <Maq_FollowTheLine.h>
 #include "Maq_Giro.h"
-#include "Boton.h"
 #include "DR_Servo.h"
 #include "DR_Inicializacion.h"
 #include "DR_Timers.h"
@@ -28,8 +26,6 @@
 
 #include "DR_GPIO.h"
 #include "DR_PINSEL.h"
-
-// TODO: insert other definitions and declarations here
 
 void testing_giro(void);
 void testing_servos(void);
