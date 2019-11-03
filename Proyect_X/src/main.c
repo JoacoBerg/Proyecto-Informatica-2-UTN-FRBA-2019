@@ -43,14 +43,16 @@ void hand2(void);
 #define NADA 3
 
 int flagT = 0;
-uint8_t est = RES;
+int j = 0;
+uint8_t est = GIR;
 
 
 
 int main(void) {
 
    	Inicializacion ();
-
+   	int t = 0;
+	//int t = 1;
 
     while(1) {
     	//testing();
@@ -58,32 +60,77 @@ int main(void) {
     	ftl(); // hace que el auto siga una linea negra
     	Maq_General();
 
+
+    	//Flag_Control = ON;
+    	if(t==0)
+    	{
+    		ftl(); // hace que el auto siga una linea negra
+    	}
+
     	//testing_ftl();//esta maquina hace que cuando detecta un cruce frene y devuelva exito, y vuelva a arrancar
     	//testing_ftl_giro();
     	//Maq_FollowTheLine();
     	//testing_servos();
     	//testing_tanks2();
+
+
+
+    	if(t == 0)
+    	{
+    		if(Maq_FollowTheLine_v2()== EXITO)
+			{
+				t = 0;
+				Flag_Control_G = 1;
+			}
+    	}
+/*
+    	else if(t == 1)
+    	{
+    		if(Maq_Giro_v2(DER)== EXITO)
+			{
+				t = 0;
+			}
+    	}
+*/
+
+
+
     }
     return 0 ;
 }
 
 void testing_ftl(void)
 {
+	int i = 0;
 
-	if(flagT == 0)
+	if(i == 0)
+	{
+		Flag_Control_G = 1;
+		i = 1;
+	}
+
+	if(Maq_Giro_v2(DER) == EXITO)
+	{
+		Flag_Control_G = 0;
+		if(j == 0)
+		{
+			TimerStart(2, 3, hand2, SEG);
+			j = 1;
+		}
+
+	}
+
+	/*if(Flag_Control_G == 1)
 	{
 		//if(Maq_FollowTheLine_v2() == EXITO)
-		if(Maq_Giro(DER) == EXITO)
-		{
-			flagT = 1;
-			TimerStart(2, 3, hand2, SEG);
-		}
-	}
+
+	}*/
 }
 
 void hand2(void)
 {
-	flagT = 0;
+	Flag_Control_G = 1;
+	j = 0;
 }
 
 
@@ -95,7 +142,7 @@ void testing_ftl_giro(void)
 	{
 		case RES:
 			est = FTL;
-			Flag_Control = ON;
+			//Flag_Control = ON;
 			break;
 
 		case FTL:
@@ -103,7 +150,7 @@ void testing_ftl_giro(void)
 			if(j == EXITO)
 			{
 				est = GIR;
-				Flag_Control = OFF;
+				//Flag_Control = OFF;
 			}
 			break;
 
