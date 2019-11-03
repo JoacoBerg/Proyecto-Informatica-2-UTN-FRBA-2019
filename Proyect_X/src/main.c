@@ -45,8 +45,33 @@ void hand2(void);
 int flagT = 0;
 uint8_t est = RES;
 
+#include "Maq_Caja.h"
 
+int main()
+{
+   	Inicializacion();
+	RED_OFF;
+	GREEN_OFF;
+	BLUE_OFF;
+	while(1)
+	{
+		uint8_t aux = 0;
 
+/*
+		if( Card())
+			BLUE_ON;
+			else
+				BLUE_OFF;
+
+		//for(int i=0; i<100000;i++);
+*/
+		aux = Maq_Caja();
+		aux = aux;
+	}
+
+}
+
+/*
 int main(void) {
 
    	Inicializacion ();
@@ -167,5 +192,5 @@ void testing_giro(void){
     }
 }
 
-
+*/
 

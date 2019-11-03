@@ -1,8 +1,8 @@
 /*******************************************************************************************************************************//**
  *
- * @file		PR_Eçntradas.h
+ * @file		Maq_Caja.h
  * @brief		Breve descripción del objetivo del Módulo
- * @date		14 de nov. de 2017
+ * @date		3 nov. 2019
  * @author		Ing. Marcelo Trujillo
  *
  **********************************************************************************************************************************/
@@ -11,36 +11,45 @@
  *** MODULO
  **********************************************************************************************************************************/
 
-#ifndef PRIMITIVAS_INC_PR_ENTRADAS_H_
-#define PRIMITIVAS_INC_PR_ENTRADAS_H_
+#ifndef MAQ_MAQ_CAJA_H_
+#define MAQ_MAQ_CAJA_H_
 
 /***********************************************************************************************************************************
  *** INCLUDES GLOBALES
  **********************************************************************************************************************************/
-#include <DR_Entradas.h>
-
-#include "DR_tipos.h"
-
-#define IR1_l 0
-#define IR2_l 1
-#define IR3_l 2
-#define IR4_l 3
-#define IR5_l 4
-#define IMAN_l 5
-#define BOTON_l 6
-
-#define IR_IZQ_OUT LeerEntrada (IR1_l)
-#define IR_IZQ_IN LeerEntrada (IR2_l)
-#define IR_DER_IN LeerEntrada (IR3_l)
-#define IR_DER_OUT LeerEntrada (IR4_l)
-#define IR_OBSTACULO LeerEntrada (IR5_l)
-#define IMAN LeerEntrada (IMAN_l)
-#define BOTON LeerEntrada (BOTON_l)
-
+#include <DR_tipos.h>
+#include "DR_PINSEL.h"
+#include "DR_GPIO.h"
+#include "PR_MFRC522.h"
+#include "DR_Servo.h"
+#include "PR_Entradas.h"
 
 /***********************************************************************************************************************************
  *** DEFINES GLOBALES
  **********************************************************************************************************************************/
+#define 	RESET					0
+#define		BUSCAR_TARJETA			1
+#define		BUSCAR_BOTON			2
+#define		BUSCAR_IMAN				3
+
+#define PIN_RED 0, 22
+#define PIN_BLUE 3, 26
+#define PIN_GREEN 3, 25
+
+#define OFFF 1
+#define ONN 0
+
+#define RED_ON 		SetPin( PIN_RED, ONN)
+#define RED_OFF 	SetPin( PIN_RED, OFFF)
+
+#define BLUE_ON 	SetPin( PIN_BLUE, ONN)
+#define BLUE_OFF 	SetPin( PIN_BLUE, OFFF)
+
+#define GREEN_ON 	SetPin( PIN_GREEN, ONN)
+#define GREEN_OFF 	SetPin( PIN_GREEN, OFFF)
+
+#define SERVO_ABIERTO	Servo_Abierto()
+#define SERVO_CERRADO	Servo_Cerrado()
 
 /***********************************************************************************************************************************
  *** MACROS GLOBALES
@@ -58,6 +67,9 @@
 /***********************************************************************************************************************************
  *** PROTOTIPOS DE FUNCIONES GLOBALES
  **********************************************************************************************************************************/
-uint8_t LeerEntrada ( uint8_t nEntrada );
+void init_led(uint8_t puerto, uint8_t pin);
+void init_caja();
+uint8_t Maq_Caja();
 
-#endif /* PRIMITIVAS_INC_PR_ENTRADAS_H_ */
+
+#endif /* MAQ_MAQ_CAJA_H_ */

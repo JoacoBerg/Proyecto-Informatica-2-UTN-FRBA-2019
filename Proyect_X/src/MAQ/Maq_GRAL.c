@@ -5,22 +5,6 @@
 #include "DR_tipos.h"
 #include "BUFFER_MAQ.h"
 
-
-uint8_t Maq_Caja(void){
-	static uint32_t i= 500000;
-
-	if(i){
-		i--;
-		return 0;
-	}
-	else{
-		i=500000;
-		return 1;
-	}
-}
-
-
-
 void Maq_General()
 {
 		static int32_t estado = BASE;

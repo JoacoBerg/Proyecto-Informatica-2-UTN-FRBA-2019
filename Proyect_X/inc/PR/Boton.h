@@ -15,7 +15,7 @@
 
 #define BOTON_PORT 0
 #define BOTON_PIN 24
-#define BOTON GPIO_Get( BOTON_PORT, BOTON_PIN)	//lectura del GPIO
+#define BOTON GetPin( BOTON_PORT, BOTON_PIN)	//lectura del GPIO
 
 void Boton_init();
 

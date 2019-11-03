@@ -1,25 +1,16 @@
-
 /*******************************************************************************************************************************//**
  *
- * @file		Inicializacion.c
- * @brief		Inicializaciones del Kit de Info II Infotronic
- * @date		23/03/16
- * @author		Marcelo Trujillo
+ * @file		Maq_Caja.c
+ * @brief		Descripcion del modulo
+ * @date		3 nov. 2019
+ * @author		Ing. Marcelo Trujillo
  *
  **********************************************************************************************************************************/
 
 /***********************************************************************************************************************************
  *** INCLUDES
  **********************************************************************************************************************************/
-#include "DR_Salidas.h"
-#include "DR_Entradas.h"
-#include "DR_PLL.h"
-#include "DR_SysTick.h"
-#include "DR_Inicializacion.h"
-#include "Tanks.h"
 #include "Maq_Caja.h"
-
-
 
 /***********************************************************************************************************************************
  *** DEFINES PRIVADOS AL MODULO
@@ -42,46 +33,99 @@
  **********************************************************************************************************************************/
 
 /***********************************************************************************************************************************
- *** VARIABLES GLOBLES PRIVADAS AL MODULO
+ *** VARIABLES GLOBALES PRIVADAS AL MODULO
  **********************************************************************************************************************************/
 
 /***********************************************************************************************************************************
  *** PROTOTIPO DE FUNCIONES PRIVADAS AL MODULO
  **********************************************************************************************************************************/
 
-/***********************************************************************************************************************************
+ /***********************************************************************************************************************************
  *** FUNCIONES PRIVADAS AL MODULO
  **********************************************************************************************************************************/
 
-/***********************************************************************************************************************************
+ /***********************************************************************************************************************************
  *** FUNCIONES GLOBALES AL MODULO
  **********************************************************************************************************************************/
-
 /**
- \fn  void Inicializar ( void )
- \brief funcion principal
- \param void
- \return void
- */
-void Inicializacion ( void )
+	\fn  Nombre de la Funcion
+	\brief Descripcion
+ 	\author Ing. Marcelo Trujillo
+ 	\date 3 nov. 2019
+ 	\param [in] parametros de entrada
+ 	\param [out] parametros de salida
+	\return tipo y descripcion de retorno
+*/
+
+void init_led(uint8_t puerto, uint8_t pin)
 {
-	//!< Se configura en primer lugar el PLL:
-	//!< Estabiliza el oscilador interno del micro en 100MHz
-	//!< Se configura el systic cada 1ms
-	InicializarPLL();
-	SysTick_Init();
+	SetPinsel(puerto, pin, PINSEL_GPIO);
+	SetPinMode(puerto, pin, PINMODE_PULLUP);
+	SetPinDir(puerto, pin, PINDIR_OUTPUT);
+}
 
-	Tanks_Init();  //Servo init no existe, ya que el tanque se encarga de eso
-	Boton_init();
 
-	InicializarEntradas( ); //InitIR() no existe, las entradas se definen en InicializarEntradas()
-	//InicializarSalidas( ); //NO Implementado
+void init_caja()
+{
+	init_led(PIN_RED);
+	init_led(PIN_BLUE);
+	init_led(PIN_GREEN);
 
-	/* Inicializo SPI */
-	setup_SPI();
+	SERVO_CERRADO;
+}
 
-	/* Inicializo modulo MFRC522 */
-	setup_MFRC522();
 
-	init_caja();
+// FUNCION Maq_Caja: se encarga de supervisar el estado de la caja
+//return: exito si tarjeta ID, Boton e iman son correctos
+uint8_t Maq_Caja()
+{
+	static uint8_t estado = RESET;
+
+	switch(estado)
+	{
+		case RESET:
+			RED_OFF;
+			GREEN_OFF;
+			BLUE_OFF;
+
+			estado = BUSCAR_TARJETA;
+			break;
+
+		case BUSCAR_TARJETA:
+			if(!Card())
+				RED_ON;
+			else
+			{
+				SERVO_ABIERTO;
+				RED_OFF;
+
+				estado = BUSCAR_BOTON;
+			}
+			break;
+
+		case BUSCAR_BOTON:
+			if( BOTON )
+			{
+				SERVO_CERRADO;
+				BLUE_OFF;
+
+				estado = BUSCAR_IMAN;
+			}
+			else
+				BLUE_ON;
+
+			break;
+
+		case BUSCAR_IMAN:
+			if(! IMAN)
+			{
+				GREEN_ON;
+				return EXITO;
+			}
+			break;
+
+		default:	estado = RESET;
+	}
+
+	return 0;
 }
