@@ -11,7 +11,7 @@
 #include "DR_tipos.h"
 //Declaracion de estados
 #define 	SELECTION	's'
-#define 	BASE	    'b'
+#define 	BASE	    -1
 #define 	CAJA	    'c'
 #define 	GIRO_IZQ	'i'
 #define 	GIRO_DER	'd'

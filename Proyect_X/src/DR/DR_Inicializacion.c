@@ -16,6 +16,8 @@
 #include "DR_PLL.h"
 #include "DR_SysTick.h"
 #include "DR_Inicializacion.h"
+#include "Tanks.h"
+#include "Boton.h"
 
 
 

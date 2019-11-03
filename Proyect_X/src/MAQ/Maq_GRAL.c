@@ -23,7 +23,7 @@ uint8_t Maq_Caja(void){
 
 void Maq_General()
 {
-		static uint8_t estado = BASE;
+		static int32_t estado = BASE;
 
 		switch(estado)
 		{
