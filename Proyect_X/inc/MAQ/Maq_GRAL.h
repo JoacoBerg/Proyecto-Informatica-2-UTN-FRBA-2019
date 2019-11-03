@@ -7,16 +7,9 @@
 */
 #include <DR_tipos.h>
 
-//Declaracion de constantes
-#define TRUE  1
-#define FALSE  0
+
 
 //declaracion de la maquina
 void Maq_General(void);
 
 
-
-//Prototipos de los eventos
-
-//Prototipos de las acciones
-uint8_t path_get(void);

@@ -23,7 +23,7 @@
 #include "DR_Inicializacion.h"
 #include "DR_Timers.h"
 #include "PR_Timers.h"
-
+#include "Maq_GRAL.h"
 #include "DR_GPIO.h"
 #include "DR_PINSEL.h"
 
@@ -57,12 +57,16 @@ int main(void) {
     while(1) {
     	//testing();
     	TimerEvent();
+    	ftl(); // hace que el auto siga una linea negra
+    	Maq_General();
+
 
     	//Flag_Control = ON;
     	if(t==0)
     	{
     		ftl(); // hace que el auto siga una linea negra
     	}
+
     	//testing_ftl();//esta maquina hace que cuando detecta un cruce frene y devuelva exito, y vuelva a arrancar
     	//testing_ftl_giro();
     	//Maq_FollowTheLine();
