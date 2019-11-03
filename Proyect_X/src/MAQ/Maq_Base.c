@@ -8,18 +8,49 @@
 #include "DR_Servo.h"
 
 
+
 //esta pensada para que se reciba incluso la vuelta a base (osea un 0 al final) y las bases separadas por comas
 
-#define START_POSITION 0
+#define START_POSITION 0 // esta es la base donde arranca
+#define START_BYTE '>'
+#define END_BYTE '<'
+#define SEPARATOR ','
 
 int get_nodos(int init, int fin);
 int get_start_dir(int init, int fin);
 int get_last_dir(int init, int fin);
 
 int Rx_Pop(void){
- return 0;
+	static int enviar = 0;
+	switch(enviar)
+	{
+
+	case(0):
+			enviar ++;
+			return START_BYTE;
+			break;
+	case(1):
+			enviar ++;
+			return 3;
+			break;
+	case(2):
+			enviar ++;
+			return SEPARATOR;
+			break;
+	case(3):
+			enviar ++;
+			return START_POSITION;
+			break;
+	case(4):
+			enviar ++;
+			return END_BYTE;
+			break;
+
+	default:
+		return -1;
+		break;
+	}
 }
-#define SEPARATOR ','
 
 
 
@@ -39,7 +70,13 @@ uint8_t Maq_Base(void){
 	init = fin;
 	lectura = Rx_Pop();
 
-	if(lectura != -1){
+	if(lectura != -1){ // no esta vacia
+		if (lectura == END_BYTE){
+			Servo_Cerrado();
+			return EXITO;
+		}
+		if(lectura == START_BYTE)
+			lectura = Rx_Pop();
 		if(lectura == SEPARATOR)
 			lectura = Rx_Pop(); //esta hecho para nums de 1 digito por ahora. pero se puede escalar a futuro cambiando la logica de rst
 
@@ -53,7 +90,8 @@ uint8_t Maq_Base(void){
 			Push_list_estados(GIRO_DER);
 			Push_list_estados(FORWARD);
 			Push_list_estados(FORWARD);
-			Push_list_estados(CAJA);
+			if(fin != START_POSITION)//ojo, esto funciona si desde el Qt no le podemos mandar que vaya a la base como una instruccion
+				Push_list_estados(CAJA);
 
 		}
 		else if (!nodos){
@@ -77,14 +115,15 @@ uint8_t Maq_Base(void){
 
 
 			Push_list_estados(FORWARD);
-			Push_list_estados(CAJA);
+			if(fin != START_POSITION) //ojo, esto funciona si desde el Qt no le podemos mandar que vaya a la base como una instruccion
+				Push_list_estados(CAJA);
 
 		}
 		return ENPROCESO;
 	}
-	else{
-		Servo_Cerrado();
-		return EXITO;
+
+	else{ // lista vacia
+		return ENPROCESO;
 	}
 }
 
