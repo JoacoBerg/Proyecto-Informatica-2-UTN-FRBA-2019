@@ -36,7 +36,6 @@ void Maq_General()
 				if(Maq_Caja() == EXITO) //LECTURA DE RFID
 					estado = Pop_list_estados();
 				break;
-			
 			case GIRO_IZQ:
 				if(Maq_Giro(IZQ) == EXITO) //GIRO A 90° HACIA LA IZQUIERDA
 					estado = Pop_list_estados();
@@ -48,7 +47,7 @@ void Maq_General()
 				break;
 			
 			case FORWARD:
-				if(Maq_FollowTheLine() == EXITO) //AVANZAR
+				if(Maq_FollowTheLine_v2() == EXITO) //AVANZAR
 					estado = Pop_list_estados();
 				break;
 			

@@ -13,38 +13,110 @@
 
 #include <cr_section_macros.h>
 
-// TODO: insert other include files here
 #include "DR_PLL.h"
 #include "Tanks.h"
 #include "DR_IR.h"
-#include <DR_Systick.h>
-#include <Maq_FollowTheLine.h>
+#include "DR_Systick.h"
+#include "Maq_FollowTheLine.h"
 #include "Maq_Giro.h"
-#include "Boton.h"
 #include "DR_Servo.h"
 #include "DR_Inicializacion.h"
-// TODO: insert other definitions and declarations here
+#include "DR_Timers.h"
+#include "PR_Timers.h"
+
+#include "DR_GPIO.h"
+#include "DR_PINSEL.h"
 
 void testing_giro(void);
 void testing_servos(void);
 void testing_tanks(void);
 void testing_tanks2(void);
 void testing_ftl(void);
+void testing_ftl_giro(void);
+
+void hand(void);
+void hand2(void);
+
+#define RES 0
+#define FTL 1
+#define GIR 2
+#define NADA 3
+
+int flagT = 0;
+uint8_t est = RES;
+
+
 
 int main(void) {
 
-	Inicializacion ();
+   	Inicializacion ();
 
-    //Servo init no existe, ya que el tanque se encarga de eso
+
     while(1) {
-    	//LecturaIRs(IRx4); --> no se usa mas
     	//testing();
-    	ftl();
+    	TimerEvent();
+
+    	//ftl(); // hace que el auto siga una linea negra
+    	//testing_ftl();//esta maquina hace que cuando detecta un cruce frene y devuelva exito, y vuelva a arrancar
+    	testing_ftl_giro();
+    	//Maq_FollowTheLine();
     	//testing_servos();
-    	//Tank_Forward(100);
     	//testing_tanks2();
     }
     return 0 ;
+}
+
+void testing_ftl(void)
+{
+
+	if(flagT == 0)
+	{
+		//if(Maq_FollowTheLine_v2() == EXITO)
+		if(Maq_Giro(DER) == EXITO)
+		{
+			flagT = 1;
+			TimerStart(2, 3, hand2, SEG);
+		}
+	}
+}
+
+void hand2(void)
+{
+	flagT = 0;
+}
+
+
+void testing_ftl_giro(void)
+{
+	int j = 0, y = 0;
+
+	switch(est)
+	{
+		case RES:
+			est = FTL;
+			Flag_Control = ON;
+			break;
+
+		case FTL:
+			j = Maq_FollowTheLine_v2();
+			if(j == EXITO)
+			{
+				est = GIR;
+				Flag_Control = OFF;
+			}
+			break;
+
+		case GIR:
+			Maq_Giro(DER);
+			if(y == EXITO)
+			{
+				est = RES;
+			}
+			break;
+
+		case NADA:
+			break;
+	}
 }
 
 void testing_tanks(void){
@@ -73,11 +145,7 @@ void testing_tanks2(void){
 		Tank_Forward(100);
 	for(int i=0;i<500000;i++)
 		Tank_Backward(100);
-
-
 }
-
-
 
 void testing_servos(void){
 	for(int i=0;i<500000;i++)
@@ -99,14 +167,4 @@ void testing_giro(void){
 }
 
 
-void testing_ftl(void){
-	static int i=0;
-   	if( i == 0){
-   		if(Maq_FollowTheLine())
-   			i = 1;
-   	}
-    else if(i == 1){
-    	for(uint32_t i=0;i<50000000;i++){}
-    		i = 0;
-    }
-}
+

@@ -73,7 +73,7 @@ void PWM_Init(void)
 	PWM->PWM1PR = PWMPRESCALE;		/* Prescalar */
 
 
-	PWM->PWM1MR0 = PWM_DIVISOR; 		//1000us = 1ms period duration 	//PWM_DIVISOR de todos
+	PWM->PWM1MR0 = PWM_DIVISOR; 	//1000us = 1ms period duration 	//PWM_DIVISOR de todos
 	PWM->PWMMR0R = 1;				// Reset PWM TC on PWM1MR0 match
 
 	// update values in MR0
@@ -97,7 +97,7 @@ void PWM_Init(void)
 	updatePulseWidth(PWM5,OFF);
 	updatePulseWidth(PWM6,OFF);
 
-	// enable PWM OUTPUT
+	// enable PWM OUTPUT (desde el modulo de hardware de PWM)
 	//PWM->PWMENA1 = 1;
 	//PWM->PWMENA2 = 1;
 	//PWM->PWMENA3 = 1;
