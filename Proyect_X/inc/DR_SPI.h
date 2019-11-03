@@ -24,20 +24,18 @@
 #include "DR_GPIO.h"
 
 //-------------------------------------------------------------------------------------------------------
-#define SCK_CLCK 0x00	//0x00= CCLK/4		; 	0x01= CCLK	; 	0x10= CCLCK/2	;	 0x11= CCLCK/8
+#define SCK_CLCK 0b01	//0b00= CCLK/4		; 	0b01= CCLK	; 	0b10= CCLCK/2	;	 0b11= CCLCK/8
 #define SPI_MODE 1//Modo que va a tomar el micro: 0: Slave ; 	1: Master
-#define SPI_FLAG	SPI->SPIF //flag de transferencia completada
-#define SPI_FUNCTION 0x11
+#define SPI_FUNCTION 3
 //----------PINES----------------------------------------------------------------------------------------
-#define SCK_PIN		0, 15 //alternativa en  1, 20
-#define SSEL_PIN	0, 16 //alternativa en  1, 21
-#define MISO_PIN	0, 17 //alternativa en  1, 23
-#define MOSI_PIN	0, 18 //alternativa en	1, 24
+#define SCK_PIN		0, 15 //alternativa en    0, 7  1, 20
+#define SSEL_PIN	0, 16//alternativa en     0, 6   1, 21
+#define MISO_PIN	 0, 17//alternativa en    0, 8  1, 23
+#define MOSI_PIN	0, 18 //alternativa en	  0, 9   1, 24
 
 //-------------FUNCIONES---------------------------------------------------------------------------------
 void SPI_init(void);
-uint8_t SPI_Write(uint8_t); //SI SE EXPANDE BUFFER -> CAMBIAR PARAMETROS
-uint8_t SPI_Read(void);
+
 
 
 typedef struct{//MAPA DE REGISTROS DE SPI
@@ -45,7 +43,7 @@ typedef struct{//MAPA DE REGISTROS DE SPI
 	union{
 		__W uint32_t S0SPCR; //SPI CONTROL REGISTER (setea SPI0 con los siguientes parametros):
 		struct{
-			__RW uint32_t RESERVED_1:1;
+			__RW uint32_t RESERVED_1:2;
 			__RW uint32_t BitEnable:1;//0: send and receives 8 bits (DATALOW); 1: amplia BUFFER sumandole BITS(BITS=nombre de registro)
 			__RW uint32_t CPHA:1;//0:muestra en primer flanco de SCK. Empieza cuando se activa SSEL signal; 1:
 			__RW uint32_t CPOL:1;//Polarizacion de pulso SCK(tiempo). 0:SCK active high; 1:SCK active low
@@ -89,14 +87,14 @@ typedef struct{//MAPA DE REGISTROS DE SPI
 			};
 		};
 
-	union{
+/*	union{
 		__RW uint32_t S0SPINT;//SPI INTERRUPT FLAG
 		struct{
 			__RW uint32_t SPINT:1;//se borra con un 1
 		};
 		__RW uint32_t RESERVED_7:31;
 	};
-
+*/
 }spi_t;
 
 #define SPI ((__RW spi_t *) 0x40020000UL)
