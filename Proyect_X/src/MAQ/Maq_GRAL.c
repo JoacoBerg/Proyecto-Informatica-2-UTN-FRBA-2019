@@ -1,54 +1,58 @@
 #include "Maq_GRAL.h"
 #include "Maq_Giro.h"
+#include "Maq_Base.h"
 #include "Maq_FollowTheLine.h"
+#include "DR_tipos.h"
+#include "BUFFER_MAQ.h"
 
 
-//Declaracion de estados
-#define 	SELECTION	0
-#define 	BASE	    1
-#define 	CAJA	    2
-#define 	GIRO_IZQ	3
-#define 	GIRO_DER	4
-#define 	FORWARD	    5
+uint8_t Maq_Caja(void){
+	static uint32_t i= 500000;
+
+	if(i){
+		i--;
+		return 0;
+	}
+	else{
+		i=500000;
+		return 1;
+	}
+}
+
+
 
 void Maq_General()
 {
-		static uint8_t estado = BASE;
+		static int32_t estado = BASE;
 
 		switch(estado)
 		{
-			case SELECTION:
-				estado = path_get();
-				break;
-			
-			/*
 			case BASE:
-				if(Maq_Base())
-					estado = SELECTION;
+				if(Maq_Base() == EXITO) //LECTURA DE UART
+					estado = Pop_list_estados();
 				break;
 			
 			case CAJA:
-				if(Maq_Caja())
-					estado = SELECTION;
+				if(Maq_Caja() == EXITO) //LECTURA DE RFID
+					estado = Pop_list_estados();
 				break;
-			*/
 			case GIRO_IZQ:
-				if(Maq_Giro(IZQ))
-					estado = SELECTION;
+				if(Maq_Giro(IZQ) == EXITO) //GIRO A 90° HACIA LA IZQUIERDA
+					estado = Pop_list_estados();
 				break;
 			
 			case GIRO_DER:
-				if(Maq_Giro(DER))
-					estado = SELECTION;
+				if(Maq_Giro(DER) == EXITO) //GIRO A 90° HACIA LA DERECHA
+					estado = Pop_list_estados();
 				break;
 			
 			case FORWARD:
-				if(Maq_FollowTheLine_v2())
-					estado = SELECTION;
+				if(Maq_FollowTheLine_v2() == EXITO) //AVANZAR
+					estado = Pop_list_estados();
 				break;
 			
 			default: estado = BASE;
 		}
-
-
 }
+
+
