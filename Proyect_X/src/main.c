@@ -56,7 +56,8 @@ int main(void) {
     	//testing();
     	TimerEvent();
 
-    	//ftl(); // hace que el auto siga una linea negra
+    	//Flag_Control = ON;
+    	ftl(); // hace que el auto siga una linea negra
     	//testing_ftl();//esta maquina hace que cuando detecta un cruce frene y devuelva exito, y vuelva a arrancar
     	testing_ftl_giro();
     	//Maq_FollowTheLine();
@@ -94,7 +95,7 @@ void testing_ftl_giro(void)
 	{
 		case RES:
 			est = FTL;
-			Flag_Control = ON;
+			//Flag_Control = ON;
 			break;
 
 		case FTL:
@@ -102,7 +103,7 @@ void testing_ftl_giro(void)
 			if(j == EXITO)
 			{
 				est = GIR;
-				Flag_Control = OFF;
+				//Flag_Control = OFF;
 			}
 			break;
 
