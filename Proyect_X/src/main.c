@@ -26,6 +26,7 @@
 #include "Maq_GRAL.h"
 #include "DR_GPIO.h"
 #include "DR_PINSEL.h"
+#include "BUFFER_MAQ.h"
 
 void testing_giro(void);
 void testing_servos(void);
@@ -53,16 +54,23 @@ int main(void) {
    	Inicializacion ();
    	int t = 0;
 	//int t = 1;
+   	//Push_list_estados(FORWARD);
+   	//Push_list_estados(GIRO_DER);
+   	//Push_list_estados(FORWARD);
 
-    while(1) {
+   	while(1) {
     	//testing();
     	TimerEvent();
-    	ftl(); // hace que el auto siga una linea negra
-    	Maq_General();
+
+
+
+
+    	//ftl(); // hace que el auto siga una linea negra
+    	//Maq_General();
 
 
     	//Flag_Control = ON;
-    	if(t==0)
+    	if(t==0 | t==2)
     	{
     		ftl(); // hace que el auto siga una linea negra
     	}
@@ -79,19 +87,33 @@ int main(void) {
     	{
     		if(Maq_FollowTheLine_v2()== EXITO)
 			{
-				t = 0;
+				t = 1;
 				Flag_Control_G = 1;
 			}
     	}
-/*
+
     	else if(t == 1)
     	{
     		if(Maq_Giro_v2(DER)== EXITO)
 			{
-				t = 0;
+				t = 2;
 			}
     	}
-*/
+    	else if(t == 2)
+        	{
+        		if(Maq_FollowTheLine_v2()== EXITO)
+    			{
+    				t = 3;
+    				Flag_Control_G = 1;
+    			}
+        	}
+    	else if(t == 3)
+    	    	{
+    	    		if(Maq_Giro_v2(IZQ)== EXITO)
+    				{
+    					t = 4;
+    				}
+    	    	}
 
 
 
