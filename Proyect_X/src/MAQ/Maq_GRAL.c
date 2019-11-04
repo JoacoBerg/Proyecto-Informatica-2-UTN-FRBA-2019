@@ -23,35 +23,38 @@ uint8_t Maq_Caja(void){
 
 void Maq_General()
 {
-		static int32_t estado = BASE;
+		static int32_t estado = SELECTION;
 
 		switch(estado)
 		{
+			case SELECTION:
+				estado = Pop_list_estados();
+				break;
 			case BASE:
 				if(Maq_Base() == EXITO) //LECTURA DE UART
-					estado = Pop_list_estados();
+					estado = SELECTION;
 				break;
 			
 			case CAJA:
 				if(Maq_Caja() == EXITO) //LECTURA DE RFID
-					estado = Pop_list_estados();
+					estado = SELECTION;
 				break;
 			case GIRO_IZQ:
 				if(Maq_Giro(IZQ) == EXITO) //GIRO A 90° HACIA LA IZQUIERDA
-					estado = Pop_list_estados();
+					estado = SELECTION;
 				break;
 			
 			case GIRO_DER:
 				if(Maq_Giro(DER) == EXITO) //GIRO A 90° HACIA LA DERECHA
-					estado = Pop_list_estados();
+					estado = SELECTION;
 				break;
 			
 			case FORWARD:
 				if(Maq_FollowTheLine_v2() == EXITO) //AVANZAR
-					estado = Pop_list_estados();
+					estado = SELECTION;
 				break;
 			
-			default: estado = BASE;
+			default: estado = SELECTION;
 		}
 }
 
