@@ -93,55 +93,19 @@ uint8_t estado2 = RESET2;
 //Maquina que detecta cruces y llama a ftl()
 uint8_t Maq_FollowTheLine_v2(void)
 {
-	//static uint8_t cruce = 0; //sirve para saber si arrancaste en un cruce
-							  // 0 = arranco en cruce
-							  // 1 = ya salio del primer cruce | no arranco en cruce
-switch(estado2)
-{
-//probando cosas maravillosas
-/*		case RESET2:
-
-			if((IR_IZQ_OUT == 1 && IR_DER_OUT == 1) | (IR_IZQ_OUT == 1) | (IR_DER_OUT == 1))// si esta uno, el otro o los dos prendidos, arranca en primer cruce
-			{
-				Flag_Control = ON;
-				cruce = 0;
-				estado2 = PRIMERCRUCE;
-			}
-
-			else if(IR_IZQ_OUT == 0 && IR_DER_OUT == 0)
-			{
-				Flag_Control = ON;
-				cruce = 1;
-				estado2 = NOCRUCE;
-			}
-			break;
-
-		case PRIMERCRUCE:
-			if(cruce == 0)
-			{
-				Flag_Control = ON;
-				estado2 = PRIMERCRUCE;
-			}
-
-			else if(IR_IZQ_OUT == 0 && IR_DER_OUT == 0)
-			{
-				Flag_Control = ON;
-				cruce = 1;
-				estado2 = NOCRUCE;
-			}
-			break;
-*/
+	switch(estado2)
+	{
 		case RESET2:
+
 			Flag_Turn_ftl = ON;
 			waiting = 0;// para que no entre a ningun if de WAITING
-			TimerStart(4, 7, timer4, DEC);
+			TimerStart(4, 7, TimerSleepIRs, DEC);
 			estado2 = WAITING;
 			break;
 
 		case NOCRUCE:
 
-			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
-			{
+			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1){
 				Flag_Turn_ftl = OFF;
 				Tank_Brake();
 				Tank_Backward(VELOCIDAD_FTL);
@@ -151,17 +115,16 @@ switch(estado2)
 			}
 			break;
 
-			case WAITING:
-				if(waiting == 1)
-				{
-					estado2 = RESET2;
-					return EXITO;
-				}
-				else if(waiting == 2)
-				{
-					estado2 = NOCRUCE;
-				}
-				break;
+		case WAITING:
+
+			if(waiting == 1){
+				estado2 = RESET2;
+				return EXITO;
+			}
+			else if(waiting == 2){
+				estado2 = NOCRUCE;
+			}
+			break;
 
 		default:
 			estado2 = RESET2;
@@ -170,13 +133,12 @@ switch(estado2)
 	return ENPROCESO;
 }
 
-void timer4(void){
+void TimerSleepIRs(void){
 	waiting = 2;
 }
 
 //Funcion de Handler de Timer1
-void TimerFrenar(void)
-{
+void TimerFrenar(void){
 	Tank_Brake();
 	waiting = 1;
 }

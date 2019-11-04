@@ -35,42 +35,21 @@ void testing_tanks2(void);
 void testing_ftl(void);
 void testing_ftl_giro(void);
 
-void hand(void);
-void hand2(void);
-
-#define RES 0
-#define FTL 1
-#define GIR 2
-#define NADA 3
-
-int flagT = 0;
-int j = 0;
-uint8_t est = GIR;
-
-
-
 int main(void) {
 
    	Inicializacion ();
-   	int t = 0;
-	//int t = 1;
-   	//Push_list_estados(FORWARD);
-   	//Push_list_estados(GIRO_DER);
-   	//Push_list_estados(FORWARD);
+   	//int t = 0;
+
+   	//for testing
+   	Push_list_estados(FORWARD);
+   	Push_list_estados(GIRO_DER);
+   	Push_list_estados(FORWARD);
 
    	while(1) {
     	TimerEvent();
-    	//Maq_General();
-    	//ftl();
+    	Maq_General();
 
-    	//Flag_Control = ON;
-
-    	//testing_ftl();//esta maquina hace que cuando detecta un cruce frene y devuelva exito, y vuelva a arrancar
-    	//testing_ftl_giro();
-    	//Maq_FollowTheLine();
-    	//testing_servos();
-    	//testing_tanks2();
-
+    	/*
     	switch(t){
 
     		case(0):
@@ -97,11 +76,16 @@ int main(void) {
 
     		default:
     			break;
-    	}
-
+    	}*/
     }
+
     return 0;
 }
+
+
+
+
+
 /*
 void testing_ftl(void)
 {
@@ -130,46 +114,6 @@ void testing_ftl(void)
 
 	}
 }*/
-
-void hand2(void)
-{
-	Flag_Control_G = 1;
-	j = 0;
-}
-
-
-void testing_ftl_giro(void)
-{
-	int j = 0, y = 0;
-
-	switch(est)
-	{
-		case RES:
-			est = FTL;
-			//Flag_Control = ON;
-			break;
-
-		case FTL:
-			j = Maq_FollowTheLine_v2();
-			if(j == EXITO)
-			{
-				est = GIR;
-				//Flag_Control = OFF;
-			}
-			break;
-
-		case GIR:
-			Maq_Giro(DER);
-			if(y == EXITO)
-			{
-				est = RES;
-			}
-			break;
-
-		case NADA:
-			break;
-	}
-}
 
 void testing_tanks(void){
 	for(int i=0;i<500000;i++)
