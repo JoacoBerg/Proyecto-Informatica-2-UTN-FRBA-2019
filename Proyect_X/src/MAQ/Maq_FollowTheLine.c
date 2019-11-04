@@ -82,12 +82,12 @@
 
 
 
-//Interruptores de las maquinas de estado
+//Flags de las maquinas de estado
 uint8_t Flag_Turn_ftl = 0;
 uint8_t waiting = 0;
+
+//Variable de estado de Switch
 uint8_t estado2 = RESET2;
-
-
 
 
 //Maquina que detecta cruces y llama a ftl()
@@ -133,6 +133,7 @@ uint8_t Maq_FollowTheLine_v2(void)
 	return ENPROCESO;
 }
 
+//Funcion de Handler de Timer4
 void TimerSleepIRs(void){
 	waiting = 2;
 }
@@ -143,7 +144,7 @@ void TimerFrenar(void){
 	waiting = 1;
 }
 
-//Este es el codigo seguidor de lineas (solo utiliza ir del medio)
+//Este es el codigo seguidor de lineas (solo utiliza IR del medio)
 uint8_t ftl(void)	//se encarga del interior
 {
 	static uint8_t estado = CONTROL;

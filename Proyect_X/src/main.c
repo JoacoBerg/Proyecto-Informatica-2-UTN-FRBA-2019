@@ -41,9 +41,22 @@ int main(void) {
    	//int t = 0;
 
    	//for testing
+   //Push_list_estados(FORWARD);
+   	//Push_list_estados(FORWARD);
+   	Push_list_estados(FORWARD);
    	Push_list_estados(FORWARD);
    	Push_list_estados(GIRO_DER);
    	Push_list_estados(FORWARD);
+   	Push_list_estados(GIRO_DER);
+   	Push_list_estados(GIRO_DER);
+   	Push_list_estados(FORWARD);
+   	Push_list_estados(GIRO_IZQ);
+   	Push_list_estados(FORWARD);
+   	Push_list_estados(FORWARD);
+
+
+   	//Push_list_estados(GIRO_DER);
+   	//Push_list_estados(FORWARD);
 
    	while(1) {
     	TimerEvent();
