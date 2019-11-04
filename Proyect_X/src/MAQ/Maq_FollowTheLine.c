@@ -83,7 +83,7 @@
 
 
 //Interruptores de las maquinas de estado
-uint8_t Flag_Control = 0;
+uint8_t Flag_Turn_ftl = 0;
 uint8_t waiting = 0;
 uint8_t estado2 = RESET2;
 
@@ -132,33 +132,23 @@ switch(estado2)
 			break;
 */
 		case RESET2:
-			Flag_Control = ON;
+			Flag_Turn_ftl = ON;
 			waiting = 0;// para que no entre a ningun if de WAITING
 			TimerStart(4, 7, timer4, DEC);
 			estado2 = WAITING;
 			break;
 
 		case NOCRUCE:
-			/*if(cruce == 1)
-			{
-				Flag_Control = ON;
-				estado2 = NOCRUCE;
-			}
-			*/
 
 			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
 			{
-				Flag_Control = OFF;
+				Flag_Turn_ftl = OFF;
 				Tank_Brake();
 				Tank_Backward(VELOCIDAD_FTL);
 				TimerStart(1, 1, TimerFrenar, DEC); //hago que vaya 1 decima de segundo para atras para que frene en el lugar
-				//cruce = 0;
 				waiting = 0;
 				estado2 = WAITING;
 			}
-
-			Flag_Control = ON;
-
 			break;
 
 			case WAITING:
@@ -200,7 +190,7 @@ uint8_t ftl(void)	//se encarga del interior
 	{
 		case CONTROL:
 
-			if(Flag_Control == 1)
+			if(Flag_Turn_ftl == 1)
 			{
 				estado = RESET;
 			}
@@ -215,7 +205,7 @@ uint8_t ftl(void)	//se encarga del interior
 			Tank_Forward(VELOCIDAD_FTL);
 				estado = X11X;
 
-			if(Flag_Control == 0)
+			if(Flag_Turn_ftl == 0)
 			{
 				estado = CONTROL;
 			}
@@ -235,7 +225,7 @@ uint8_t ftl(void)	//se encarga del interior
 				Tank_Left(VELOCIDAD_FTL);
 				estado = X10X;
 			}
-			if(Flag_Control == 0)
+			if(Flag_Turn_ftl == 0)
 			{
 				estado = CONTROL;
 			}
@@ -251,7 +241,7 @@ uint8_t ftl(void)	//se encarga del interior
 
 			}
 
-			if(Flag_Control == 0)
+			if(Flag_Turn_ftl == 0)
 			{
 				estado = CONTROL;
 			}
@@ -266,7 +256,7 @@ uint8_t ftl(void)	//se encarga del interior
 				estado = X11X;
 
 			}
-			if(Flag_Control == 0)
+			if(Flag_Turn_ftl == 0)
 			{
 				estado = CONTROL;
 			}
