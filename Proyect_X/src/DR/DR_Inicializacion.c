@@ -18,7 +18,7 @@
 #include "DR_Inicializacion.h"
 #include "Tanks.h"
 #include "Boton.h"
-
+#include "DR_UART0.h"
 
 
 /***********************************************************************************************************************************
@@ -70,6 +70,8 @@ void Inicializacion ( void )
 	//!< Se configura el systic cada 1ms
 	InicializarPLL();
 	SysTick_Init();
+
+	UART0_Inicializacion();
 
 	Tanks_Init();  //Servo init no existe, ya que el tanque se encarga de eso
 	Boton_init();

@@ -73,6 +73,7 @@
 #define 	RESET2		0
 #define 	PRIMERCRUCE	1
 #define 	NOCRUCE		2
+#define 	WAITING		3
 
 
 
@@ -81,74 +82,47 @@
 
 
 
-//Interruptores de las maquinas de estado
-uint8_t Flag_Control = 0;
-uint8_t flag_TB=0; //este flag sirve para que frene con el timer (este timer tiene injerencia en ftl())
+//Flags de las maquinas de estado
+uint8_t Flag_Turn_ftl = 0;
+uint8_t waiting = 0;
 
-
-
+//Variable de estado de Switch
+uint8_t estado2 = RESET2;
 
 
 //Maquina que detecta cruces y llama a ftl()
 uint8_t Maq_FollowTheLine_v2(void)
 {
-	static uint8_t estado2 = RESET2;
-	static uint8_t cruce = 0; //sirve para saber si arrancaste en un cruce
-							  // 0 = arranco en cruce
-							  // 1 = ya salio del primer cruce | no arranco en cruce
-switch(estado2)
+	switch(estado2)
 	{
-
 		case RESET2:
 
-			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
-			{
-				Flag_Control = ON;
-				cruce = 0;
-				estado2 = PRIMERCRUCE;
-			}
-
-			if(IR_IZQ_OUT == 0 && IR_DER_OUT == 0)
-			{
-				Flag_Control = ON;
-				cruce = 1;
-				estado2 = NOCRUCE;
-			}
-			break;
-
-		case PRIMERCRUCE:
-			if(cruce == 0)
-			{
-				Flag_Control = ON;
-				estado2 = PRIMERCRUCE;
-			}
-
-			if(IR_IZQ_OUT == 0 && IR_DER_OUT == 0)
-			{
-				Flag_Control = ON;
-				cruce = 1;
-				estado2 = NOCRUCE;
-			}
+			Flag_Turn_ftl = ON;
+			waiting = 0;// para que no entre a ningun if de WAITING
+			TimerStart(4, 7, TimerSleepIRs, DEC);
+			estado2 = WAITING;
 			break;
 
 		case NOCRUCE:
-			if(cruce == 1)
-			{
-				Flag_Control = ON;
-				estado2 = NOCRUCE;
-			}
 
-			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1)
-			{
+			if(IR_IZQ_OUT == 1 && IR_DER_OUT == 1){
+				Flag_Turn_ftl = OFF;
 				Tank_Brake();
 				Tank_Backward(VELOCIDAD_FTL);
 				TimerStart(1, 1, TimerFrenar, DEC); //hago que vaya 1 decima de segundo para atras para que frene en el lugar
-				flag_TB = 1; //este flag sirve para que frene con el timer (este timer tiene injerencia en ftl())
-							 //si esta en 1 frena con el Timer
-				cruce = 0;
+				waiting = 0;
+				estado2 = WAITING;
+			}
+			break;
+
+		case WAITING:
+
+			if(waiting == 1){
 				estado2 = RESET2;
-				Flag_Control = OFF;
 				return EXITO;
+			}
+			else if(waiting == 2){
+				estado2 = NOCRUCE;
 			}
 			break;
 
@@ -159,7 +133,18 @@ switch(estado2)
 	return ENPROCESO;
 }
 
-//Este es el codigo seguidor de lineas (solo utiliza ir del medio)
+//Funcion de Handler de Timer4
+void TimerSleepIRs(void){
+	waiting = 2;
+}
+
+//Funcion de Handler de Timer1
+void TimerFrenar(void){
+	Tank_Brake();
+	waiting = 1;
+}
+
+//Este es el codigo seguidor de lineas (solo utiliza IR del medio)
 uint8_t ftl(void)	//se encarga del interior
 {
 	static uint8_t estado = CONTROL;
@@ -168,16 +153,13 @@ uint8_t ftl(void)	//se encarga del interior
 	{
 		case CONTROL:
 
-			if(Flag_Control == 1)
+			if(Flag_Turn_ftl == 1)
 			{
 				estado = RESET;
 			}
 			else
 			{
 				estado = CONTROL;
-				if(flag_TB ==0) Tank_Brake(); //habria que probrar si la maquina deja de andar bien por no poner este Tank_Brake()
-											  //El if() esta para que no se active esta linea si hay un timer para frenar al auto
-											  //Maq_FollowTheLine_v2()
 			}
 			break;
 
@@ -186,10 +168,9 @@ uint8_t ftl(void)	//se encarga del interior
 			Tank_Forward(VELOCIDAD_FTL);
 				estado = X11X;
 
-			if(Flag_Control == 0)
+			if(Flag_Turn_ftl == 0)
 			{
 				estado = CONTROL;
-				if(flag_TB ==0) Tank_Brake();
 			}
 
 			break;
@@ -207,10 +188,9 @@ uint8_t ftl(void)	//se encarga del interior
 				Tank_Left(VELOCIDAD_FTL);
 				estado = X10X;
 			}
-			if(Flag_Control == 0)
+			if(Flag_Turn_ftl == 0)
 			{
 				estado = CONTROL;
-				if(flag_TB ==0) Tank_Brake();
 			}
 
 			break;
@@ -224,10 +204,9 @@ uint8_t ftl(void)	//se encarga del interior
 
 			}
 
-			if(Flag_Control == 0)
+			if(Flag_Turn_ftl == 0)
 			{
 				estado = CONTROL;
-				if(flag_TB ==0) Tank_Brake();
 			}
 
 			break;
@@ -240,10 +219,9 @@ uint8_t ftl(void)	//se encarga del interior
 				estado = X11X;
 
 			}
-			if(Flag_Control == 0)
+			if(Flag_Turn_ftl == 0)
 			{
 				estado = CONTROL;
-				if(flag_TB ==0) Tank_Brake();
 			}
 
 			break;
@@ -258,12 +236,7 @@ uint8_t ftl(void)	//se encarga del interior
 		return ENPROCESO;
 }
 
-//Funcion de Handler de Timer1
-void TimerFrenar(void)
-{
-	Tank_Brake();
-	flag_TB = 0; //este flag sirve para que frene con el timer (este timer tiene injerencia en ftl())
-}
+
 
 
 

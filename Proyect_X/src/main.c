@@ -26,6 +26,7 @@
 #include "Maq_GRAL.h"
 #include "DR_GPIO.h"
 #include "DR_PINSEL.h"
+#include "BUFFER_MAQ.h"
 
 void testing_giro(void);
 void testing_servos(void);
@@ -34,91 +35,98 @@ void testing_tanks2(void);
 void testing_ftl(void);
 void testing_ftl_giro(void);
 
-void hand(void);
-void hand2(void);
-
-#define RES 0
-#define FTL 1
-#define GIR 2
-#define NADA 3
-
-int flagT = 0;
-uint8_t est = RES;
-
-
-
 int main(void) {
 
    	Inicializacion ();
+   	//int t = 0;
+
+   	//for testing
+   //Push_list_estados(FORWARD);
+   	//Push_list_estados(FORWARD);
+   	Push_list_estados(FORWARD);
+   	Push_list_estados(FORWARD);
+   	Push_list_estados(GIRO_DER);
+   	Push_list_estados(FORWARD);
+   	Push_list_estados(GIRO_DER);
+   	Push_list_estados(GIRO_DER);
+   	Push_list_estados(FORWARD);
+   	Push_list_estados(GIRO_IZQ);
+   	Push_list_estados(FORWARD);
+   	Push_list_estados(FORWARD);
 
 
-    while(1) {
-    	//testing();
+   	//Push_list_estados(GIRO_DER);
+   	//Push_list_estados(FORWARD);
+
+   	while(1) {
     	TimerEvent();
-    	ftl(); // hace que el auto siga una linea negra
     	Maq_General();
 
-    	//testing_ftl();//esta maquina hace que cuando detecta un cruce frene y devuelva exito, y vuelva a arrancar
-    	//testing_ftl_giro();
-    	//Maq_FollowTheLine();
-    	//testing_servos();
-    	//testing_tanks2();
+    	/*
+    	switch(t){
+
+    		case(0):
+				ftl();
+				if(Maq_FollowTheLine_v2()== EXITO)
+					t++;
+    			break;
+
+    		case(1):
+				if(Maq_Giro_v2(DER)== EXITO)
+					t++;
+    			break;
+
+    		case(2):
+				ftl();
+				if(Maq_FollowTheLine_v2()== EXITO)
+					t++;
+    			break;
+
+    		case(3):
+				if(Maq_Giro_v2(IZQ)== EXITO)
+					t++;
+    			break;
+
+    		default:
+    			break;
+    	}*/
     }
-    return 0 ;
+
+    return 0;
 }
 
+
+
+
+
+/*
 void testing_ftl(void)
 {
+	int i = 0;
 
-	if(flagT == 0)
+	if(i == 0)
+	{
+		Flag_Control_G = 1;
+		i = 1;
+	}
+
+	if(Maq_Giro_v2(DER) == EXITO)
+	{
+		Flag_Control_G = 0;
+		if(j == 0)
+		{
+			TimerStart(2, 3, hand2, SEG);
+			j = 1;
+		}
+
+	}
+////////////////////////////////
+	if(Flag_Control_G == 1)
 	{
 		//if(Maq_FollowTheLine_v2() == EXITO)
-		if(Maq_Giro(DER) == EXITO)
-		{
-			flagT = 1;
-			TimerStart(2, 3, hand2, SEG);
-		}
+
 	}
-}
-
-void hand2(void)
-{
-	flagT = 0;
-}
-
-
-void testing_ftl_giro(void)
-{
-	int j = 0, y = 0;
-
-	switch(est)
-	{
-		case RES:
-			est = FTL;
-			Flag_Control = ON;
-			break;
-
-		case FTL:
-			j = Maq_FollowTheLine_v2();
-			if(j == EXITO)
-			{
-				est = GIR;
-				Flag_Control = OFF;
-			}
-			break;
-
-		case GIR:
-			Maq_Giro(DER);
-			if(y == EXITO)
-			{
-				est = RES;
-			}
-			break;
-
-		case NADA:
-			break;
-	}
-}
+}*/
 
 void testing_tanks(void){
 	for(int i=0;i<500000;i++)
