@@ -59,7 +59,7 @@ int UART0_PopRX(void){
 uint8_t Maq_Base(void){
 
 	Servo_Abierto();
-	uint8_t lectura = 0;
+	int lectura = 0;
 
 	static int fin = START_POSITION;
 	static int init = START_POSITION;
@@ -89,8 +89,10 @@ uint8_t Maq_Base(void){
 					tramaStart_ok = 0;
 					return EXITO;
 				}
+				//aca es un numero
+				lectura = lectura - '0'; //convierto de ascii a numerico
 
-				fin = (int) lectura; //checkear esto
+				fin = lectura; //checkear esto
 				nodos = get_nodos(init, fin);
 				if ( nodos == 1){
 					start_dir = FORWARD;
