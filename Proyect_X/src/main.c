@@ -59,21 +59,11 @@ int main(void) {
    	//Push_list_estados(FORWARD);
 
    	while(1) {
-    	//testing();
     	TimerEvent();
-
-
-
-
-    	//ftl(); // hace que el auto siga una linea negra
     	//Maq_General();
-
+    	//ftl();
 
     	//Flag_Control = ON;
-    	if(t==0 | t==2)
-    	{
-    		ftl(); // hace que el auto siga una linea negra
-    	}
 
     	//testing_ftl();//esta maquina hace que cuando detecta un cruce frene y devuelva exito, y vuelva a arrancar
     	//testing_ftl_giro();
@@ -81,44 +71,36 @@ int main(void) {
     	//testing_servos();
     	//testing_tanks2();
 
+    	switch(t){
 
+    		case(0):
+				ftl();
+				if(Maq_FollowTheLine_v2()== EXITO)
+					t++;
+    			break;
 
-    	if(t == 0)
-    	{
-    		if(Maq_FollowTheLine_v2()== EXITO)
-			{
-				t = 1;
-				Flag_Control_G = 1;
-			}
+    		case(1):
+				if(Maq_Giro_v2(DER)== EXITO)
+					t++;
+    			break;
+
+    		case(2):
+				ftl();
+				if(Maq_FollowTheLine_v2()== EXITO)
+					t++;
+    			break;
+
+    		case(3):
+				if(Maq_Giro_v2(IZQ)== EXITO)
+					t++;
+    			break;
+
+    		default:
+    			break;
     	}
-
-    	else if(t == 1)
-    	{
-    		if(Maq_Giro_v2(DER)== EXITO)
-			{
-				t = 2;
-			}
-    	}
-    	else if(t == 2)
-        	{
-        		if(Maq_FollowTheLine_v2()== EXITO)
-    			{
-    				t = 3;
-    				Flag_Control_G = 1;
-    			}
-        	}
-    	else if(t == 3)
-    	    	{
-    	    		if(Maq_Giro_v2(IZQ)== EXITO)
-    				{
-    					t = 4;
-    				}
-    	    	}
-
-
 
     }
-    return 0 ;
+    return 0;
 }
 
 void testing_ftl(void)

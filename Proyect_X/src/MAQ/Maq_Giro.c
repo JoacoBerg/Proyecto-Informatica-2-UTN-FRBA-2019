@@ -30,13 +30,11 @@
 #define 	DERECHA					2
 #define 	CUARENTAYCINCOGRADOS	3
 
-#define CONTR    0
-#define RES      1
-#define IZ       2
-#define DE    	 3
-#define DOBLANDO 4
+#define CONTR    			0
+#define RES     			1
+#define EMPIEZA_A_GIRAR		2
+#define DOBLANDO			3
 
-#define ERROR 3
 
 #define		VELOCIDAD_GIRO	100
 
@@ -44,21 +42,10 @@ uint8_t Flag_Control_G = 0;
 
 uint8_t Maq_Giro_v2(uint8_t orient)
 {
-	static uint8_t estado = RESET;
+	static uint8_t estado = RES;
 
 	switch (estado)
 	{
-		case CONTR:
-
-			if(Flag_Control_G == 1)
-			{
-				estado = RES;
-			}
-			else
-			{
-				estado = CONTR;
-			}
-				break;
 
 		case RES:
 			if(IR_DER_OUT == 1 && IR_IZQ_OUT == 1)
@@ -66,62 +53,36 @@ uint8_t Maq_Giro_v2(uint8_t orient)
 				switch(orient)
 				{
 					case DER:
-						estado = DE;
 						FDerecha();
 						break;
 
 					case IZQ:
-						estado = IZ;
 						FIzquierda();
-
 						break;
+
 					default:
-						Flag_Control_G = 0;
-						return ERROR;
+						estado = RES;
+ 						return FALLO;
 						break;
 				}
+				estado = EMPIEZA_A_GIRAR;
 			}
-			else
-			{
-				/*y ahora?*/
-			}
+			else{}/*y ahora?*/
 			break;
 
-		case IZ:
-			FIzquierda();
-			if(IR_DER_IN == 0 && IR_IZQ_IN == 0)
-			{
-				estado = DOBLANDO;
-			}
+		case EMPIEZA_A_GIRAR:
 
-			break;
-
-		case DE:
-			FDerecha();
 			if(IR_DER_IN == 0 && IR_IZQ_IN == 0)
-			{
 				estado = DOBLANDO;
-			}
 			break;
 
 		case DOBLANDO:
-			if(orient == DE)
-			{
-				FDerecha();
-			}
-			else if(orient == IZ)
-			{
-				FIzquierda();
-			}
 		  //if(IR_DER_OUT == 1 && IR_IZQ_OUT == 1)
-			if(IR_DER_IN == 1 && IR_IZQ_IN == 1)
-			{
+			if(IR_DER_IN == 1 && IR_IZQ_IN == 1){
 				Frenar();
-				Flag_Control_G = 0;
-				estado = CONTR;
+				estado = RES;
 				return EXITO;
 			}
-
 			break;
 
 		default:
@@ -131,7 +92,7 @@ uint8_t Maq_Giro_v2(uint8_t orient)
 	return ENPROCESO;
 }
 
-
+/*
 //
 uint8_t Maq_Giro(uint8_t orient)
 {
@@ -194,7 +155,7 @@ uint8_t Maq_Giro(uint8_t orient)
 		return ENPROCESO;
 
 }
-
+*/
 //Funciones asociadas a los eventos
 
 /**
