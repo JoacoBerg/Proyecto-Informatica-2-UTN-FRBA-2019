@@ -38,8 +38,6 @@
 
 #define		VELOCIDAD_GIRO	100
 
-uint8_t Flag_Control_G = 0;
-
 uint8_t Maq_Giro_v2(uint8_t orient)
 {
 	static uint8_t estado = RES;

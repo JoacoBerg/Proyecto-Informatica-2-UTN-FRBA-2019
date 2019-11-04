@@ -102,7 +102,7 @@ int main(void) {
     }
     return 0;
 }
-
+/*
 void testing_ftl(void)
 {
 	int i = 0;
@@ -123,13 +123,13 @@ void testing_ftl(void)
 		}
 
 	}
-
-	/*if(Flag_Control_G == 1)
+////////////////////////////////
+	if(Flag_Control_G == 1)
 	{
 		//if(Maq_FollowTheLine_v2() == EXITO)
 
-	}*/
-}
+	}
+}*/
 
 void hand2(void)
 {
