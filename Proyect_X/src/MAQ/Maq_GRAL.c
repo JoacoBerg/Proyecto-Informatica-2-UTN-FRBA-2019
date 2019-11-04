@@ -40,16 +40,17 @@ void Maq_General()
 					estado = SELECTION;
 				break;
 			case GIRO_IZQ:
-				if(Maq_Giro(IZQ) == EXITO) //GIRO A 90° HACIA LA IZQUIERDA
+				if(Maq_Giro_v2(IZQ) == EXITO) //GIRO A 90° HACIA LA IZQUIERDA
 					estado = SELECTION;
 				break;
 			
 			case GIRO_DER:
-				if(Maq_Giro(DER) == EXITO) //GIRO A 90° HACIA LA DERECHA
+				if(Maq_Giro_v2(DER) == EXITO) //GIRO A 90° HACIA LA DERECHA
 					estado = SELECTION;
 				break;
 			
 			case FORWARD:
+				ftl();
 				if(Maq_FollowTheLine_v2() == EXITO) //AVANZAR
 					estado = SELECTION;
 				break;

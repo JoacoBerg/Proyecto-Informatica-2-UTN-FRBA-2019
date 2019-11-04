@@ -1,12 +1,3 @@
-/**
-*	\file funciones.c
-*	\brief
-*	\details Descripcion detallada del archivo
-*	\author CrisafienGerman
-*	\date 15-09-2019 18:56:46
-*/
-
-
 #include "DR_tipos.h"
 #include "Maq_Giro.h"
 #include "DR_IR.h"
@@ -25,103 +16,56 @@
 
 
 //Declaracion de estados
-#define 	IZQUIERDA				0
-#define 	RESET					1
-#define 	DERECHA					2
-#define 	CUARENTAYCINCOGRADOS	3
+#define CONTR    			0
+#define RES     			1
+#define EMPIEZA_A_GIRAR		2
+#define DOBLANDO			3
 
-#define CONTR    0
-#define RES      1
-#define IZ       2
-#define DE    	 3
-#define DOBLANDO 4
-
-#define ERROR 3
 
 #define		VELOCIDAD_GIRO	100
 
-uint8_t Flag_Control_G = 0;
 
 uint8_t Maq_Giro_v2(uint8_t orient)
 {
-	static uint8_t estado = RESET;
+	static uint8_t estado = RES;
 
 	switch (estado)
 	{
-		case CONTR:
-
-			if(Flag_Control_G == 1)
-			{
-				estado = RES;
-			}
-			else
-			{
-				estado = CONTR;
-			}
-				break;
 
 		case RES:
-			if(IR_DER_OUT == 1 && IR_IZQ_OUT == 1)
+			if(IR_DER_IN == 1 && IR_IZQ_IN == 1)
 			{
 				switch(orient)
 				{
 					case DER:
-						estado = DE;
 						FDerecha();
 						break;
 
 					case IZQ:
-						estado = IZ;
 						FIzquierda();
-
 						break;
+
 					default:
-						Flag_Control_G = 0;
-						return ERROR;
+						estado = RES;
+ 						return FALLO;
 						break;
 				}
-			}
-			else
-			{
-				/*y ahora?*/
+				estado = EMPIEZA_A_GIRAR;
 			}
 			break;
 
-		case IZ:
-			FIzquierda();
-			if(IR_DER_IN == 0 && IR_IZQ_IN == 0)
-			{
-				estado = DOBLANDO;
-			}
+		case EMPIEZA_A_GIRAR:
 
-			break;
-
-		case DE:
-			FDerecha();
 			if(IR_DER_IN == 0 && IR_IZQ_IN == 0)
-			{
 				estado = DOBLANDO;
-			}
 			break;
 
 		case DOBLANDO:
-			if(orient == DE)
-			{
-				FDerecha();
-			}
-			else if(orient == IZ)
-			{
-				FIzquierda();
-			}
-		  //if(IR_DER_OUT == 1 && IR_IZQ_OUT == 1)
-			if(IR_DER_IN == 1 && IR_IZQ_IN == 1)
-			{
+			if(IR_DER_IN == 1 && IR_IZQ_IN == 1){
 				Frenar();
-				Flag_Control_G = 0;
-				estado = CONTR;
+				estado = RES;
 				return EXITO;
 			}
-
 			break;
 
 		default:
@@ -131,8 +75,42 @@ uint8_t Maq_Giro_v2(uint8_t orient)
 	return ENPROCESO;
 }
 
+void Frenar(void)
+{
+	Tank_Brake();
+}
 
-//
+/**
+*	\fn void FIzquierda(void)
+*	\brief Resumen
+*	\details Detalles
+*	\author CrisafienGerman
+*	\date 15-09-2019 18:56:46
+*/
+void FIzquierda(void){
+	Tank_Left(VELOCIDAD_GIRO);
+}
+
+/**
+*	\fn void FDerecha(void)
+*	\brief Resumen
+*	\details Detalles
+*	\author CrisafienGerman
+*	\date 15-09-2019 18:56:46
+*/
+void FDerecha(void){
+	Tank_Right(VELOCIDAD_GIRO);
+}
+
+
+/*
+
+ MAQUINA DE ESTADOS DESCARTADA
+
+#define 	IZQUIERDA				0
+#define 	RESET					1
+#define 	DERECHA					2
+#define 	CUARENTAYCINCOGRADOS	3
 uint8_t Maq_Giro(uint8_t orient)
 {
 		static uint8_t estado = RESET;
@@ -194,7 +172,7 @@ uint8_t Maq_Giro(uint8_t orient)
 		return ENPROCESO;
 
 }
-
+*/
 //Funciones asociadas a los eventos
 
 /**
@@ -215,30 +193,5 @@ uint8_t Maq_Giro(uint8_t orient)
 *	\author CrisafienGerman
 *	\date 15-09-2019 18:56:46
 */
-void Frenar(void)
-{
-	Tank_Brake();
-}
 
-/**
-*	\fn void FIzquierda(void)
-*	\brief Resumen
-*	\details Detalles
-*	\author CrisafienGerman
-*	\date 15-09-2019 18:56:46
-*/
-void FIzquierda(void){
-	Tank_Left(VELOCIDAD_GIRO);
-}
-
-/**
-*	\fn void FDerecha(void)
-*	\brief Resumen
-*	\details Detalles
-*	\author CrisafienGerman
-*	\date 15-09-2019 18:56:46
-*/
-void FDerecha(void){
-	Tank_Right(VELOCIDAD_GIRO);
-}
 
