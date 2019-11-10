@@ -12,4 +12,5 @@
 //declaracion de la maquina
 void Maq_General(void);
 
+uint8_t Maq_Dummy(void);
 

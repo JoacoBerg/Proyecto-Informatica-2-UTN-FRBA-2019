@@ -70,7 +70,7 @@
 #define 	CONTROL 5
 
 //Declaracion de estados de Maq_FollowTheLine_v2()
-#define 	RESET2		0
+//#define 	RESET		0
 #define 	PRIMERCRUCE	1
 #define 	NOCRUCE		2
 #define 	WAITING		3
@@ -96,35 +96,73 @@ void TimerSleepIRs(void);
 //Maquina que detecta cruces y llama a ftl()
 uint8_t Maq_FollowTheLine_v2(void)
 {
-	static uint8_t estado2 = RESET2;
-	switch(estado2)
-	{
-		case RESET2:
+	static uint8_t estado2 = RESET;
+	static uint8_t estado_obstaculo = RESET;
+	static uint8_t estado_aux = RESET;
+	static uint8_t Flag_Turn_ftl_aux = OFF;
+	static uint8_t waiting_IRs_aux = OFF;
 
-			Flag_Turn_ftl = ON;
-			waiting_IRs = OFF;// para que no entre a ningun if de WAITING
-			TimerStart(TIMER4, 4, TimerSleepIRs, DEC);
-			estado2 = WAITING;
-			break;
+	if(estado_obstaculo == RESET){
 
-		case NOCRUCE:
+		if (IR_OBSTACULO == ON){
 
-			if(IR_IZQ_OUT == ON && IR_DER_OUT == ON){
-				estado2 = RESET2;
-				return EXITO;
+			//guardo variables en estados auxiliares
+			estado_aux = estado2;
+			Flag_Turn_ftl_aux = Flag_Turn_ftl;
+			waiting_IRs_aux = waiting_IRs;
+			//freno todo
+			TimerStop(TIMER4);
+			Maq_Freno();
+			estado_obstaculo = WAITING;
+		}
+
+		else{
+
+			switch(estado2)
+			{
+				case RESET:
+
+					Flag_Turn_ftl = ON;
+					waiting_IRs = OFF;// para que no entre a ningun if de WAITING
+					TimerStart(TIMER4, 4, TimerSleepIRs, DEC);
+					estado2 = WAITING;
+					break;
+
+				case WAITING:
+
+					if(waiting_IRs == ON)
+						estado2 = NOCRUCE;
+					break;
+
+				case NOCRUCE:
+
+					if(IR_IZQ_OUT == ON && IR_DER_OUT == ON){
+						estado2 = RESET;
+						return EXITO;
+					}
+					break;
+
+				default:
+
+					estado2 = RESET;
+					break;
 			}
-			break;
+		}
+	}
+	else if (estado_obstaculo == WAITING){
 
-		case WAITING:
-
-			if(waiting_IRs == ON)
-				estado2 = NOCRUCE;
-			break;
-
-		default:
-
-			estado2 = RESET2;
-			break;
+		if(IR_OBSTACULO == OFF){
+			estado2 = estado_aux;
+			Flag_Turn_ftl = Flag_Turn_ftl_aux;
+			waiting_IRs = waiting_IRs_aux;
+			if(estado2 == WAITING){
+				TimerStart(TIMER4, 4, TimerSleepIRs, DEC);
+			}
+			estado_obstaculo = RESET;
+		}
+		else{
+			//nada
+		}
 	}
 	return ENPROCESO;
 }
