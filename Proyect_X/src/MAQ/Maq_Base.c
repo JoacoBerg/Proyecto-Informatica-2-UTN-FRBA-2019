@@ -89,6 +89,9 @@ uint8_t Maq_Base(void){
 					tramaStart_ok = 0;
 					return EXITO;
 				}
+				if(lectura == -1){
+					return ENPROCESO;
+				}
 				//aca es un numero
 				lectura = lectura - '0'; //convierto de ascii a numerico
 
@@ -157,17 +160,20 @@ int get_nodos(int init, int fin){
 	return 0;
 }
 
-
+/*
 int get_start_dir(int init, int fin){
 	if(init%2){
+
 		if( fin > init ){
 			return GIRO_DER;
 		}
 		else{
 			return GIRO_IZQ;
 		}
+
 	}
 	else{
+
 		if( fin > init ){
 			return GIRO_IZQ;
 		}
@@ -184,5 +190,52 @@ int get_last_dir(int init, int fin){
 	}
 	else{
 		return GIRO_DER;
+	}
+}
+*/
+
+
+int get_start_dir(int init, int fin){
+	if(init%2){
+
+		if( fin > init ){
+			return GIRO_DER;
+		}
+		else{
+			return GIRO_IZQ;
+		}
+
+	}
+	else{
+
+		if( fin > init ){
+			return GIRO_IZQ;
+		}
+		else{
+			return GIRO_DER;
+		}
+	}
+}
+
+
+int get_last_dir(int init, int fin){
+	if(fin%2){
+
+		if( fin > init ){
+			return GIRO_DER;
+		}
+		else{
+			return GIRO_IZQ;
+		}
+
+	}
+	else{
+
+		if( fin > init ){
+			return GIRO_IZQ;
+		}
+		else{
+			return GIRO_DER;
+		}
 	}
 }
