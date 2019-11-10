@@ -77,41 +77,56 @@ void init_caja()
 
 #define SEGUNDOS 2
 //------------------EVENTOS--------------------------
-#define E_WrongID	3
-#define E_BlinkRed 	4
-#define E_Exit		5
-//------------------TIEMPOS--------------------------
-#define T_WrongID	7
-#define T_BlinkRed	3
-#define T_Exit		7
-uint32_t blink=0;
+#define E_WrongID		3
+#define E_BlinkON 		4
+#define E_BlinkOFF		5
+#define E_Exit			6
+#define E_BlinkGreenON	7
+#define E_BlinkGreenOFF	8
 
-//------------------Handlers--------------------------
+//------------------TIEMPOS--------------------------
+#define T_WrongID		7
+#define T_BlinkRed		3 //en decimas
+#define T_Exit			7
+#define T_BlinkGreen	5 //en decimas
+//------------------HANDLERS----------------------------------
+void handler_BlinkOFF();
+void handler_BlinkON();
+void handler_BlinkGreenON();
+void handler_BlinkGreenOFF();
+
 //Bloquea acceso por tarjeta no valida
 void handler_WrongID(){
 	estado = BUSCAR_ID;
 }
+
 //Parpadeo hasta que termine tiempo de bloqueo
-void handler_BlinkRed(){
-	if(blink%2)
-	{
-		RED_OFF;
-		blink++;
-	}
-	else
-	{
-		RED_ON;
-		blink++;
-	}
-	TimerStart(E_BlinkRed, T_BlinkRed, handler_BlinkRed, SEG );
+void handler_BlinkOFF(){
+	RED_OFF;
+	TimerStart(E_BlinkON, T_BlinkRed, handler_BlinkON, DEC );
+}
+void handler_BlinkON(){
+	RED_ON;
+	TimerStart(E_BlinkOFF, T_BlinkRed, handler_BlinkOFF, DEC );
 }
 
-void handler_Exit()
-{
+//
+void handler_Exit(){
 	estado = SALIENDO;
 }
-uint8_t flag=0;
 
+//Parpadeo de estado con Caja LLENA
+void handler_BlinkGreenOFF(){
+	GREEN_OFF;
+	TimerStart(E_BlinkGreenON, T_BlinkGreen, handler_BlinkGreenON, SEG );
+}
+void handler_BlinkGreenON(){
+	GREEN_ON;
+	TimerStart(E_BlinkGreenOFF, T_BlinkGreen, handler_BlinkGreenOFF, SEG );
+}
+
+uint8_t flag=0;
+//-----------FIN DE HANDLERS-----------------------------------
 // FUNCION Maq_Caja: se encarga de supervisar el estado de la caja
 //return: exito si tarjeta ID, Boton e iman son correctos
 uint8_t Maq_Caja()
@@ -124,6 +139,8 @@ uint8_t Maq_Caja()
 			GREEN_OFF;
 			BLUE_OFF;
 			SERVO_CERRADO;
+			TimerStop(E_BlinkGreenOFF);
+			TimerStop(E_BlinkGreenON);
 
 			estado = BUSCAR_ID;
 			break;
@@ -136,7 +153,8 @@ uint8_t Maq_Caja()
 				RED_OFF;
 
 				TimerStop(E_WrongID);	//por si acaso
-				TimerStop(E_BlinkRed); //termino blink
+				TimerStop(E_BlinkON); //termino blink
+				TimerStop(E_BlinkOFF); //termino blink
 
 				estado = BUSCAR_BOTON;
 			}
@@ -145,7 +163,7 @@ uint8_t Maq_Caja()
 				RED_ON;
 				flag_Wrong++;
 				TimerStart(E_WrongID, T_WrongID, handler_WrongID, SEG );
-				TimerStart(E_BlinkRed, T_BlinkRed, handler_BlinkRed, SEG );
+				TimerStart(E_BlinkON, T_BlinkRed, handler_BlinkON, DEC );
 				estado = ESPERANDO;
 			}
 			if(!card)
@@ -160,7 +178,8 @@ uint8_t Maq_Caja()
 
 		case BUSCAR_BOTON:
 			TimerStop(E_WrongID);
-			TimerStop(E_BlinkRed);
+			TimerStop(E_BlinkON);
+			TimerStop(E_BlinkOFF);
 
 			if( BOTON )
 			{
@@ -190,6 +209,7 @@ uint8_t Maq_Caja()
 		case SALIENDO:
 			TimerStop(E_Exit);
 			retorno = 1;
+			TimerStart(E_BlinkGreenON, T_BlinkGreen, handler_BlinkGreenON, DEC );
 			estado = RESET;
 			break;
 
