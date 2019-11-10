@@ -103,7 +103,7 @@ uint8_t Maq_FollowTheLine_v2(void)
 
 			Flag_Turn_ftl = ON;
 			waiting_IRs = OFF;// para que no entre a ningun if de WAITING
-			TimerStart(TIMER4, 7, TimerSleepIRs, DEC);
+			TimerStart(TIMER4, 4, TimerSleepIRs, DEC);
 			estado2 = WAITING;
 			break;
 

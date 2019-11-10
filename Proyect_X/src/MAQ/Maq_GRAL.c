@@ -73,7 +73,7 @@ uint8_t Maq_Dummy(void){
 
 		case RESET_DUMMY:
 
-			TimerStart(TIMER3, 4, TimerDummy, SEG); //hago que vaya 1 decima de segundo para atras para que frene en el lugar
+			TimerStart(TIMER3, 3, TimerDummy, SEG); //hago que vaya 1 decima de segundo para atras para que frene en el lugar
 			waiting_dummy = OFF;
 			estado = WAIT_DUMMY;
 			break;

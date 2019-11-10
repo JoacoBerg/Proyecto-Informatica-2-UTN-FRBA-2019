@@ -33,7 +33,7 @@ uint8_t Maq_Giro_v2(uint8_t orient)
 	{
 
 		case RES:
-			if(IR_DER_IN == 1 && IR_IZQ_IN == 1)
+			if(IR_DER_IN == 1 || IR_IZQ_IN == 1) //PONEMOS UNA OR PARA QUE ARRANQUE SI CUALQUIERA DE LOS 2 ESTA EN LINEA NEGRA
 			{
 				switch(orient)
 				{
