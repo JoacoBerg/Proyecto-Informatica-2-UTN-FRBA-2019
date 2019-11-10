@@ -46,7 +46,7 @@ int flagT = 0;
 uint8_t est = RES;
 
 #include "Maq_Caja.h"
-
+/*
 int main()
 {
    	Inicializacion();
@@ -55,8 +55,10 @@ int main()
 	BLUE_OFF;
 	while(1)
 	{
-		uint8_t aux = 0;
 
+
+		uint8_t aux = 0;
+		TimerEvent();
 /*
 		if( Card())
 			BLUE_ON;
@@ -64,14 +66,14 @@ int main()
 				BLUE_OFF;
 
 		//for(int i=0; i<100000;i++);
-*/
+
 		aux = Maq_Caja();
 		aux = aux;
 	}
 
 }
+*/
 
-/*
 int main(void) {
 
    	Inicializacion ();
@@ -82,6 +84,7 @@ int main(void) {
     	TimerEvent();
     	ftl(); // hace que el auto siga una linea negra
     	Maq_General();
+		 Maq_Caja();
 
     	//testing_ftl();//esta maquina hace que cuando detecta un cruce frene y devuelva exito, y vuelva a arrancar
     	//testing_ftl_giro();
@@ -192,5 +195,5 @@ void testing_giro(void){
     }
 }
 
-*/
+
 

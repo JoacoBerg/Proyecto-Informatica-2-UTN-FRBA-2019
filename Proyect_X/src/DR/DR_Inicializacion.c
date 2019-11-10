@@ -72,7 +72,6 @@ void Inicializacion ( void )
 	SysTick_Init();
 
 	Tanks_Init();  //Servo init no existe, ya que el tanque se encarga de eso
-	Boton_init();
 
 	InicializarEntradas( ); //InitIR() no existe, las entradas se definen en InicializarEntradas()
 	//InicializarSalidas( ); //NO Implementado

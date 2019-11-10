@@ -23,12 +23,16 @@
 #include "PR_MFRC522.h"
 #include "DR_Servo.h"
 #include "PR_Entradas.h"
+#include "PR_Timers.h"
+#include "DR_Timers.h"
 
 /***********************************************************************************************************************************
  *** DEFINES GLOBALES
  **********************************************************************************************************************************/
+#define 	ESPERANDO				4
+#define 	SALIENDO				5
 #define 	RESET					0
-#define		BUSCAR_TARJETA			1
+#define		BUSCAR_ID				1
 #define		BUSCAR_BOTON			2
 #define		BUSCAR_IMAN				3
 
