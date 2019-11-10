@@ -118,11 +118,11 @@ void handler_Exit(){
 //Parpadeo de estado con Caja LLENA
 void handler_BlinkGreenOFF(){
 	GREEN_OFF;
-	TimerStart(E_BlinkGreenON, T_BlinkGreen, handler_BlinkGreenON, SEG );
+	TimerStart(E_BlinkGreenON, T_BlinkGreen, handler_BlinkGreenON, DEC );
 }
 void handler_BlinkGreenON(){
 	GREEN_ON;
-	TimerStart(E_BlinkGreenOFF, T_BlinkGreen, handler_BlinkGreenOFF, SEG );
+	TimerStart(E_BlinkGreenOFF, T_BlinkGreen, handler_BlinkGreenOFF, DEC );
 }
 
 uint8_t flag=0;
