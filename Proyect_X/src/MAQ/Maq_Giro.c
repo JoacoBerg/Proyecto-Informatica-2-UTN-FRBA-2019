@@ -33,7 +33,7 @@ uint8_t Maq_Giro_v2(uint8_t orient)
 	{
 
 		case RES:
-			if(IR_DER_IN == 1 && IR_IZQ_IN == 1)
+			if(IR_DER_IN == 1 || IR_IZQ_IN == 1) //PONEMOS UNA OR PARA QUE ARRANQUE SI CUALQUIERA DE LOS 2 ESTA EN LINEA NEGRA
 			{
 				switch(orient)
 				{
@@ -101,97 +101,3 @@ void FIzquierda(void){
 void FDerecha(void){
 	Tank_Right(VELOCIDAD_GIRO);
 }
-
-
-/*
-
- MAQUINA DE ESTADOS DESCARTADA
-
-#define 	IZQUIERDA				0
-#define 	RESET					1
-#define 	DERECHA					2
-#define 	CUARENTAYCINCOGRADOS	3
-uint8_t Maq_Giro(uint8_t orient)
-{
-		static uint8_t estado = RESET;
-
-		switch(estado)
-		{
-			case IZQUIERDA:
-
-				if(!IR_IZQ_IN && !IR_DER_IN)
-				{
-
-				 	estado = CUARENTAYCINCOGRADOS;
-
-				}
-
-				break;
-
-			case DERECHA:
-
-				if(!IR_IZQ_IN && !IR_DER_IN)
-				{
-
-					estado = CUARENTAYCINCOGRADOS;
-
-				}
-
-				break;
-
-			case CUARENTAYCINCOGRADOS:
-
-				if(IR_IZQ_IN && IR_DER_IN)
-				{
-					Frenar();
-					estado = RESET;
-					return EXITO;
-
-				}
-
-				break;
-			case RESET:
-
-				if(orient == IZQ)
-				{
-					FIzquierda();
-					estado = IZQUIERDA;
-
-				}
-				if(orient == DER)
-				{
-					FDerecha();
-					estado = DERECHA;
-
-				}
-
-				break;
-			default: estado = RESET;
-		}
-
-		return ENPROCESO;
-
-}
-*/
-//Funciones asociadas a los eventos
-
-/**
-*	\fn int esIzquierda(void)
-*	\brief Resumen
-*	\details Detalles
-*	\author CrisafienGerman
-*	\date 15-09-2019 18:56:46
-*/
-
-
-//Funciones asociadas a las acciones
-
-/**
-*	\fn void Frenar(void)
-*	\brief Resumen
-*	\details Detalles
-*	\author CrisafienGerman
-*	\date 15-09-2019 18:56:46
-*/
-
-

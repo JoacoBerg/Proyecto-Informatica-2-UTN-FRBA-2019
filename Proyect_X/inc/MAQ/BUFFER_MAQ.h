@@ -16,6 +16,7 @@
 #define 	GIRO_IZQ	'i'
 #define 	GIRO_DER	'd'
 #define 	FORWARD	    'f'
+#define		FRENO		'F'
 
 void Push_list_estados(uint8_t dato);
 int32_t Pop_list_estados(void);

@@ -89,6 +89,9 @@ uint8_t Maq_Base(void){
 					tramaStart_ok = 0;
 					return EXITO;
 				}
+				if(lectura == -1){
+					return ENPROCESO;
+				}
 				//aca es un numero
 				lectura = lectura - '0'; //convierto de ascii a numerico
 
@@ -102,9 +105,9 @@ uint8_t Maq_Base(void){
 					Push_list_estados(GIRO_DER);
 					Push_list_estados(FORWARD);
 					Push_list_estados(FORWARD);
+					Push_list_estados(FRENO);
 					if(fin != START_POSITION)//ojo, esto funciona si desde el Qt no le podemos mandar que vaya a la base como una instruccion
 						Push_list_estados(CAJA);
-
 				}
 
 				else if (!nodos){}//no deberia llegar nunca aca
@@ -117,16 +120,18 @@ uint8_t Maq_Base(void){
 					Push_list_estados(GIRO_DER);
 					Push_list_estados(FORWARD);
 
-
+					Push_list_estados(FRENO);
 					Push_list_estados(start_dir);
 
 					for (int i = nodos-1;i>0;i--)
 						Push_list_estados(FORWARD);
 
+					Push_list_estados(FRENO);
 					Push_list_estados(last_dir);
 
 
 					Push_list_estados(FORWARD);
+					Push_list_estados(FRENO);
 					if(fin != START_POSITION) //ojo, esto funciona si desde el Qt no le podemos mandar que vaya a la base como una instruccion
 						Push_list_estados(CAJA);
 				}
@@ -155,17 +160,20 @@ int get_nodos(int init, int fin){
 	return 0;
 }
 
-
+/*
 int get_start_dir(int init, int fin){
 	if(init%2){
+
 		if( fin > init ){
 			return GIRO_DER;
 		}
 		else{
 			return GIRO_IZQ;
 		}
+
 	}
 	else{
+
 		if( fin > init ){
 			return GIRO_IZQ;
 		}
@@ -182,5 +190,52 @@ int get_last_dir(int init, int fin){
 	}
 	else{
 		return GIRO_DER;
+	}
+}
+*/
+
+
+int get_start_dir(int init, int fin){
+	if(init%2){
+
+		if( fin > init ){
+			return GIRO_DER;
+		}
+		else{
+			return GIRO_IZQ;
+		}
+
+	}
+	else{
+
+		if( fin > init ){
+			return GIRO_IZQ;
+		}
+		else{
+			return GIRO_DER;
+		}
+	}
+}
+
+
+int get_last_dir(int init, int fin){
+	if(fin%2){
+
+		if( fin > init ){
+			return GIRO_DER;
+		}
+		else{
+			return GIRO_IZQ;
+		}
+
+	}
+	else{
+
+		if( fin > init ){
+			return GIRO_IZQ;
+		}
+		else{
+			return GIRO_DER;
+		}
 	}
 }
