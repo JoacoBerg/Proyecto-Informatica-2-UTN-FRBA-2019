@@ -43,9 +43,8 @@ void UART0_PushTX( uint8_t dato )
 		IndiceTxIn ++;
 		IndiceTxIn %= TOPE_BUFFER_TX;
 
-		if(TxStart == 0)
-		{
+		if(TxStart == 0){
 			TxStart = 1;
-			UART0THR = 1;
+			UART0THR = UART0_PopTX();
 		}
 }

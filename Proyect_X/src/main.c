@@ -40,27 +40,32 @@ int main(void) {
    	Inicializacion ();
    	//int t = 0;
 
-   	//for testing
-   //Push_list_estados(FORWARD);
-   	//Push_list_estados(FORWARD);
+/*
    	Push_list_estados(FORWARD);
    	Push_list_estados(FORWARD);
+   	Push_list_estados(FRENO);
+
    	Push_list_estados(GIRO_DER);
    	Push_list_estados(FORWARD);
+   	Push_list_estados(FRENO);
+   	Push_list_estados(CAJA);
    	Push_list_estados(GIRO_DER);
    	Push_list_estados(GIRO_DER);
    	Push_list_estados(FORWARD);
+   	Push_list_estados(FRENO);
    	Push_list_estados(GIRO_IZQ);
    	Push_list_estados(FORWARD);
-   	Push_list_estados(FORWARD);
-
-
-   	//Push_list_estados(GIRO_DER);
    	//Push_list_estados(FORWARD);
+   	Push_list_estados(FRENO);
+*/
 
    	while(1) {
     	TimerEvent();
     	Maq_General();
+    }
+
+    return 0;
+}
 
     	/*
     	switch(t){
@@ -90,10 +95,7 @@ int main(void) {
     		default:
     			break;
     	}*/
-    }
 
-    return 0;
-}
 
 
 
