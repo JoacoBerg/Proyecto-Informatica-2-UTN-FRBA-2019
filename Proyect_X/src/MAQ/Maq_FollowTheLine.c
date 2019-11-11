@@ -167,12 +167,7 @@ uint8_t Maq_FollowTheLine_v2(void)
 	else if (estado_obstaculo == WAITING){
 
 		if(IR_OBSTACULO == ON){
-			estado2 = estado_aux;
-			Flag_Turn_ftl = Flag_Turn_ftl_aux;
-			waiting_IRs = waiting_IRs_aux;
-			if(estado2 == WAITING){
-				TimerStart(TIMER_SLEEP_IRs, 4, TimerSleepIRs, DEC);
-			}
+
 			waiting_Restart = OFF;
 			TimerStart(TIMER_RESTART, 1, TimerRestart, SEG);
 			estado_obstaculo = RESTARTING;
@@ -183,8 +178,16 @@ uint8_t Maq_FollowTheLine_v2(void)
 	}
 	else if (estado_obstaculo == RESTARTING){
 		 if(waiting_Restart == ON){
-			 TimerStart(TIMER_SLEEP_OBSTACULO, 2, TimerSleepOBSTACULO, DEC);
-			 estado_obstaculo = RESET;
+
+			estado2 = estado_aux;
+			Flag_Turn_ftl = Flag_Turn_ftl_aux;
+			waiting_IRs = waiting_IRs_aux;
+			if(estado2 == WAITING){
+				TimerStart(TIMER_SLEEP_IRs, 4, TimerSleepIRs, DEC);
+			}
+
+			TimerStart(TIMER_SLEEP_OBSTACULO, 2, TimerSleepOBSTACULO, DEC);
+			estado_obstaculo = RESET;
 		 }
 	}
 	return ENPROCESO;
