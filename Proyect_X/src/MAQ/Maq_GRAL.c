@@ -22,9 +22,10 @@ void Maq_General()
 				estado = Pop_list_estados();
 				break;
 			case BASE:
-				if(Maq_Base() == EXITO) //LECTURA DE UART
-					estado = SELECTION;
-
+				if(Maq_Base() == EXITO){ //LECTURA DE UART
+					estado_CAJA = BUSCAR_BOTON;
+					estado = CAJA;
+				}
 				break;
 			
 			case CAJA: //Maq_Caja()

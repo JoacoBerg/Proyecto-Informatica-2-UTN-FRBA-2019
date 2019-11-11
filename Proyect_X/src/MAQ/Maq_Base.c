@@ -60,7 +60,7 @@ uint8_t Maq_Base(void){
 					UART0_PushTX('k');
 					UART0_PushTX('\0');
 					while(UART0_PopRX() != -1){} //flush de rx
-					Servo_Cerrado();
+					//Servo_Cerrado();
 					return EXITO;
 				}
 

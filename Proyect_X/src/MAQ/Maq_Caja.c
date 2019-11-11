@@ -35,7 +35,7 @@
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PRIVADAS AL MODULO
  **********************************************************************************************************************************/
-static uint8_t estado = RESET;
+uint8_t estado_CAJA = RESET;
 
 /***********************************************************************************************************************************
  *** PROTOTIPO DE FUNCIONES PRIVADAS AL MODULO
@@ -95,7 +95,7 @@ void handler_BlinkGreenOFF();
 
 //Bloquea acceso por tarjeta no valida
 void handler_WrongID(){
-	estado = BUSCAR_ID;
+	estado_CAJA = BUSCAR_ID;
 }
 
 //Parpadeo hasta que termine tiempo de bloqueo
@@ -110,7 +110,7 @@ void handler_BlinkON(){
 
 //
 void handler_Exit(){
-	estado = SALIENDO;
+	estado_CAJA = SALIENDO;
 }
 
 //Parpadeo de estado con Caja LLENA
@@ -130,7 +130,7 @@ uint8_t flag=0;
 uint8_t Maq_Caja()
 {
 	uint8_t retorno = ENPROCESO , card, flag_Wrong = 0;
-	switch(estado)
+	switch(estado_CAJA)
 	{
 		case RESET:
 			RED_OFF;
@@ -140,7 +140,7 @@ uint8_t Maq_Caja()
 			TimerStop(E_BlinkGreenOFF);
 			TimerStop(E_BlinkGreenON);
 
-			estado = BUSCAR_ID;
+			estado_CAJA = BUSCAR_ID;
 			break;
 
 		case BUSCAR_ID:
@@ -154,7 +154,7 @@ uint8_t Maq_Caja()
 				TimerStop(E_BlinkON); //termino blink
 				TimerStop(E_BlinkOFF); //termino blink
 
-				estado = BUSCAR_BOTON;
+				estado_CAJA = BUSCAR_BOTON;
 			}
 			if( card == -1) //ID invalido
 			{
@@ -162,7 +162,7 @@ uint8_t Maq_Caja()
 				flag_Wrong++;
 				TimerStart(E_WrongID, T_WrongID, handler_WrongID, SEG );
 				TimerStart(E_BlinkON, T_BlinkRed, handler_BlinkON, DEC );
-				estado = ESPERANDO;
+				estado_CAJA = ESPERANDO;
 			}
 			if(!card)
 				if(!flag_Wrong)
@@ -182,7 +182,7 @@ uint8_t Maq_Caja()
 			if( BOTON )
 			{
 				BLUE_OFF;
-				estado = BUSCAR_IMAN;
+				estado_CAJA = BUSCAR_IMAN;
 			}
 			else
 				BLUE_ON;
@@ -195,12 +195,12 @@ uint8_t Maq_Caja()
 				SERVO_CERRADO;
 				TimerStart(E_Exit, T_Exit, handler_Exit, SEG );
 				GREEN_ON;
-				estado = ESPERANDO;
+				estado_CAJA = ESPERANDO;
 			}
 			else
 			{
 				BLUE_ON;
-				estado = BUSCAR_BOTON;
+				estado_CAJA = BUSCAR_BOTON;
 			}
 			break;
 
@@ -208,11 +208,11 @@ uint8_t Maq_Caja()
 			TimerStop(E_Exit);
 			retorno = EXITO;
 			TimerStart(E_BlinkGreenON, T_BlinkGreen, handler_BlinkGreenON, DEC );
-			estado = RESET;
+			estado_CAJA = RESET;
 			break;
 
 		default:
-			estado = RESET;
+			estado_CAJA = RESET;
 	}
 
 	return retorno;
