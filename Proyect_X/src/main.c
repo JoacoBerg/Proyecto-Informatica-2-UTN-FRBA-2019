@@ -49,13 +49,11 @@ int main(void) {
 
    	while(1) {
     	TimerEvent();
-    	//Maq_General();
+    	Maq_General();
     	/*
     	ftl();
     	Maq_FollowTheLine_v2();
     	*/
-    	Servo_Abierto();
-    	Servo_Cerrado();
     	//test_servos();
     }
 
