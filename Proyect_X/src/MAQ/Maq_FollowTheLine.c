@@ -104,7 +104,7 @@ uint8_t Maq_FollowTheLine_v2(void)
 
 	if(estado_obstaculo == RESET){
 
-		if (IR_OBSTACULO == ON){
+		if (IR_OBSTACULO == OFF){
 
 			//guardo variables en estados auxiliares
 			estado_aux = estado2;
@@ -112,6 +112,7 @@ uint8_t Maq_FollowTheLine_v2(void)
 			waiting_IRs_aux = waiting_IRs;
 			//freno todo
 			TimerStop(TIMER4);
+			Flag_Turn_ftl = OFF;
 			Maq_Freno();
 			estado_obstaculo = WAITING;
 		}
@@ -151,7 +152,7 @@ uint8_t Maq_FollowTheLine_v2(void)
 	}
 	else if (estado_obstaculo == WAITING){
 
-		if(IR_OBSTACULO == OFF){
+		if(IR_OBSTACULO == ON){
 			estado2 = estado_aux;
 			Flag_Turn_ftl = Flag_Turn_ftl_aux;
 			waiting_IRs = waiting_IRs_aux;

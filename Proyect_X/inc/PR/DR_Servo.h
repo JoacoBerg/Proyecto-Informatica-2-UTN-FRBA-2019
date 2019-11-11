@@ -9,6 +9,7 @@
 #define DR_SERVO_H_
 
 
+#define SERVO_GPIO GPIO_PWM6
 
 void Servo_Abierto(void);
 

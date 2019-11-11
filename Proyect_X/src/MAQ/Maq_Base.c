@@ -87,6 +87,8 @@ uint8_t Maq_Base(void){
 				if (lectura == END_BYTE){
 					Servo_Cerrado();
 					tramaStart_ok = 0;
+					UART0_PushTX('o');
+					UART0_PushTX('k');
 					return EXITO;
 				}
 				if(lectura == -1){

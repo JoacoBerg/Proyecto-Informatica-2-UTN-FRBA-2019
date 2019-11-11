@@ -17,13 +17,13 @@
 #include "PR_Timers.h"
 #include "Maq_GRAL.h"
 #include "DR_Servo.h"
+#include "Maq_FollowTheLine.h"
 
 void test_servos(void);
 
 int main(void) {
 
    	Inicializacion ();
-   	Servo_Cerrado();
 
 
 /*
@@ -49,7 +49,14 @@ int main(void) {
 
    	while(1) {
     	TimerEvent();
-    	Maq_General();
+    	//Maq_General();
+    	/*
+    	ftl();
+    	Maq_FollowTheLine_v2();
+    	*/
+    	Servo_Abierto();
+    	Servo_Cerrado();
+    	//test_servos();
     }
 
     return 0;

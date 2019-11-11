@@ -18,7 +18,11 @@
 #include "DR_Inicializacion.h"
 #include "Tanks.h"
 #include "Boton.h"
+#include "DR_Servo.h"
 #include "DR_UART0.h"
+#include "DR_tipos.h"
+#include "DR_PINSEL.h"
+#include "DR_GPIO.h"
 
 
 /***********************************************************************************************************************************
