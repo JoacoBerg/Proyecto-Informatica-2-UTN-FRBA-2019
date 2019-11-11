@@ -26,6 +26,9 @@
 //0xE000E180UL : Direccion de inicio de los registros de deshabilitacion (clear) de interrupciones en el NVIC:
 #define		ICER		( (__RW uint32_t  * ) 0xE000E180UL )
 
+#define		ISER0		ISER[0]
+#define		ISER1		ISER[1]
+
 
 void SetPinsel(uint32_t Puerto, uint32_t Pin,uint32_t Configurar);
 

@@ -6,6 +6,7 @@
  */
 #include "Maq_Base.h"
 #include "DR_Servo.h"
+#include "PR_UART0.h"
 
 
 
@@ -20,7 +21,8 @@ int get_nodos(int init, int fin);
 int get_start_dir(int init, int fin);
 int get_last_dir(int init, int fin);
 
-int Rx_Pop(void){
+/*
+int UART0_PopRX(void){
 	static int enviar = 0;
 	switch(enviar)
 	{
@@ -52,72 +54,88 @@ int Rx_Pop(void){
 	}
 }
 
-
+*/
 
 uint8_t Maq_Base(void){
 
 	Servo_Abierto();
-	uint8_t lectura = 0;
+	int lectura = 0;
 
 	static int fin = START_POSITION;
 	static int init = START_POSITION;
 	static uint8_t start_dir = FORWARD;
 	static uint8_t last_dir = FORWARD;
 	static int nodos = 0;
-
+	static uint8_t tramaStart_ok = 0;
 
 
 	init = fin;
-	lectura = Rx_Pop();
+	lectura = UART0_PopRX();
 
 	if(lectura != -1){ // no esta vacia
-		if (lectura == END_BYTE){
-			Servo_Cerrado();
-			return EXITO;
-		}
-		if(lectura == START_BYTE)
-			lectura = Rx_Pop();
-		if(lectura == SEPARATOR)
-			lectura = Rx_Pop(); //esta hecho para nums de 1 digito por ahora. pero se puede escalar a futuro cambiando la logica de rst
 
-		fin = (int) lectura; //checkear esto
-		nodos = get_nodos(init, fin);
-		if ( nodos == 1){
-			start_dir = FORWARD;
-			last_dir  = FORWARD;
-
-			Push_list_estados(GIRO_DER);
-			Push_list_estados(GIRO_DER);
-			Push_list_estados(FORWARD);
-			Push_list_estados(FORWARD);
-			if(fin != START_POSITION)//ojo, esto funciona si desde el Qt no le podemos mandar que vaya a la base como una instruccion
-				Push_list_estados(CAJA);
-
+		if(lectura == START_BYTE){
+			lectura = UART0_PopRX();
+			tramaStart_ok = 1;
 		}
-		else if (!nodos){
-			//no deberia llegar nunca aca
-		}
+
 		else{
-			start_dir = get_start_dir(init, fin);
-			last_dir  = get_last_dir(init, fin);
+			if(tramaStart_ok){
+				if(lectura == SEPARATOR)
+					lectura = UART0_PopRX(); //esta hecho para nums de 1 digito por ahora. pero se puede escalar a futuro cambiando la logica de rst
 
-			Push_list_estados(GIRO_DER);
-			Push_list_estados(GIRO_DER);
-			Push_list_estados(FORWARD);
+				if (lectura == END_BYTE){
+					Servo_Cerrado();
+					tramaStart_ok = 0;
+					return EXITO;
+				}
+				if(lectura == -1){
+					return ENPROCESO;
+				}
+				//aca es un numero
+				lectura = lectura - '0'; //convierto de ascii a numerico
+
+				fin = lectura; //checkear esto
+				nodos = get_nodos(init, fin);
+				if ( nodos == 1){
+					start_dir = FORWARD;
+					last_dir  = FORWARD;
+
+					Push_list_estados(GIRO_DER);
+					Push_list_estados(GIRO_DER);
+					Push_list_estados(FORWARD);
+					Push_list_estados(FORWARD);
+					Push_list_estados(FRENO);
+					if(fin != START_POSITION)//ojo, esto funciona si desde el Qt no le podemos mandar que vaya a la base como una instruccion
+						Push_list_estados(CAJA);
+				}
+
+				else if (!nodos){}//no deberia llegar nunca aca
+
+				else{
+					start_dir = get_start_dir(init, fin);
+					last_dir  = get_last_dir(init, fin);
+
+					Push_list_estados(GIRO_DER);
+					Push_list_estados(GIRO_DER);
+					Push_list_estados(FORWARD);
+
+					Push_list_estados(FRENO);
+					Push_list_estados(start_dir);
+
+					for (int i = nodos-1;i>0;i--)
+						Push_list_estados(FORWARD);
+
+					Push_list_estados(FRENO);
+					Push_list_estados(last_dir);
 
 
-			Push_list_estados(start_dir);
-
-			for (int i = nodos-1;i>0;i--)
-				Push_list_estados(FORWARD);
-
-			Push_list_estados(last_dir);
-
-
-			Push_list_estados(FORWARD);
-			if(fin != START_POSITION) //ojo, esto funciona si desde el Qt no le podemos mandar que vaya a la base como una instruccion
-				Push_list_estados(CAJA);
-
+					Push_list_estados(FORWARD);
+					Push_list_estados(FRENO);
+					if(fin != START_POSITION) //ojo, esto funciona si desde el Qt no le podemos mandar que vaya a la base como una instruccion
+						Push_list_estados(CAJA);
+				}
+			}
 		}
 		return ENPROCESO;
 	}
@@ -142,17 +160,20 @@ int get_nodos(int init, int fin){
 	return 0;
 }
 
-
+/*
 int get_start_dir(int init, int fin){
 	if(init%2){
+
 		if( fin > init ){
 			return GIRO_DER;
 		}
 		else{
 			return GIRO_IZQ;
 		}
+
 	}
 	else{
+
 		if( fin > init ){
 			return GIRO_IZQ;
 		}
@@ -169,5 +190,52 @@ int get_last_dir(int init, int fin){
 	}
 	else{
 		return GIRO_DER;
+	}
+}
+*/
+
+
+int get_start_dir(int init, int fin){
+	if(init%2){
+
+		if( fin > init ){
+			return GIRO_DER;
+		}
+		else{
+			return GIRO_IZQ;
+		}
+
+	}
+	else{
+
+		if( fin > init ){
+			return GIRO_IZQ;
+		}
+		else{
+			return GIRO_DER;
+		}
+	}
+}
+
+
+int get_last_dir(int init, int fin){
+	if(fin%2){
+
+		if( fin > init ){
+			return GIRO_DER;
+		}
+		else{
+			return GIRO_IZQ;
+		}
+
+	}
+	else{
+
+		if( fin > init ){
+			return GIRO_IZQ;
+		}
+		else{
+			return GIRO_DER;
+		}
 	}
 }

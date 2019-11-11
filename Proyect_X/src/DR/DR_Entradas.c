@@ -87,7 +87,6 @@ void DebounceEntradas (void)
 	if ( GetPin( PIN_BOTON , ALTO) )
 		in |= 0x40;
 
-
 	x = in ^ BufferEntradas;
 
 	if ( !x )
