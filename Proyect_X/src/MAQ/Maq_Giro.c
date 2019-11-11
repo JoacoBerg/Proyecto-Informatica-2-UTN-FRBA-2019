@@ -1,6 +1,5 @@
 #include "DR_tipos.h"
 #include "Maq_Giro.h"
-#include "DR_IR.h"
 #include "Tanks.h"
 #include "PR_Entradas.h"
 

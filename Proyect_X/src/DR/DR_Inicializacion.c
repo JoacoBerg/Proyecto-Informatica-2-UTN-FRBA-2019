@@ -1,25 +1,14 @@
-
-/*******************************************************************************************************************************//**
- *
- * @file		Inicializacion.c
- * @brief		Inicializaciones del Kit de Info II Infotronic
- * @date		23/03/16
- * @author		Marcelo Trujillo
- *
- **********************************************************************************************************************************/
-
 /***********************************************************************************************************************************
  *** INCLUDES
  **********************************************************************************************************************************/
-#include "DR_Salidas.h"
-#include "DR_Entradas.h"
+#include <DR_Inicializacion.h>
 #include "DR_PLL.h"
 #include "DR_SysTick.h"
-#include "DR_Inicializacion.h"
-#include "Tanks.h"
-#include "Maq_Caja.h"
-#include "Boton.h"
 #include "DR_UART0.h"
+#include "Tanks.h"
+#include "DR_Entradas.h"
+//#include "DR_Salidas.h"
+#include "Maq_Caja.h"
 
 
 
@@ -67,15 +56,16 @@
  */
 void Inicializacion ( void )
 {
-	//!< Se configura en primer lugar el PLL:
-	//!< Estabiliza el oscilador interno del micro en 100MHz
-	//!< Se configura el systic cada 1ms
+	// Se configura en primer lugar el PLL:
+	// Estabiliza el oscilador interno del micro en 100MHz
 	InicializarPLL();
 	SysTick_Init();
+	// Se configura el systick cada 1ms
 
 	UART0_Inicializacion();
 
-	Tanks_Init();  //Servo init no existe, ya que el tanque se encarga de eso
+	//la inicializacion de Servo se hace dentro de Tanks_Init() porque Tanks_Init() inicializa tambien los PWM
+	Tanks_Init();
 
 	InicializarEntradas( ); //InitIR() no existe, las entradas se definen en InicializarEntradas()
 	//InicializarSalidas( ); //NO Implementado

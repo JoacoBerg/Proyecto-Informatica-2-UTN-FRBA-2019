@@ -1,4 +1,3 @@
-
 /*******************************************************************************************************************************//**
  *
  * @file		Template.c
@@ -151,4 +150,9 @@ void InicializarEntradas ( void )
 	SetPinMode( PIN_IMAN, PINMODE_PULLDOWN); //pull up
 	SetPinDir( PIN_IMAN, PINDIR_INPUT); // input
 
+	//IR5 (Distancia)
+	SetPinsel(IR5, PINSEL_GPIO);		//Funcion del pin
+	SetPinMode(IR5, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+	SetPinDir(IR5, PINDIR_INPUT);		//0: Entrada | 1: Salida
 }
+

@@ -4,60 +4,29 @@
  *  Created on: 27 oct. 2019
  *      Author: gif30
  */
+#include <PR_Servo.h>
 #include "Maq_Base.h"
-#include "DR_Servo.h"
 #include "PR_UART0.h"
-
-
-
-//esta pensada para que se reciba incluso la vuelta a base (osea un 0 al final) y las bases separadas por comas
 
 #define START_POSITION 0 // esta es la base donde arranca
 #define START_BYTE '>'
 #define END_BYTE '<'
 #define SEPARATOR ','
 
+// devuelve la cantidad de nodos a cruzar
 int get_nodos(int init, int fin);
+
+// devuelve la direccion del primer giro
 int get_start_dir(int init, int fin);
+
+// devuelve la direccion del ultimo giro
 int get_last_dir(int init, int fin);
 
-/*
-int UART0_PopRX(void){
-	static int enviar = 0;
-	switch(enviar)
-	{
 
-	case(0):
-			enviar ++;
-			return START_BYTE;
-			break;
-	case(1):
-			enviar ++;
-			return 3;
-			break;
-	case(2):
-			enviar ++;
-			return SEPARATOR;
-			break;
-	case(3):
-			enviar ++;
-			return START_POSITION;
-			break;
-	case(4):
-			enviar ++;
-			return END_BYTE;
-			break;
-
-	default:
-		return -1;
-		break;
-	}
-}
-
-*/
-
+//Se encarga de armar el recorrido en base a lo que recibe de la UART0. Para ello tiene un algoritmo destinado a traducir los numeros de bases en un listado de acciones que tiene que hacer el auto. Este listado es utilizado luego por la Maq_GRAL()
 uint8_t Maq_Base(void){
-
+	//esta pensada para que se reciba incluso la vuelta a base (osea un 0 al final) y las bases separadas por comas
+	//el chequeo de trama no es el "optimo" en realidad deberia recibir la trama entera, chequear que es correcta y luego armar el recorrido
 	Servo_Abierto();
 	int lectura = 0;
 
@@ -87,13 +56,19 @@ uint8_t Maq_Base(void){
 				if (lectura == END_BYTE){
 					Servo_Cerrado();
 					tramaStart_ok = 0;
+					UART0_PushTX('o');
+					UART0_PushTX('k');
+					UART0_PushTX('\0');
+
 					return EXITO;
 				}
-				if(lectura == -1){
+
+				if(lectura == -1)
 					return ENPROCESO;
-				}
-				//aca es un numero
+
 				lectura = lectura - '0'; //convierto de ascii a numerico
+
+				//se arma el recorrido de un destino a otro
 
 				fin = lectura; //checkear esto
 				nodos = get_nodos(init, fin);
@@ -145,8 +120,6 @@ uint8_t Maq_Base(void){
 	}
 }
 
-
-
 int get_nodos(int init, int fin){
 	if(fin == init){
 		return 0; //no hace nada porque no tiene a donde ir
@@ -159,40 +132,6 @@ int get_nodos(int init, int fin){
 	}
 	return 0;
 }
-
-/*
-int get_start_dir(int init, int fin){
-	if(init%2){
-
-		if( fin > init ){
-			return GIRO_DER;
-		}
-		else{
-			return GIRO_IZQ;
-		}
-
-	}
-	else{
-
-		if( fin > init ){
-			return GIRO_IZQ;
-		}
-		else{
-			return GIRO_DER;
-		}
-	}
-}
-
-
-int get_last_dir(int init, int fin){
-	if(GIRO_DER == get_start_dir(init, fin)){
-		return GIRO_IZQ;
-	}
-	else{
-		return GIRO_DER;
-	}
-}
-*/
 
 
 int get_start_dir(int init, int fin){
@@ -239,3 +178,38 @@ int get_last_dir(int init, int fin){
 		}
 	}
 }
+
+/*
+int UART0_PopRX(void){
+	static int enviar = 0;
+	switch(enviar)
+	{
+
+	case(0):
+			enviar ++;
+			return START_BYTE;
+			break;
+	case(1):
+			enviar ++;
+			return 3;
+			break;
+	case(2):
+			enviar ++;
+			return SEPARATOR;
+			break;
+	case(3):
+			enviar ++;
+			return START_POSITION;
+			break;
+	case(4):
+			enviar ++;
+			return END_BYTE;
+			break;
+
+	default:
+		return -1;
+		break;
+	}
+}
+
+*/

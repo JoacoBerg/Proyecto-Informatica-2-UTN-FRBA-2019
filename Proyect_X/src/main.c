@@ -13,37 +13,24 @@
 
 #include <cr_section_macros.h>
 
-#include "DR_Inicializacion.h"
+#include <DR_Inicializacion.h>
 #include "PR_Timers.h"
 #include "Maq_GRAL.h"
+//#include "testings.h"
+
 
 int main(void) {
 
    	Inicializacion ();
-
-/*
-   	Push_list_estados(FORWARD);
-   	Push_list_estados(FORWARD);
-   	Push_list_estados(FRENO);
-
-   	Push_list_estados(GIRO_DER);
-   	Push_list_estados(FORWARD);
-   	Push_list_estados(FRENO);
-   	Push_list_estados(CAJA);
-   	Push_list_estados(GIRO_DER);
-   	Push_list_estados(GIRO_DER);
-   	Push_list_estados(FORWARD);
-   	Push_list_estados(FRENO);
-   	Push_list_estados(GIRO_IZQ);
-   	Push_list_estados(FORWARD);
-   	//Push_list_estados(FORWARD);
-   	Push_list_estados(FRENO);
-*/
+   	//test_Maq_GRAL_init();
 
    	while(1) {
     	TimerEvent();
     	Maq_General();
+    	//test_servos();
     }
 
     return 0;
 }
+
+

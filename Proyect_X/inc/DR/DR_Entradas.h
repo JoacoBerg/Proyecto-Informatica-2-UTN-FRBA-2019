@@ -30,7 +30,7 @@
 #define IR3 0,26
 #define IR2 1,30
 #define IR1 1,31
-#define IR5 0,0
+#define IR5 0,9
 
 #define PIN_BOTON 0, 24
 #define PIN_IMAN 0, 23
