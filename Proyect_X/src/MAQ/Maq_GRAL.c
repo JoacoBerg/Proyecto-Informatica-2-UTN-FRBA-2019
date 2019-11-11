@@ -26,7 +26,7 @@ void Maq_General()
 				break;
 			
 			case CAJA: //Maq_Caja()
-				if(Maq_Dummy() == EXITO) //LECTURA DE RFID
+				if(Maq_Caja() == EXITO) //LECTURA DE RFID
 					estado = SELECTION;
 				break;
 			case GIRO_IZQ:
