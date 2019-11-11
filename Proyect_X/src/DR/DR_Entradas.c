@@ -88,6 +88,12 @@ void DebounceEntradas (void)
 
 	if ( GetPin( KEY3 , BAJO) )
 		in |= 0x40;
+
+	if ( GetPin( KEY3 , BAJO) )
+		in |= 0x80;
+
+	if ( GetPin( KEY3 , BAJO) )
+		in |= 0x100;
 	*/
 
 	x = in ^ BufferEntradas;
