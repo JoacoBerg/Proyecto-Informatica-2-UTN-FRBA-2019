@@ -54,12 +54,13 @@ uint8_t Maq_Base(void){
 					lectura = UART0_PopRX(); //esta hecho para nums de 1 digito por ahora. pero se puede escalar a futuro cambiando la logica de rst
 
 				if (lectura == END_BYTE){
-					Servo_Cerrado();
+
 					tramaStart_ok = 0;
 					UART0_PushTX('o');
 					UART0_PushTX('k');
 					UART0_PushTX('\0');
-
+					while(UART0_PopRX() != -1){} //flush de rx
+					Servo_Cerrado();
 					return EXITO;
 				}
 

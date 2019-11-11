@@ -1,6 +1,7 @@
 #include "Maq_GRAL.h"
 #include "Maq_Giro.h"
 #include "Maq_Base.h"
+#include "Maq_Caja.h"
 #include "Maq_FollowTheLine.h"
 #include "DR_tipos.h"
 #include "BUFFER_MAQ.h"
@@ -23,6 +24,7 @@ void Maq_General()
 			case BASE:
 				if(Maq_Base() == EXITO) //LECTURA DE UART
 					estado = SELECTION;
+
 				break;
 			
 			case CAJA: //Maq_Caja()

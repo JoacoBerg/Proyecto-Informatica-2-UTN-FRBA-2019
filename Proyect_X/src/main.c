@@ -18,6 +18,7 @@
 #include "Maq_GRAL.h"
 //#include "testings.h"
 
+//#include "Maq_FollowTheLine.h"
 
 int main(void) {
 
@@ -27,6 +28,8 @@ int main(void) {
    	while(1) {
     	TimerEvent();
     	Maq_General();
+    	//ftl();
+    	//Maq_FollowTheLine_v2();
     	//test_servos();
     }
 

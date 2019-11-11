@@ -71,8 +71,6 @@ void init_caja()
 	init_led(PIN_RED);
 	init_led(PIN_BLUE);
 	init_led(PIN_GREEN);
-
-	SERVO_CERRADO;
 }
 
 #define SEGUNDOS 2
@@ -87,7 +85,7 @@ void init_caja()
 //------------------TIEMPOS--------------------------
 #define T_WrongID		2
 #define T_BlinkRed		3 //en decimas
-#define T_Exit			7
+#define T_Exit			2
 #define T_BlinkGreen	5 //en decimas
 //------------------HANDLERS----------------------------------
 void handler_BlinkOFF();
@@ -131,7 +129,7 @@ uint8_t flag=0;
 //return: exito si tarjeta ID, Boton e iman son correctos
 uint8_t Maq_Caja()
 {
-	uint8_t retorno =0 , card, flag_Wrong = 0;
+	uint8_t retorno = ENPROCESO , card, flag_Wrong = 0;
 	switch(estado)
 	{
 		case RESET:
@@ -208,7 +206,7 @@ uint8_t Maq_Caja()
 
 		case SALIENDO:
 			TimerStop(E_Exit);
-			retorno = 1;
+			retorno = EXITO;
 			TimerStart(E_BlinkGreenON, T_BlinkGreen, handler_BlinkGreenON, DEC );
 			estado = RESET;
 			break;
