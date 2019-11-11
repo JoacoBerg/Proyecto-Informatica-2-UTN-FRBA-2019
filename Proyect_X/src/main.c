@@ -88,13 +88,7 @@ int main(void) {
     	SERVO_ABIERTO;
     	while(!Maq_Caja());
     	uint8_t aux = 1;
-aux = aux;
-
-    	//testing_ftl();//esta maquina hace que cuando detecta un cruce frene y devuelva exito, y vuelva a arrancar
-    	//testing_ftl_giro();
-    	//Maq_FollowTheLine();
-    	//testing_servos();
-    	//testing_tanks2();
+    	aux = aux;
     }
     return 0 ;
 }
