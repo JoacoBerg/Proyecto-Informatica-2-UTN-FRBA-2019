@@ -17,8 +17,10 @@
 #include "DR_SysTick.h"
 #include "DR_Inicializacion.h"
 #include "Tanks.h"
+#include "Maq_Caja.h"
 #include "Boton.h"
 #include "DR_UART0.h"
+
 
 
 /***********************************************************************************************************************************
@@ -74,8 +76,15 @@ void Inicializacion ( void )
 	UART0_Inicializacion();
 
 	Tanks_Init();  //Servo init no existe, ya que el tanque se encarga de eso
-	Boton_init();
 
 	InicializarEntradas( ); //InitIR() no existe, las entradas se definen en InicializarEntradas()
 	//InicializarSalidas( ); //NO Implementado
+
+	/* Inicializo SPI */
+	setup_SPI();
+
+	/* Inicializo modulo MFRC522 */
+	setup_MFRC522();
+
+	init_caja();
 }

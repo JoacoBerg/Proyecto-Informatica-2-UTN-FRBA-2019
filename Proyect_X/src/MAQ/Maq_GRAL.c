@@ -6,9 +6,6 @@
 #include "BUFFER_MAQ.h"
 #include "PR_Timers.h"
 
-uint8_t Maq_Dummy(void);
-
-
 void Maq_General()
 {
 		static int32_t estado = SELECTION;

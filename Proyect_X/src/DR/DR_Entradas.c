@@ -81,20 +81,11 @@ void DebounceEntradas (void)
 	if ( GetPin( IR5 , ALTO) )
 		in |= 0x10;
 
-
-	/*
-	if ( GetPin( KEY2 , BAJO) )
+	if ( GetPin( PIN_IMAN , BAJO) )
 		in |= 0x20;
 
-	if ( GetPin( KEY3 , BAJO) )
+	if ( GetPin( PIN_BOTON , ALTO) )
 		in |= 0x40;
-
-	if ( GetPin( KEY3 , BAJO) )
-		in |= 0x80;
-
-	if ( GetPin( KEY3 , BAJO) )
-		in |= 0x100;
-	*/
 
 	x = in ^ BufferEntradas;
 
@@ -149,5 +140,15 @@ void InicializarEntradas ( void )
 	SetPinsel(IR4, PINSEL_GPIO);		//Funcion del pin
 	SetPinMode(IR4, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
 	SetPinDir(IR4, PINDIR_INPUT);		//0: Entrada | 1: Salida
+
+	//BOTON
+	SetPinsel( PIN_BOTON, PINSEL_GPIO);  //funcion GPIO configurada en pin
+	SetPinMode( PIN_BOTON, PINMODE_PULLDOWN); //pull up
+	SetPinDir( PIN_BOTON, PINDIR_INPUT); // input
+
+	//IMAN
+	SetPinsel( PIN_IMAN, PINSEL_GPIO);  //funcion GPIO configurada en pin
+	SetPinMode( PIN_IMAN, PINMODE_PULLDOWN); //pull up
+	SetPinDir( PIN_IMAN, PINDIR_INPUT); // input
 
 }

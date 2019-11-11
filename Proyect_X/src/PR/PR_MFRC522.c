@@ -7,35 +7,20 @@
 
 #include <PR_MFRC522.h>
 
-#define CARDS 2
-volatile uint8_t cards[CARDS] = { 0xe6, 0x1c }; //SUBE: 0xe6
-
+#define MAX_ID 4
+volatile uint8_t id[MAX_ID+1] = { 0xcb , 0x73 , 0xd7 , 0x73 , 0x00 };
 //INICIALIZACION SPI Y MFRC522 (mediante comandos)
 void setup_MFRC522() {
 	/* Inicializo MFRC522 */
 	MFRC522_Init();
 }
 
-//FUNCION isCardRegistered: verificacion de tarjeta registrada
-// AGREGAR TARJETAS EN ARRAY 'cards' y SUMAR n EN DEFINE 'CARDS'
-uint16_t isCardRegistered (uint8_t checksum)
-{
-	uint16_t i, status = 0;
-	for(i = 0; i<CARDS ; i++)
-	{
-		if( checksum == cards[i] )
-			status = 1;
-	}
-
-return status;
-}
-
 //FUNCION Card: primitiva de MFRC522 para acceso por tarjeta magnetica
 // return: hay tarjeta valida o no
 uint16_t Card(void)
 {
-	uint8_t status, checksum1, str[MAX_LEN], isCard;
-
+	uint8_t status, checksum1, str[MAX_LEN], isCard = 1;
+	uint32_t i;
 	    // Find cards
 	    status = MFRC522_Request(PICC_REQIDL, str);
 
@@ -44,7 +29,13 @@ uint16_t Card(void)
 	    if (status == MI_OK)
 	      checksum1 = str[0] ^ str[1] ^ str[2] ^ str[3];
 
-	    isCard = isCardRegistered(checksum1);
+	    for(i=0 ; i<MAX_ID ; i++)
+	    {
+	    	if( *(str+i) != *(id+i) )
+	    		isCard = -1;
+	    }
+	    if( 0x10 == checksum1 || 0x00 == checksum1)
+	    	isCard = 0;
 	    MFRC522_Halt(); //modo hibernacion
 	  return isCard ;
 }
