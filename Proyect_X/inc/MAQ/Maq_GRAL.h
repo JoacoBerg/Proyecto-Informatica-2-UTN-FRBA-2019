@@ -6,7 +6,7 @@
 *	\date 17-09-2019 18:07:28
 */
 #include <DR_tipos.h>
-
+#include "BUFFER_MAQ.h"
 
 
 //declaracion de la maquina

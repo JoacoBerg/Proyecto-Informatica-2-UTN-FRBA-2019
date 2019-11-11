@@ -56,14 +56,6 @@ volatile int16_t TxStart;
  *** FUNCIONES GLOBALES AL MODULO
  **********************************************************************************************************************************/
 
-/**
-	\fn  void UART0_IRQHandler (void)
-	\brief Interrupcion de UART0
- 	\author Ing. Marcelo Trujillo
- 	\date 31 de ago. de 2016
- 	\param void
-	\return void
-*/
 #define IIR_RDA 2
 #define IIR_THRE 1
 
@@ -96,13 +88,6 @@ void UART0_IRQHandler (void)
 
 }
 
-/**
-	\fn  	void UART0_Inicializacion ( uint32_t baudios )
-	\brief 	Inicializacion de UART0
- 	\author Ing. Marcelo Trujillo
- 	\date 	31 de ago. de 2016
-	\return void
-*/
 void UART0_Inicializacion ( void )
 {
 	PCONP |= 0x01<<3;	//prendo UART
@@ -120,14 +105,7 @@ void UART0_Inicializacion ( void )
 	UART0IER = 0x03; //habilito interrupcion desde los registros de le UART0
 	ISER0 |= (1<<5);  //habilito vector de interrupciones para UART0
 }
-/**
-	\fn  void PushRX( uint8_t dato )
-	\brief pone un Byte en el buffer de recepcion
- 	\author Ing. Marcelo Trujillo
- 	\date 5 de oct. de 2017
- 	\param [in] uint8_t dato Dato a guardar
-	\return void
-*/
+
 void UART0_PushRX( uint8_t dato )
 {
 	UART0_BufferRx[ IndiceRxIn ] = dato;
@@ -135,14 +113,6 @@ void UART0_PushRX( uint8_t dato )
 		IndiceRxIn %= TOPE_BUFFER_RX;
 }
 
-/**
-	\fn int16_t PopTX( void )
-	\brief saca un Byte en el buffer de transmicion
- 	\author Ing. Marcelo Trujillo
- 	\date 5 de oct. de 2017
- 	\param void
-	\return int16_t valor del dato o -1 por ERROR
-*/
 int16_t UART0_PopTX( void )
 {
 	int dato = -1;

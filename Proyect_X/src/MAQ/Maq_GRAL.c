@@ -8,7 +8,7 @@
 
 
 
-
+//esta funcion solamente se encarga de popear de una lista los estados de control que genera Maq_Base(), para indicarle al auto los pasos que tiene que hacer
 void Maq_General()
 {
 		static int32_t estado = SELECTION;
@@ -55,9 +55,9 @@ void Maq_General()
 
 
 
-#define RESET_DUMMY 0
-#define WAIT_DUMMY 1
-#define TIMER3 3
+#define RESET_DUMMY 	0
+#define WAIT_DUMMY 		1
+#define TIMER_DUMMY 	3
 
 uint8_t waiting_dummy = OFF;
 
@@ -73,7 +73,7 @@ uint8_t Maq_Dummy(void){
 
 		case RESET_DUMMY:
 
-			TimerStart(TIMER3, 3, TimerDummy, SEG); //hago que vaya 1 decima de segundo para atras para que frene en el lugar
+			TimerStart(TIMER_DUMMY, 3, TimerDummy, SEG); //hago que vaya 1 decima de segundo para atras para que frene en el lugar
 			waiting_dummy = OFF;
 			estado = WAIT_DUMMY;
 			break;
