@@ -58,7 +58,7 @@ uint8_t Maq_Base(void){
 					tramaStart_ok = 0;
 					UART0_PushTX('o');
 					UART0_PushTX('k');
-					UART0_PushTX('\0');
+					UART0_PushTX('\n');
 					while(UART0_PopRX() != -1){} //flush de rx
 					//Servo_Cerrado();
 					return EXITO;
