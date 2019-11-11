@@ -85,7 +85,7 @@ void init_caja()
 #define E_BlinkGreenOFF	8
 
 //------------------TIEMPOS--------------------------
-#define T_WrongID		7
+#define T_WrongID		2
 #define T_BlinkRed		3 //en decimas
 #define T_Exit			7
 #define T_BlinkGreen	5 //en decimas

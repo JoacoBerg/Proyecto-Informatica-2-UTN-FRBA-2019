@@ -81,7 +81,7 @@ void DebounceEntradas (void)
 	if ( GetPin( IR5 , ALTO) )
 		in |= 0x10;
 
-	if ( GetPin( PIN_IMAN , ALTO) )
+	if ( GetPin( PIN_IMAN , BAJO) )
 		in |= 0x20;
 
 	if ( GetPin( PIN_BOTON , ALTO) )

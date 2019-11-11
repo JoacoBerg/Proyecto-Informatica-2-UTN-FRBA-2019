@@ -59,7 +59,7 @@ int main()
 
 		uint8_t aux = 0;
 		TimerEvent();
-/*
+
 		if( Card())
 			BLUE_ON;
 			else
@@ -84,7 +84,11 @@ int main(void) {
     	TimerEvent();
     	ftl(); // hace que el auto siga una linea negra
     	Maq_General();
-		Maq_Caja();
+
+    	SERVO_ABIERTO;
+    	while(!Maq_Caja());
+    	uint8_t aux = 1;
+aux = aux;
 
     	//testing_ftl();//esta maquina hace que cuando detecta un cruce frene y devuelva exito, y vuelva a arrancar
     	//testing_ftl_giro();
