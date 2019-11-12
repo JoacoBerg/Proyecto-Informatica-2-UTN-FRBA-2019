@@ -8,7 +8,8 @@
 #include <PR_MFRC522.h>
 
 #define MAX_ID 4
-volatile uint8_t id[MAX_ID+1] = { 0xcb , 0x73 , 0xd7 , 0x73 , 0x00 };
+//volatile uint8_t id[MAX_ID+1] = { 0xcb , 0x73 , 0xd7 , 0x73 , 0x00 };
+volatile uint8_t id[MAX_ID+1] = { 0x95 , 0x32 , 0x78 , 0x89 , 0x00 };
 //INICIALIZACION SPI Y MFRC522 (mediante comandos)
 void setup_MFRC522() {
 	/* Inicializo MFRC522 */
