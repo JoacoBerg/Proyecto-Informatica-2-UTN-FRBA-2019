@@ -25,6 +25,7 @@
 #include "PR_Entradas.h"
 #include "PR_Timers.h"
 #include "DR_Timers.h"
+#include "PR_UART0.h"
 
 /***********************************************************************************************************************************
  *** DEFINES GLOBALES
