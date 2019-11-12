@@ -105,13 +105,22 @@ void TimerSleepIRs(void);
 void TimerSleepOBSTACULO(void);
 void TimerRestart(void);
 
-//Maquina que detecta cruces y llama a ftl()
+
+/*
+ * Maq_FollowTheLine_v2(), es una maquina de estados que se encarga de detectar cuando el auto pasa por un cruce
+ * Esta maquina es la que prende y apaga a flt(), para que el auto pueda avanzar en linea recta.
+ * Por otro lado, tiene integrada la deteccion de obstaculos en el camino. En caso de detectar un objeto en el camino
+ * se detendra automaticamente, cuando el objeto es retirdo arrancara despues de un tiempo determinado
+ * No recibe ningun parametro
+ * Devuelve: - EXITO: 		si detecto un cruce
+ * 			 - ENPROCESO:	si no detecto un cruce
+ */
 uint8_t Maq_FollowTheLine_v2(void)
 {
 	static uint8_t estado2 = RESET;
 	static uint8_t estado_obstaculo = RESET;
 	static uint8_t estado_aux = RESET;
-	static uint8_t Flag_Turn_ftl_aux = OFF;
+	static uint8_t Flag_Turn_ftl_aux = OFF; //Flag para "prender" o "apagar" ftl()
 	static uint8_t waiting_IRs_aux = OFF;
 
 	if(estado_obstaculo == RESET){
@@ -175,7 +184,7 @@ uint8_t Maq_FollowTheLine_v2(void)
 			estado_obstaculo = RESTARTING;
 		}
 		else{
-			//nada
+			/*nada*/
 		}
 	}
 	else if (estado_obstaculo == RESTARTING){
@@ -195,6 +204,8 @@ uint8_t Maq_FollowTheLine_v2(void)
 	return ENPROCESO;
 }
 
+
+//Funciones de handlers de timers para Maq_FollowTheLine_v2()
 void TimerSleepIRs(void){
 	waiting_IRs = ON;
 }
@@ -212,6 +223,14 @@ void TimerFrenar(void){
 	waiting_freno = ON;
 }
 
+
+/*
+ * Maq_Freno(), Es una maquina de estados para lograr que el auto frene en el lugar.
+ * Haciendo que vaya para atras una decima de segundo
+ * No recibe ningun parametro
+ * Devuelve: - EXITO: 		si ya termino de frenar
+ * 			 - ENPROCESO:	si no termino de frenar
+ */
 uint8_t Maq_Freno(void){
 	static uint8_t estado = RESET;
 	switch(estado)
@@ -245,8 +264,13 @@ uint8_t Maq_Freno(void){
 	return ENPROCESO;
 }
 
-//Este es el codigo seguidor de lineas (solo utiliza IR del medio)
-uint8_t ftl(void)	//controla solamente en base a
+/*
+ * ftl(), Es la maquina de estados que hace posible que el auto siga un linea negra (solamente con los Sensores IR del centro)
+ * Si detecta que se desvia hacia la derecha gira levemente a la izquiera y veceversa.
+ * No recibe ningun parametro
+ * No devuelve ningun parametro
+ */
+uint8_t ftl(void)
 {
 	static uint8_t estado = CONTROL;
 
@@ -319,14 +343,6 @@ uint8_t ftl(void)	//controla solamente en base a
 
 	return ENPROCESO;
 }
-
-
-
-//Funciones asociadas a los eventos
-
-
-//Funciones asociadas a los eventos
-
 
 //------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------
