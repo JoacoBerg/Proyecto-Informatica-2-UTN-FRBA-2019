@@ -56,9 +56,7 @@ uint8_t Maq_Base(void){
 				if (lectura == END_BYTE){
 
 					tramaStart_ok = 0;
-					UART0_PushTX('o');
-					UART0_PushTX('k');
-					UART0_PushTX('\n');
+					UART0_SendString("ok polilla");
 					while(UART0_PopRX() != -1){} //flush de rx
 					//Servo_Cerrado();
 					return EXITO;

@@ -48,3 +48,13 @@ void UART0_PushTX( uint8_t dato )
 			UART0THR = UART0_PopTX();
 		}
 }
+
+void UART0_SendString(char * str ){
+	uint8_t i = 0;
+
+	while(str[i]){
+		UART0_PushTX(str[i]);
+		i++;
+	}
+	UART0_PushTX('\n');
+}

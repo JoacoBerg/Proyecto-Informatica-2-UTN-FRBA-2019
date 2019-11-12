@@ -12,5 +12,5 @@
 
 int16_t UART0_PopRX( void );
 void UART0_PushTX( uint8_t dato );
-
+void UART0_SendString(char * str );
 #endif /* PR_UART0_H_ */

@@ -17,6 +17,7 @@
 #include "PR_Entradas.h"
 #include "PR_Timers.h"
 #include <DR_PINSEL.h>
+#include "PR_UART0.h"
 
 /***********************************************************************************************************************************
  *** DEFINES PRIVADOS AL MODULO
@@ -115,8 +116,7 @@ uint8_t Maq_FollowTheLine_v2(void)
 
 	if(estado_obstaculo == RESET){
 
-		if (IR_OBSTACULO == OFF && waiting_OBSTACULO == ON){
-
+		if (IR_OBSTACULO == OFF && waiting_OBSTACULO == ON){ //IR_OBSTACULO ESTA AL REVES (OFF = hay obstaculo)
 			//guardo variables en estados auxiliares
 			estado_aux = estado2;
 			Flag_Turn_ftl_aux = Flag_Turn_ftl;
@@ -161,13 +161,15 @@ uint8_t Maq_FollowTheLine_v2(void)
 		}
 	}
 	else if (estado_obstaculo == WAITING_FRENO){
-		if(Maq_Freno())
+		if(Maq_Freno()){
+			UART0_SendString("Obstaculo detectado");
 			estado_obstaculo = WAITING;
+		}
 	}
 	else if (estado_obstaculo == WAITING){
 
 		if(IR_OBSTACULO == ON){
-
+			UART0_SendString("Retomando Ruta");
 			waiting_Restart = OFF;
 			TimerStart(TIMER_RESTART, 1, TimerRestart, SEG);
 			estado_obstaculo = RESTARTING;

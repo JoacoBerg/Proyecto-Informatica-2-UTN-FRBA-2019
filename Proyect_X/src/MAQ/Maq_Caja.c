@@ -147,17 +147,18 @@ uint8_t Maq_Caja()
 			card = Card();
 			if( card == 1)	// ID valido
 			{
+				UART0_SendString("Credenciales Validas");
 				SERVO_ABIERTO;
 				RED_OFF;
 
 				TimerStop(E_WrongID);	//por si acaso
 				TimerStop(E_BlinkON); //termino blink
 				TimerStop(E_BlinkOFF); //termino blink
-
 				estado_CAJA = BUSCAR_BOTON;
 			}
 			if( card == -1) //ID invalido
 			{
+				UART0_SendString("Acceso Denegado");
 				RED_ON;
 				flag_Wrong++;
 				TimerStart(E_WrongID, T_WrongID, handler_WrongID, SEG );
@@ -192,6 +193,7 @@ uint8_t Maq_Caja()
 		case BUSCAR_IMAN:
 			if(! IMAN)	// IMAN == 0 -> caja cerrada
 			{
+				UART0_SendString("Saliendo de estacion");
 				SERVO_CERRADO;
 				TimerStart(E_Exit, T_Exit, handler_Exit, SEG );
 				GREEN_ON;
@@ -199,6 +201,7 @@ uint8_t Maq_Caja()
 			}
 			else
 			{
+				UART0_SendString("Caja Mal Cerrada");
 				BLUE_ON;
 				estado_CAJA = BUSCAR_BOTON;
 			}
