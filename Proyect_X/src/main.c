@@ -86,7 +86,7 @@ int main(void) {
     	Maq_General();
 
     	SERVO_ABIERTO;
-    	while(!Maq_Caja());
+    	while(!Maq_Caja(1));
     	uint8_t aux = 1;
     	aux = aux;
     }

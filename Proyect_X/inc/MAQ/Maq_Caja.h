@@ -73,7 +73,7 @@
  **********************************************************************************************************************************/
 void init_led(uint8_t puerto, uint8_t pin);
 void init_caja();
-uint8_t Maq_Caja();
+uint8_t Maq_Caja(uint32_t);
 
 
 #endif /* MAQ_MAQ_CAJA_H_ */

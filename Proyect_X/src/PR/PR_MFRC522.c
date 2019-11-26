@@ -7,8 +7,23 @@
 
 #include <PR_MFRC522.h>
 
-#define MAX_ID 4
-volatile uint8_t id[MAX_ID+1] = { 0xcb , 0x73 , 0xd7 , 0x73 , 0x00 };
+/*	VERSION ANTERIOR	*/
+/*
+  #define MAX_ID 4
+  volatile uint8_t id[MAX_ID+1] = { 0xcb , 0x73 , 0xd7 , 0x73 , 0x00 };
+*/
+
+#define N_ID 4 //num_id -1
+#define LEN_ID 10 //generalizo len para todos los id
+volatile uint8_t id[N_ID][LEN_ID] = {
+
+									{ 0xcb , 0x73 , 0xd7 , 0x73 , 0x00 },//hay que probar si este es el 0 o 1
+									//si es 0 -> num_base - 1 (FUNCION: Card()) else num_base (FUNCION: Card())
+									{ /* INGRESAR ID */	},
+									{ /* INGRESAR ID */	},
+									{ /* INGRESAR ID */	},
+								};
+
 //INICIALIZACION SPI Y MFRC522 (mediante comandos)
 void setup_MFRC522() {
 	/* Inicializo MFRC522 */
@@ -17,7 +32,7 @@ void setup_MFRC522() {
 
 //FUNCION Card: primitiva de MFRC522 para acceso por tarjeta magnetica
 // return: hay tarjeta valida o no
-uint16_t Card(void)
+uint16_t Card( uint32_t num_base )
 {
 	uint8_t status, checksum1, str[MAX_LEN], isCard = 1;
 	uint32_t i;
@@ -29,11 +44,18 @@ uint16_t Card(void)
 	    if (status == MI_OK)
 	      checksum1 = str[0] ^ str[1] ^ str[2] ^ str[3];
 
-	    for(i=0 ; i<MAX_ID ; i++)
+	    for( i=0 ; i<LEN_ID ; i++)
+	    {
+	    	if( *(str+i) != *( id[num_base - 1]+i) )
+	    		isCard = -1;
+	    }
+	    /* 	VERSION ANTERIOR */
+/*	    for(i=0 ; i<MAX_ID ; i++)
 	    {
 	    	if( *(str+i) != *(id+i) )
 	    		isCard = -1;
 	    }
+*/
 	    if( 0x10 == checksum1 || 0x00 == checksum1)
 	    	isCard = 0;
 	    MFRC522_Halt(); //modo hibernacion

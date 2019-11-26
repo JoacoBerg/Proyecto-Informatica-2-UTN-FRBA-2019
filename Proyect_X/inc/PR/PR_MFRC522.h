@@ -12,7 +12,7 @@
 #include <PR_SPI.h>
 
 void setup_MFRC522(void);
-uint16_t Card(void);
+uint16_t Card(uint32_t);
 uint16_t isCardRegistered (uint8_t checksum);
 void Write_MFRC522(uint8_t addr, uint8_t val);
 uint8_t Read_MFRC522(uint8_t addr);
