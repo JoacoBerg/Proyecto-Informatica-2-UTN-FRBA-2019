@@ -1,4 +1,0 @@
-PR_Maq_Recibo.c:16:6:handler_Descontar1	8	static
-PR_Maq_Recibo.c:20:6:handler_Descontar2	8	static
-PR_Maq_Recibo.c:26:5:recepcionTrama	16	static
-PR_Maq_Recibo.c:138:6:Maq_Recibo	8	static

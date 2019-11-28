@@ -1,4 +1,0 @@
-DR_UART1.c:71:6:UART1_IRQHandler	16	static
-DR_UART1.c:109:6:UART1_Inicializacion	8	static
-DR_UART1.c:146:6:UART1_PushRX	16	static
-DR_UART1.c:161:9:UART1_PopTX	16	static

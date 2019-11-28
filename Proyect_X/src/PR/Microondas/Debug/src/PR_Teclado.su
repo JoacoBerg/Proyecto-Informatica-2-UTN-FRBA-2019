@@ -1,7 +1,0 @@
-PR_Teclado.c:41:6:BarridoTeclado	16	static
-PR_Teclado.c:70:9:Lectura_Teclado	16	static
-PR_Teclado.c:76:6:Init_Teclado_Matrix	16	static
-PR_Teclado.c:92:6:Init_Teclado_Array	16	static
-PR_Teclado.c:100:9:check_teclas_Array	16	static
-PR_Teclado.c:108:9:check_teclas_Matrix	16	static
-PR_Teclado.c:121:6:ApagarTeclado	16	static

@@ -60,10 +60,10 @@ __RW uint32_t BufferSalidas;		//!< Buffer de las salidas de los relays
 */
 void RefrescoSalidas ( void )
 {
-	SetPin ( OUT0 , ( BufferSalidas >> 0 ) & 1 );
-	SetPin ( OUT1 , ( BufferSalidas >> 1 ) & 1 );
-	SetPin ( OUT2 , ( BufferSalidas >> 2 ) & 1 );
-	SetPin ( OUT3 , ( BufferSalidas >> 3 ) & 1 );
+	SetPin ( OUT_BUZZER, ( BufferSalidas >> 0 ) & 1 );
+	SetPin ( OUT_BLUE, ( BufferSalidas >> 1 ) & 1 );
+	SetPin ( OUT_GREEN, ( BufferSalidas >> 2 ) & 1 );
+	SetPin ( OUT_RED, ( BufferSalidas >> 3 ) & 1 );
 }
 
 /**
@@ -77,13 +77,13 @@ void RefrescoSalidas ( void )
 void InicializarSalidas( void )
 {
 	//!< Inicializar Salidas Digitales
-	SetPinsel(OUT0,PINSEL_GPIO);
-	SetPinsel(OUT1,PINSEL_GPIO);
-	SetPinsel(OUT2,PINSEL_GPIO);
-	SetPinsel(OUT3,PINSEL_GPIO);
+	SetPinsel(OUT_BUZZER,PINSEL_GPIO);
+	SetPinsel(OUT_BLUE,PINSEL_GPIO);
+	SetPinsel(OUT_GREEN,PINSEL_GPIO);
+	SetPinsel(OUT_RED,PINSEL_GPIO);
 
-	SetPinDir( OUT0 , PINDIR_OUTPUT);
-	SetPinDir( OUT1 , PINDIR_OUTPUT);
-	SetPinDir( OUT2 , PINDIR_OUTPUT);
-	SetPinDir( OUT3 , PINDIR_OUTPUT);
+	SetPinDir( OUT_BUZZER , PINDIR_OUTPUT);
+	SetPinDir( OUT_BLUE , PINDIR_OUTPUT);
+	SetPinDir( OUT_GREEN , PINDIR_OUTPUT);
+	SetPinDir( OUT_RED , PINDIR_OUTPUT);
 }

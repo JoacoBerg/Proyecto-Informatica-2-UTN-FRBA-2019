@@ -1,2 +1,0 @@
-PR_UART1.c:19:9:UART1_PopRX	16	static
-PR_UART1.c:39:6:UART1_PushTX	16	static

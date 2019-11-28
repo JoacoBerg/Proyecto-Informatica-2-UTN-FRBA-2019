@@ -19,6 +19,8 @@
  **********************************************************************************************************************************/
 #include "DR_tipos.h"
 
+
+
 /***********************************************************************************************************************************
  *** DEFINES GLOBALES
  **********************************************************************************************************************************/
@@ -30,12 +32,29 @@
 /***********************************************************************************************************************************
  *** TIPO DE DATOS GLOBALES
  **********************************************************************************************************************************/
-#define OUT0 0,0
-#define OUT1 0,0
-#define OUT2 0,0
-#define OUT3 0,0
-#define OUT4 0,0
-#define OUT5 0,0
+
+#define 	OUT_BUZZER	0,28
+#define		OUT_BLUE	2,1
+#define		OUT_GREEN	2,2
+#define		OUT_RED		2,3
+
+#define BUZZER_ON		(BufferSalidas |= (1<<1))
+#define BLUE_ON			(BufferSalidas |= (1<<2))
+#define GREEN_ON		(BufferSalidas |= (1<<3))
+#define RED_ON			(BufferSalidas |= (1<<4))
+#define MOTOR01_ON		(BufferSalidas |= (1<<5))
+#define MOTOR02_ON		(BufferSalidas |= (1<<6))
+#define MOTOR03_ON		(BufferSalidas |= (1<<7))
+
+
+#define BUZZER_OFF		(BufferSalidas &= ~(1<<1))
+#define BLUE_OFF		(BufferSalidas &= ~(1<<2))
+#define GREEN_OFF		(BufferSalidas &= ~(1<<3))
+#define RED_OFF			(BufferSalidas &= ~(1<<4))
+#define MOTOR01_OFF		(BufferSalidas &= ~(1<<5))
+#define MOTOR02_OFF		(BufferSalidas &= ~(1<<6))
+#define MOTOR03_OFF		(BufferSalidas &= ~(1<<7))
+
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES
  **********************************************************************************************************************************/

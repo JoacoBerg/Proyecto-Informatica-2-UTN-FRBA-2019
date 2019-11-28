@@ -1,6 +1,0 @@
-PR_Timers.c:63:6:TimerStart	24	static
-PR_Timers.c:101:6:SetTimer	16	static
-PR_Timers.c:125:10:GetTimer	24	static
-PR_Timers.c:152:6:StandByTimer	16	static
-PR_Timers.c:164:6:TimerStop	16	static
-PR_Timers.c:179:6:TimerClose	16	static

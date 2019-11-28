@@ -24,6 +24,6 @@ void SysTick_Handler(void){
 
 	DebounceEntradas( );
 	AnalizarTimers( );
-  //RefrescoSalidas( );
+    RefrescoSalidas( );
 
 }
