@@ -16,6 +16,7 @@
 #include <DR_Inicializacion.h>
 #include "PR_Timers.h"
 #include "Maq_GRAL.h"
+#include "DR_Salidas.h"
 //#include "testings.h"
 
 //#include "Maq_FollowTheLine.h"
@@ -25,8 +26,16 @@ int i = 0,a;
 
 int main(void) {
 
-   	Inicializacion ();
-   	//test_Maq_GRAL_init();
+	Inicializacion ();
+	RED_OFF;
+	//RED_ON;
+	//GREEN_ON;
+	GREEN_ON;
+	//BLUE_ON;
+	BLUE_ON;
+	//BUZZER_OFF;
+
+	//test_Maq_GRAL_init();
    	TimerStart(1, 1, prueba, MIL);
    	while(1) {
     	TimerEvent();
@@ -34,10 +43,6 @@ int main(void) {
     	//ftl();
     	//Maq_FollowTheLine_v2();
     	//test_servos();
-    	if(i == 10000)
-    	{
-    		a++;
-    	}
 
     }
 
@@ -47,13 +52,19 @@ int main(void) {
 
 void prueba(void)
 {
-	i++;
-	TimerStart(2, 1, prueba2, MIL);
+	//BLUE_ON;
+	RED_ON;
+	//GREEN_ON;
+	//BUZZER_ON;
+	TimerStart(2, 1000, prueba2, MIL);
 }
 
 void prueba2(void)
 {
-	i++;
-	TimerStart(1, 1, prueba, MIL);
+	//BLUE_OFF;
+	RED_OFF;
+	//GREEN_OFF;
+	//BUZZER_OFF;
+	TimerStart(1, 1000, prueba, MIL);
 }
 
