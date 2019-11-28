@@ -1,0 +1,4 @@
+Microondas.c:21:6:IntToChar	32	static
+Microondas.c:32:6:init_microondas	8	static
+Microondas.c:47:6:handler_COOK	4	static
+Microondas.c:54:6:Microondas	16	static

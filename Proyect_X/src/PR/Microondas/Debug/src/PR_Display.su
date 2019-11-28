@@ -1,0 +1,5 @@
+PR_Display.c:125:6:Display7seg_BCD	24	static
+PR_Display.c:138:6:Display7seg_Binary	32	static
+PR_Display.c:154:6:BarridoDisplay	16	static
+PR_Display.c:187:6:SET_Digit	24	static
+PR_Display.c:192:6:Init_Display	16	static

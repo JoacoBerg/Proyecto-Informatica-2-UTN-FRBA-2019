@@ -1,0 +1,5 @@
+DR_GPIO.c:52:6:SetPinDir	24	static
+DR_GPIO.c:61:6:SetPinMode	24	static
+DR_GPIO.c:68:6:SetPinMode_OD	24	static
+DR_GPIO.c:76:6:SetPin	24	static
+DR_GPIO.c:86:10:GetPin	16	static
