@@ -2,6 +2,7 @@
 #include <DR_Systick.h>
 #include "DR_Entradas.h"
 #include "DR_Timers.h"
+#include "DR_Display.h"
 
 void SysTick_Init(void){
 	Systick->STRELOAD = (Systick->STCALIB / 4) - 1; //inicializo para 2,5ms

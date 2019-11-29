@@ -19,23 +19,27 @@
 #include "PR_SE_Parcial2.h"
 #include "Maq_PC.h"
 
-//#include "Maq_FollowTheLine.h"
+
 void tiempo_pregunta(void);
 void tiempo_seteos(void);
-//void prueba2(void);
+
 
 uint8_t num_cabina = 1;
 uint8_t estado_cabina = 0;
 
 int main(void) {
-	Inicializacion ();
-	//test_Maq_GRAL_init();
-   	TimerStart(2, 1, tiempo_pregunta, SEG);
-   	Display7seg_BCD(000000);
+
+	Inicializacion (); //Inicializo todo lo pedido
+
+   	TimerStart(2, 1, tiempo_pregunta, SEG); //Impresion en los displays de 7 Segmentos + Sistema externo
+
+   	Display7seg_BCD(888888); //Prendo todos los D7s en 8
+
    	while(1) {
-    	TimerEvent();
-    	Maquina_PC(num_cabina, estado_cabina);
-    	//Display7seg_BCD(000000);
+
+    	TimerEvent(); //Maquina de timers
+
+    	Maquina_PC(num_cabina, estado_cabina); //Maquina de comunicacion por uart
 
     }
     return 0;
@@ -50,11 +54,9 @@ void tiempo_pregunta(void)
 		num_cabina++;
 	Set_SE(num_cabina);
 	TimerStart(2, 1, tiempo_pregunta, SEG);
-	TimerStart(3, 1, tiempo_seteos, MIL250);
+	TimerStart(3, 1, tiempo_seteos, MILISX250);
 }
 
-//CAMBIAR LOS 4 por la letra de TABLA D7S
-//HACER TABLA de 7S == 4 significa la posicion 4 del vector de la tabla (ejemplo posicion 10 es apagar)
 
 void tiempo_seteos(void)
 {

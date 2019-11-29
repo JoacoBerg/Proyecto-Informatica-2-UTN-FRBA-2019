@@ -88,7 +88,7 @@ void UART1_IRQHandler (void)
 void UART1_Inicializacion (void)
 {
 	PCONP |= 0x01<<4;	//prendo UART
-		PCLKSEL0 |= (0x03<<8);		//	PLL/8		clock de UART
+		PCLKSEL0 &= ~(0x03<<8);		//	PLL/8		clock de UART
 
 
 		UART1LCR = 0x0000009b;		//Tx de 8 bits, 1 bit de stop, par, sin break cond, habilito silicio para DLL y DLM (divisores) DLAB =1
@@ -96,10 +96,7 @@ void UART1_Inicializacion (void)
 
 		//seteado a 115200 baud (PLL a 100Mhz)
 		UART1DLM = 0;	//parte alta de divisor
-		UART1DLL = 0x04;	//parte baja de divisor
-
-		FDR_UART1 |= (0x05<<0);
-		FDR_UART1 |= (0x08<<4);
+		UART1DLL = 0x0E;	//parte baja de divisor
 
 		SetPinsel( TX1 , PINSEL_FUNC1);
 		SetPinsel( RX1 , PINSEL_FUNC1);

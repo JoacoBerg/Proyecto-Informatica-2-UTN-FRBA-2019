@@ -58,8 +58,7 @@ void Inicializacion ( void )
 	// Se configura en primer lugar el PLL:
 	// Estabiliza el oscilador interno del micro en 100MHz
 	InicializarPLL();
-	SysTick_Init();
-	// Se configura el systick cada 2,5ms
+	SysTick_Init();// Se configura el systick cada 2,5ms
 
 	//Inicializaciones pedidas
 	UART1_Inicializacion();

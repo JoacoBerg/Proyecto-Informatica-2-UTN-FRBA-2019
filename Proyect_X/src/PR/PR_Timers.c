@@ -65,7 +65,7 @@ void TimerStart(uint8_t event, uint32_t time, Timer_Handler handler , uint8_t ba
 {
 	switch ( base )
 	{
-		case MIL250:
+		case MILISX250:
 			time *= MILIS;
 			break;
 		case DEC:

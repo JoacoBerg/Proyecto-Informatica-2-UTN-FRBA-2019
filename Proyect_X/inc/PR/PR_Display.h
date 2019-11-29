@@ -2,6 +2,7 @@
 #define PR_PR_DISPLAY_H_
 #include "DR_tipos.h"
 
+
 void Display7seg_per_digit_BCD(uint32_t val, uint8_t digit);
 void Display7seg_BCD(uint32_t val);
 //void Display7seg_Binary(uint32_t val);
@@ -31,43 +32,13 @@ void Display7seg_BCD(uint32_t val);
 #define GUION			0x40
 //#define PUNTO_D7S       0x12
 
+#define CANT_DIGITOS			6
+extern uint8_t BUFFER_D7S[CANT_DIGITOS];
 
 
 
 
-uint8_t Tabla_D7S[] = {
-    CERO_D7S,
-    UNO_D7S,
-    DOS_D7S,
-    TRES_D7S,
-    CUATRO_D7S,
-    CINCO_D7S,
-    SEIS_D7S,
-    SIETE_D7S,
-    OCHO_D7S,
-    NUEVE_D7S,
-    APAGAR_D7S,
-	R_MIN,
-	U_MIN,
-	N_MIN,
-	T_MIN,
-	E_MIN,
-	P_MIN,
-	P_MIN,
-	R_MIN,
-	E_MIN,
-	S_MIN,
-	T_MIN,
-	P_MIN,
-	E_MIN,
-	R_MIN,
-	R_MIN,
-	GUION,
-	P_MIN,
-	C_MIN
-	/*,
-    PUNTO_D7S*/
-};
+
 
 
 #endif /* PR_PR_DISPLAY_H_ */

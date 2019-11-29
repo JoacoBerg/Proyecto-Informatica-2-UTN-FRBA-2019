@@ -74,7 +74,7 @@ void Maquina_PC(uint8_t NUM_CABINA, uint8_t ESTADO){
 						UART1_PushTX('$');
 						estadoMAQ_PC ++;
 
-						TimerStart(E_PC, T_PC , handler_ERRORPC, MIL250);
+						TimerStart(E_PC, T_PC , handler_ERRORPC, MILISX250);
 
 						flagSEND = 0;
 						break;
