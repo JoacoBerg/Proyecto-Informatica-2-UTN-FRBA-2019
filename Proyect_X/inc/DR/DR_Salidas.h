@@ -33,9 +33,9 @@
  *** TIPO DE DATOS GLOBALES
  **********************************************************************************************************************************/
 
-#define 	SD0	3, 26
-#define		SD1	3, 26
-#define		SD2	3, 26
+#define 	SD0	2, 0
+#define		SD1	0, 23
+#define		SD2	0, 21
 
 
 #define SD0_ON		(BufferSalidas |= (1<<0))

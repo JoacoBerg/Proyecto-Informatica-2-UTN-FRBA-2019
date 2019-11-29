@@ -25,15 +25,16 @@
 #define Rebotes				4
 #define MAX_ENTRADAS		10
 
+//teclado fijo como entradas comunes para probar
+#define SW_0 2, 10
+#define SW_1 0, 18
+#define SW_2 0, 11
 
-#define IR4 0,25
-#define E2 0,26
-#define E1 1,30
-#define E0 1,31
-#define IR5 0,9
 
-#define PIN_BOTON 0, 24
-#define PIN_IMAN 0, 23
+
+#define E2 SW_2
+#define E1 SW_1
+#define E0 SW_0
 
 
 
