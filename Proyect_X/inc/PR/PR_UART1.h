@@ -1,10 +1,3 @@
-/*
- * PR_UART1.h
- *
- *  Created on: Oct 31, 2019
- *      Author: augusto
- */
-
 #ifndef PR_UART1_H_
 #define PR_UART1_H_
 

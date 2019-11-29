@@ -1,8 +1,5 @@
 /*
  * DR_Systick.h
- *
- *  Created on: 6 sep. 2019
- *      Author: gif30
  */
 #include <DR_tipos.h>
 #include "PR_Display.h"

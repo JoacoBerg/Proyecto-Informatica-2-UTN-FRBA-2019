@@ -1,10 +1,4 @@
 /*******************************************************************************************************************************//**
- *
- * @file		PR_Eçntradas.h
- * @brief		Breve descripción del objetivo del Módulo
- * @date		14 de nov. de 2017
- * @author		Ing. Marcelo Trujillo
- *
  **********************************************************************************************************************************/
 
 /***********************************************************************************************************************************
@@ -24,21 +18,12 @@
 #define E0_l 0
 #define E1_l 1
 #define E2_l 2
-/*
-#define IR4_l 3
-#define IR5_l 4
-#define IMAN_l 5
-#define BOTON_l 6
-*/
+
+
 #define LEER_E0 LeerEntrada (E0_l)
 #define LEER_E1 LeerEntrada (E1_l)
 #define LEER_E2 LeerEntrada (E2_l)
-/*
-#define IR_DER_OUT LeerEntrada (IR4_l)
-#define IR_OBSTACULO LeerEntrada (IR5_l)
-#define IMAN LeerEntrada (IMAN_l)
-#define BOTON LeerEntrada (BOTON_l)
-*/
+
 
 /***********************************************************************************************************************************
  *** DEFINES GLOBALES

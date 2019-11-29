@@ -1,9 +1,3 @@
-/*
- * DR_systick.c
- *
- *  Created on: 6 sep. 2019
- *      Author: gif30
- */
 #include <DR_Salidas.h>
 #include <DR_Systick.h>
 #include "DR_Entradas.h"

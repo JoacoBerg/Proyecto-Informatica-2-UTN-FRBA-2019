@@ -100,7 +100,7 @@ void InicializarEntradas ( void )
 	SetPinMode(E0, PINMODE_PULLDOWN);
 	SetPinDir(E0, PINDIR_INPUT);
 
-	//IR2
+	//E1
 	SetPinsel(E1, PINSEL_GPIO);
 	SetPinMode(E1, PINMODE_PULLDOWN);
 	SetPinDir(E1, PINDIR_INPUT);
