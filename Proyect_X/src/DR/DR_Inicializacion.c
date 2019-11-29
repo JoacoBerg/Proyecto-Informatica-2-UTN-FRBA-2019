@@ -8,7 +8,8 @@
 #include "Tanks.h"
 #include "DR_Entradas.h"
 //#include "DR_Salidas.h"
-#include "Maq_Caja.h"
+//#include "Maq_Caja.h"
+#include <DR_Salidas.h>
 
 
 
@@ -62,19 +63,9 @@ void Inicializacion ( void )
 	SysTick_Init();
 	// Se configura el systick cada 1ms
 
-	UART0_Inicializacion();
-
-	//la inicializacion de Servo se hace dentro de Tanks_Init() porque Tanks_Init() inicializa tambien los PWM
-	Tanks_Init();
-
+	UART1_Inicializacion();
+	Init_Display();
 	InicializarEntradas( ); //InitIR() no existe, las entradas se definen en InicializarEntradas()
-	//InicializarSalidas( ); //NO Implementado
+	InicializarSalidas( ); //NO Implementado
 
-	/* Inicializo SPI */
-	setup_SPI();
-
-	/* Inicializo modulo MFRC522 */
-	setup_MFRC522();
-
-	init_caja();
 }

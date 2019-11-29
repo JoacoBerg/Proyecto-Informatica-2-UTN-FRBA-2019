@@ -5,6 +5,8 @@
  *      Author: gif30
  */
 #include <DR_tipos.h>
+#include "PR_Display.h"
+#include "DR_UART1.h"
 #ifndef DR_SYSTICK_H_
 #define DR_SYSTICK_H_
 
