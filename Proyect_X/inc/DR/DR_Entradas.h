@@ -25,15 +25,10 @@
 #define Rebotes				4
 #define MAX_ENTRADAS		10
 
+#define E2 2,11 ////Pagina 4 del pfd infotronic adjunto en la entrega
+#define E1 4,29
+#define E0 1,26
 
-#define IR4 0,25
-#define E2 0,26
-#define E1 1,30
-#define E0 1,31
-#define IR5 0,9
-
-#define PIN_BOTON 0, 24
-#define PIN_IMAN 0, 23
 
 
 

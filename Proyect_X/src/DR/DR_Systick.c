@@ -10,7 +10,7 @@
 #include "DR_Timers.h"
 
 void SysTick_Init(void){
-	Systick->STRELOAD = (Systick->STCALIB / 4) - 1; //Base de tiempo dada por 10ms/10: El -1 es porque cuenta uno de mas el STCURR
+	Systick->STRELOAD = (Systick->STCALIB / 4) - 1;
 	Systick->STCURR = 0; //esto es para limpiar el timer
 
 	Systick->ENABLE = 1; //activa el modulo
@@ -20,9 +20,8 @@ void SysTick_Init(void){
 
 void SysTick_Handler(void){
 
-	//cada 1 milisegundo
-	BarridoDisplay();
-
+	//Funciones pedidas para el parcial
+	BarridoDisplay(); //cada 2,5ms milisegundo
 	DebounceEntradas( );
 	AnalizarTimers( );
     RefrescoSalidas( );

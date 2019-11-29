@@ -1,9 +1,5 @@
 /*******************************************************************************************************************************//**
  *
- * @file		DR_Salidas.c
- * @brief		Descripcion del modulo
- * @date		14 de nov. de 2017
- * @author		Ing. Marcelo Trujillo
  *
  **********************************************************************************************************************************/
 
@@ -51,12 +47,7 @@ __RW uint32_t BufferSalidas;		//!< Buffer de las salidas de los relays
  *** FUNCIONES GLOBALES AL MODULO
  **********************************************************************************************************************************/
 /**
-	\fn  void RefrescoSalidas ( void )
-	\brief Refresca el estadp de las salidas delos relays
- 	\author Ing. Marcelo Trujillo
- 	\date 14 de nov. de 2017
- 	\param void
- 	\return void
+
 */
 void RefrescoSalidas ( void )
 {
@@ -65,14 +56,7 @@ void RefrescoSalidas ( void )
 	SetPin ( SD2, ( BufferSalidas >> 2 ) & 1 );
 }
 
-/**
-	\fn  void InicializarSalidas( void )
-	\brief Configura las salidas de los relays
- 	\author Ing. Marcelo Trujillo
- 	\date 14 de nov. de 2017
- 	\param void
- 	\return void
-*/
+
 void InicializarSalidas( void )
 {
 	//!< Inicializar Salidas Digitales

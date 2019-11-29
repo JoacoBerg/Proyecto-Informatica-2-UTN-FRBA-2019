@@ -4,12 +4,9 @@
 #include <DR_Inicializacion.h>
 #include "DR_PLL.h"
 #include "DR_SysTick.h"
-#include "DR_UART0.h"
-#include "Tanks.h"
 #include "DR_Entradas.h"
-//#include "DR_Salidas.h"
-//#include "Maq_Caja.h"
 #include <DR_Salidas.h>
+#include "DR_UART1.h"
 
 
 
@@ -61,10 +58,11 @@ void Inicializacion ( void )
 	// Estabiliza el oscilador interno del micro en 100MHz
 	InicializarPLL();
 	SysTick_Init();
-	// Se configura el systick cada 1ms
+	// Se configura el systick cada 2,5ms
 
+	//Inicializaciones pedidas
 	UART1_Inicializacion();
 	Init_Display();
-	InicializarEntradas( ); //InitIR() no existe, las entradas se definen en InicializarEntradas()
+	InicializarEntradas( );
 	InicializarSalidas( );
 }
