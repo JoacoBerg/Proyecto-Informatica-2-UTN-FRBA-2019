@@ -10,7 +10,7 @@
 #include "DR_Timers.h"
 
 void SysTick_Init(void){
-	Systick->STRELOAD = (Systick->STCALIB / 4) - 1;
+	Systick->STRELOAD = (Systick->STCALIB / 4) - 1; //inicializo para 2,5ms
 	Systick->STCURR = 0; //esto es para limpiar el timer
 
 	Systick->ENABLE = 1; //activa el modulo
