@@ -11,6 +11,7 @@
 #include <DR_Systick.h>
 #include "DR_Entradas.h"
 #include "DR_Timers.h"
+#include "DR_Display.h"
 
 void SysTick_Init(void){
 	Systick->STRELOAD = (Systick->STCALIB / 4) - 1; //Base de tiempo dada por 10ms/10: El -1 es porque cuenta uno de mas el STCURR

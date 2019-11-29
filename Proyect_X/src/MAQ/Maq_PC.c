@@ -7,24 +7,24 @@
  *
  */
 
-#include "Maq_PC.h"
+#include <Maq_PCTransmision.h>
 static uint8_t estadoMAQ_PC = RESET;
-uint8_t flagSEND = 0;
-uint8_t flagERROR = 0; //si la PC no manda en 250 ms OK -> flag =1
+uint8_t START_TRANSMISION_FLAG = 0;
+uint8_t ERROR_FLAG = 0; //si la PC no manda en 250 ms OK -> flag =1
 uint8_t estadoRECV = 0;
 void TimerHandler_ErrorPC_Reception()
 {
-	flagERROR = 1;
+	ERROR_FLAG = 1;
 	estadoRECV = 0;
 	estadoMAQ_PC = RESET;
-	flagSEND = 0;
+	START_TRANSMISION_FLAG = 0;
 
-	TimerStart(E_ERROR, TIEMPO_ERROR , TimerHandler_Fin_De_Error, SEG);
+	TimerStart(TIMER_ERROR, TIEMPO_ERROR , TimerHandler_Fin_De_Error, SEG);
 }
 
 void TimerHandler_Fin_De_Error()
 {
-	flagERROR = 0; //despues del tiempo de bloqueo
+	ERROR_FLAG = 0; //despues del tiempo de bloqueo
 }
 
 void Maq_PCTransmision(uint8_t NUM_CABINA, uint8_t ESTADO){
@@ -34,7 +34,7 @@ void Maq_PCTransmision(uint8_t NUM_CABINA, uint8_t ESTADO){
 	 	 switch(estadoMAQ_PC)
 	 	 {
 				 case RESET:
-					if(flagSEND)
+					if(START_TRANSMISION_FLAG)
 						estadoMAQ_PC = SENDUNG;
 
 					 break;
@@ -81,9 +81,9 @@ void Maq_PCTransmision(uint8_t NUM_CABINA, uint8_t ESTADO){
 						UART1_PushTX('$');
 						estadoMAQ_PC ++;
 
-						TimerStart(E_PC, TIEMPO_PC , TimerHandler_ErrorPC_Reception, MIL250);
+						TimerStart(TIMER_PC, TIEMPO_PC , TimerHandler_ErrorPC_Reception, MIL250);
 
-						flagSEND = 0;
+						START_TRANSMISION_FLAG = 0;
 						break;
 
 
@@ -108,9 +108,9 @@ void Maq_PCTransmision(uint8_t NUM_CABINA, uint8_t ESTADO){
 
 				 if(estadoRECV == 2)
 				 {
-					 TimerStop(E_PC);
+					 TimerStop(TIMER_PC);
 					 estadoRECV = 0;
-					 flagERROR = 0;
+					 ERROR_FLAG = 0;
 					 estadoMAQ_PC = 0;
 				 }
 

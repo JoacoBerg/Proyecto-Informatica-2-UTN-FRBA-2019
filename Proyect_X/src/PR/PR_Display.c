@@ -30,7 +30,7 @@ void Display7seg_BCD(uint32_t val){ // val a cargar en el dsp asignado
 }
 
 //
-void Display7seg_per_digit_BCD(uint32_t val, uint8_t digit){ // val a cargar en el dsp asignado
+void Display7seg_SetDigit_BCD(uint32_t val, uint8_t digit){ // val a cargar en el dsp asignado
         BUFFER_D7S[digit] = Tabla_D7S[val];
     /// opcional: rehabilitar la interrupcion
 }
