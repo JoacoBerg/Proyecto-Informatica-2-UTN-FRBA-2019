@@ -20,6 +20,15 @@
 #define OCHO_D7S        0x7F
 #define NUEVE_D7S       0x67
 #define APAGAR_D7S      0x00
+
+#define R_MIN
+#define U_MIN
+#define N_MIN
+#define T_MIN
+#define E_MIN
+#define P_MIN
+#define S_MIN
+#define C_MIN
 //#define PUNTO_D7S       0x12
 
 
@@ -139,6 +148,13 @@ void Display7seg_BCD(uint32_t val){ // val a cargar en el dsp asignado
     /// opcional: rehabilitar la interrupcion
 }
 
+//
+void Display7seg_per_digit_BCD(uint32_t val, uint8_t digit){ // val a cargar en el dsp asignado
+        BUFFER_D7S[digit] = Tabla_D7S[val];
+    /// opcional: rehabilitar la interrupcion
+}
+
+
 void Display7seg_Binary(uint32_t val){ // val a cargar en el dsp asignado
     uint8_t i = 0;
     uint8_t aux[CANT_DIGITOS];
@@ -156,8 +172,8 @@ void Display7seg_Binary(uint32_t val){ // val a cargar en el dsp asignado
 //systick
 ///HACER EL BARRIDO EN SERIO
 void BarridoDisplay(void){
-    static char time = REFRESH_TIME -1; // sistick para 1 ms
-    if(!time){
+    //static char time = REFRESH_TIME -1; // sistick para 1 ms
+    //if(!time){
         static uint8_t digito = 0;
         uint8_t auxiliar = BUFFER_D7S[digito];
         Apagar_D7S();
@@ -166,10 +182,10 @@ void BarridoDisplay(void){
             digito++;
         else
             digito = 0;
-        time = REFRESH_TIME - 1;
-    }
-    else
-        time --;
+      //  time = REFRESH_TIME - 1;
+    //}
+    //else
+    //    time --;
 }
 
 //funciones internas del modulo

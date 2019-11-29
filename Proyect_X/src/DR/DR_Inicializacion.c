@@ -66,6 +66,5 @@ void Inicializacion ( void )
 	UART1_Inicializacion();
 	Init_Display();
 	InicializarEntradas( ); //InitIR() no existe, las entradas se definen en InicializarEntradas()
-	InicializarSalidas( ); //NO Implementado
-
+	InicializarSalidas( );
 }

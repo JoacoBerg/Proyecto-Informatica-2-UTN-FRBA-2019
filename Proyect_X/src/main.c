@@ -15,57 +15,53 @@
 
 #include <DR_Inicializacion.h>
 #include "PR_Timers.h"
-//#include "testings.h"
-#include <DR_Salidas.h>
+#include "PR_Display.h"
+#include "PR_SE_Parcial2.h"
+#include "Maq_PC.h"
 
 //#include "Maq_FollowTheLine.h"
-void prueba(void);
-void prueba2(void);
-int i = 0,a;
+void tiempo_pregunta(void);
+//void prueba2(void);
+
+uint8_t num_cabina = 1;
+uint8_t estado_cabina = 0;
 
 int main(void) {
-
 	Inicializacion ();
-	RED_OFF;
-	//RED_ON;
-	//GREEN_ON;
-	GREEN_ON;
-	//BLUE_ON;
-	BLUE_ON;
-	BUZZER_OFF;
-
 	//test_Maq_GRAL_init();
-   	TimerStart(1, 1, prueba, MIL);
+   	TimerStart(2, 1, tiempo_pregunta, SEG);
+   	Display7seg_BCD(000000);
    	while(1) {
     	TimerEvent();
-    	//Maquina_PC();
-
-    	//Maq_General();
-    	//ftl();
-    	//Maq_FollowTheLine_v2();
-    	//test_servos();
+    	Maquina_PC();
+    	//Display7seg_BCD(000000);
 
     }
-
     return 0;
 }
 
 
-void prueba(void)
+void tiempo_pregunta(void)
 {
-	//BLUE_ON;
-	RED_ON;
-	//GREEN_ON;
-	BUZZER_ON;
-	TimerStart(2, 1000, prueba2, MIL);
+	if(num_cabina == 6)
+		num_cabina = 1;
+	else
+		num_cabina++;
+	Set_SE(num_cabina);
+	Get_SE(num_cabina);
+	TimerStart(2, 1, tiempo_pregunta, SEG);
+	TimerStart(3, 1, tiempo_seteos, MIL250);
 }
 
-void prueba2(void)
+void tiempo_seteos(void)
 {
-	//BLUE_OFF;
-	RED_OFF;
-	//GREEN_OFF;
-	BUZZER_OFF;
-	TimerStart(1, 1000, prueba, MIL);
+	flagSend = 1;
+	if(flagError){
+    	Display7seg_per_digit_BCD(4, 0);
+    	Display7seg_per_digit_BCD(4, 1);
+    	Display7seg_per_digit_BCD(4, 2);
+    	Display7seg_per_digit_BCD(4, 3);
+    	Display7seg_per_digit_BCD(4, 4);
+    	Display7seg_per_digit_BCD(4, 5);
+	}
 }
-

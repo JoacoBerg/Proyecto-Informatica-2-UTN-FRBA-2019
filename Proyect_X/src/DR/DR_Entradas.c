@@ -65,15 +65,15 @@ void DebounceEntradas (void)
 	uint8_t in = 0, x;
 	uint8_t i;
 
-	if ( GetPin( IR1 , ALTO) )
+	if ( GetPin( E0 , BAJO) )
 		in = 1;
 
-	if ( GetPin( IR2 , ALTO) )
+	if ( GetPin( E1 , BAJO) )
 		in |= 0x02;
 
-	if ( GetPin( IR3 , ALTO) )
+	if ( GetPin( E2 , BAJO) )
 		in |= 0x04;
-
+/*
 	if ( GetPin( IR4 , ALTO) )
 		in |= 0x08;
 
@@ -85,7 +85,7 @@ void DebounceEntradas (void)
 
 	if ( GetPin( PIN_BOTON , ALTO) )
 		in |= 0x40;
-
+*/
 	x = in ^ BufferEntradas;
 
 	if ( !x )
@@ -120,21 +120,21 @@ void DebounceEntradas (void)
 */
 void InicializarEntradas ( void )
 {
-	//IR1
-	SetPinsel(IR1, PINSEL_GPIO);		//Funcion del pin
-	SetPinMode(IR1, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-	SetPinDir(IR1, PINDIR_INPUT);		//0: Entrada | 1: Salida
+	//E0
+	SetPinsel(E0, PINSEL_GPIO);		//Funcion del pin
+	SetPinMode(E0, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+	SetPinDir(E0, PINDIR_INPUT);		//0: Entrada | 1: Salida
 
 	//IR2
-	SetPinsel(IR2, PINSEL_GPIO);		//Funcion del pin
-	SetPinMode(IR2, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-	SetPinDir(IR2, PINDIR_INPUT);		//0: Entrada | 1: Salida
+	SetPinsel(E1, PINSEL_GPIO);		//Funcion del pin
+	SetPinMode(E1, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+	SetPinDir(E1, PINDIR_INPUT);		//0: Entrada | 1: Salida
 
-	//IR3
-	SetPinsel(IR3, PINSEL_GPIO);		//Funcion del pin
-	SetPinMode(IR3, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
-	SetPinDir(IR3, PINDIR_INPUT);		//0: Entrada | 1: Salida
-
+	//E2
+	SetPinsel(E2, PINSEL_GPIO);		//Funcion del pin
+	SetPinMode(E2, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
+	SetPinDir(E2, PINDIR_INPUT);		//0: Entrada | 1: Salida
+/*
 	//IR4
 	SetPinsel(IR4, PINSEL_GPIO);		//Funcion del pin
 	SetPinMode(IR4, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
@@ -154,5 +154,6 @@ void InicializarEntradas ( void )
 	SetPinsel(IR5, PINSEL_GPIO);		//Funcion del pin
 	SetPinMode(IR5, PINMODE_PULLDOWN);		//pull up? (or pull down) 0 = pull-up | 3 = pull-down?
 	SetPinDir(IR5, PINDIR_INPUT);		//0: Entrada | 1: Salida
+*/
 }
 
