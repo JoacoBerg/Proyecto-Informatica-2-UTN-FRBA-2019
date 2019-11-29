@@ -11,7 +11,6 @@
  *** INCLUDES
  **********************************************************************************************************************************/
 #include "DR_Display.h"
-#include "PR_Display.h"
 #include "DR_tipos.h"
 #include "DR_PINSEL.h"
 #include "DR_GPIO.h"
@@ -36,7 +35,7 @@
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PUBLICAS
  **********************************************************************************************************************************/
-
+uint8_t BUFFER_D7S[CANT_DIGITOS];
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PRIVADAS AL MODULO
  **********************************************************************************************************************************/
@@ -74,6 +73,7 @@ void Init_Display(void){
 }
 
 
+
 //funciones internas del modulo
 //prende un digito con numD7s siendo el codigo D7S
 void SET_Digit(uint8_t numD7S, uint8_t dig){
@@ -84,8 +84,33 @@ void SET_Digit(uint8_t numD7S, uint8_t dig){
 
 
 void Apagar_D7S(void){
-    SET_Digit(APAGAR_D7S, 0);
+    SET_Digit(0x00, 0);
     for (uint8_t i = 0;i<CANT_DIGITOS;i++)
     	SetPin( COMM_Pins_D7S[(i*2)], COMM_Pins_D7S[(i*2)+1], LOW);
 }
+
+//systick
+///HACER EL BARRIDO EN SERIO
+void BarridoDisplay(void){
+    //static char time = REFRESH_TIME -1; // sistick para 1 ms
+    //if(!time){
+        static uint8_t digito = 0;
+        uint8_t auxiliar = BUFFER_D7S[digito];
+        Apagar_D7S();
+
+
+        SET_Digit(auxiliar, digito); //pinto no usar
+        if(digito < CANT_DIGITOS)
+            digito++;
+        else
+            digito = 0;
+      //  time = REFRESH_TIME - 1;
+    //}
+    //else
+    //    time --;
+}
+
+
+
+
 
