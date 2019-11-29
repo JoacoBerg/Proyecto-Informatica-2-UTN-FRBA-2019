@@ -27,14 +27,6 @@ int i = 0,a;
 int main(void) {
 
 	Inicializacion ();
-	RED_OFF;
-	//RED_ON;
-	//GREEN_ON;
-	GREEN_ON;
-	//BLUE_ON;
-	BLUE_ON;
-	BUZZER_ON;
-
 	//test_Maq_GRAL_init();
    	TimerStart(1, 1, prueba, MIL250);
    	while(1) {
@@ -57,7 +49,6 @@ int main(void) {
 void prueba(void)
 {
 	//BLUE_ON;
-	RED_ON;
 	//GREEN_ON;
 	TimerStart(2, 1000, prueba2, MIL250);
 }
@@ -65,7 +56,6 @@ void prueba(void)
 void prueba2(void)
 {
 	//BLUE_OFF;
-	RED_OFF;
 	//GREEN_OFF;
 	TimerStart(1, 1000, prueba, MIL250);
 }
