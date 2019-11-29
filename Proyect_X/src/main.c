@@ -31,7 +31,7 @@ int main(void) {
 	Inicializacion ();
 	//test_Maq_GRAL_init();
    	TimerStart(2, 1, tiempo_pregunta, SEG);
-   	Display7seg_BCD(000000);
+   	Display7seg_BCD(888888);
    	while(1) {
     	TimerEvent();
     	Maquina_PC(num_cabina, estado_cabina);
@@ -50,11 +50,10 @@ void tiempo_pregunta(void)
 		num_cabina++;
 	Set_SE(num_cabina);
 	TimerStart(2, 1, tiempo_pregunta, SEG);
-	TimerStart(3, 1, tiempo_seteos, MIL250);
-}
 
-//CAMBIAR LOS 4 por la letra de TABLA D7S
-//HACER TABLA de 7S == 4 significa la posicion 4 del vector de la tabla (ejemplo posicion 10 es apagar)
+
+	TimerStart(3, 1, tiempo_seteos, MIL250); //Este Tiempo esta para que tenga tiempo el set de la salida hecho en Set_SE()
+}
 
 void tiempo_seteos(void)
 {
@@ -70,8 +69,8 @@ void tiempo_seteos(void)
 	}
 	else{
 		//Set de numero de cabina
-    	Display7seg_per_digit_BCD(0, 1);
     	Display7seg_per_digit_BCD(0, 2);
+    	Display7seg_per_digit_BCD(0, 1);
     	Display7seg_per_digit_BCD(num_cabina, 0);
     	//Set de estado de cabina
 		switch(estado_cabina){

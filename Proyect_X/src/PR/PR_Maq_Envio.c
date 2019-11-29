@@ -1,8 +1,10 @@
-/*
- * PR_Maq_Envio.c
+/*******************************************************************************************************************************//**
  *
- *  Created on: Nov 10, 2019
- *      Author: GCRIS
+ * @file		Template.c
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
+ *
  */
 
 #include "PR_Maq_Envio.h"

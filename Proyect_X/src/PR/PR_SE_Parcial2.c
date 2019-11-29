@@ -1,3 +1,12 @@
+/*******************************************************************************************************************************//**
+ *
+ * @file		Template.c
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
+ *
+ */
+
 #include "PR_SE_Parcial2.h"
 #include "DR_tipos.h"
 #include "DR_Salidas.h"

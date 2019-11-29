@@ -1,9 +1,9 @@
 /*******************************************************************************************************************************//**
  *
- * @file		DR_UART.c
- * @brief		Descripcion del modulo
- * @date		12 de oct. de 2017
- * @author		Ing. Marcelo Trujillo
+ * @file		Template.c
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
  *
  **********************************************************************************************************************************/
 

@@ -1,9 +1,9 @@
 /*******************************************************************************************************************************//**
  *
- * @file		Infotronic.c
- * @brief		Drivers de GPIO LPC1769
- * @date		23-03-16
- * @author		Marcelo Trujillo
+ * @file		Template.c
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
  *
  **********************************************************************************************************************************/
 

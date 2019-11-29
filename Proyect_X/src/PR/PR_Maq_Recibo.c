@@ -1,3 +1,12 @@
+/*******************************************************************************************************************************//**
+ *
+ * @file		Template.c
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
+ *
+ */
+
 #include "PR_Maq_Recibo.h"
 
 int recepcionTrama(void){

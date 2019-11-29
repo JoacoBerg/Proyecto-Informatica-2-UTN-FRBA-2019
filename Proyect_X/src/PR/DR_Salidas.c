@@ -1,9 +1,9 @@
 /*******************************************************************************************************************************//**
  *
- * @file		DR_Salidas.c
- * @brief		Descripcion del modulo
- * @date		14 de nov. de 2017
- * @author		Ing. Marcelo Trujillo
+ * @file		Template.c
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
  *
  **********************************************************************************************************************************/
 

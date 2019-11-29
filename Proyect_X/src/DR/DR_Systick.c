@@ -1,9 +1,12 @@
-/*
- * DR_systick.c
+/*******************************************************************************************************************************//**
  *
- *  Created on: 6 sep. 2019
- *      Author: gif30
+ * @file		Template.c
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
+ *
  */
+
 #include <DR_Salidas.h>
 #include <DR_Systick.h>
 #include "DR_Entradas.h"

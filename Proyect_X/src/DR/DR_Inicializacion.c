@@ -1,13 +1,18 @@
-/***********************************************************************************************************************************
+/*******************************************************************************************************************************//**
+ *
+ * @file		Template.c
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
+ *
+ ***********************************************************************************************************************************
  *** INCLUDES
  **********************************************************************************************************************************/
 #include <DR_Inicializacion.h>
 #include "DR_PLL.h"
 #include "DR_SysTick.h"
 #include "DR_Entradas.h"
-//#include "DR_Salidas.h"
-//#include "Maq_Caja.h"
-#include <DR_Salidas.h>
+#include "DR_Salidas.h"
 
 
 
@@ -63,6 +68,6 @@ void Inicializacion ( void )
 
 	UART1_Inicializacion();
 	Init_Display();
-	InicializarEntradas( ); //InitIR() no existe, las entradas se definen en InicializarEntradas()
+	InicializarEntradas( );
 	InicializarSalidas( );
 }

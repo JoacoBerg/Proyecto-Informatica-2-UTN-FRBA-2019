@@ -1,9 +1,9 @@
 /*******************************************************************************************************************************//**
  *
- * @file		PR_Timers.c
- * @brief		Maquinaria de timers
- * @date		2 de jun. de 2017
- * @author		Ing. Marcelo Trujillo
+ * @file		Template.c
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
  *
  **********************************************************************************************************************************/
 

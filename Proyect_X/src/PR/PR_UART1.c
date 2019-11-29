@@ -1,8 +1,10 @@
-/*
- * PR_UART1.c
+/*******************************************************************************************************************************//**
  *
- *  Created on: Oct 31, 2019
- *      Author: augusto
+ * @file		Template.c
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
+ *
  */
 
 #include "PR_UART1.h"

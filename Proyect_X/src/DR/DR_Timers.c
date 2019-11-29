@@ -1,9 +1,9 @@
 /*******************************************************************************************************************************//**
  *
- * @file		DR_Timers.c
- * @brief		Descripcion del modulo
- * @date		9 de jun. de 2017
- * @author		Ing. Marcelo Trujillo
+ * @file		Template.c
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
  *
  **********************************************************************************************************************************/
 

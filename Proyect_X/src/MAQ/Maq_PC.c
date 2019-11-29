@@ -1,4 +1,11 @@
-
+/*******************************************************************************************************************************//**
+ *
+ * @file		Template.c
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
+ *
+ */
 
 #include "Maq_PC.h"
 static uint8_t estadoMAQ_PC = RESET;
