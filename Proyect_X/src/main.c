@@ -40,7 +40,6 @@ int main(void) {
 	Inicializacion ();
    	TimerStart(TIMER_MAQUINA_SE, TIEMPO_MAQUINA_SE, TimerHandler_MaquinaSE, SEG);
    	Display7seg_BCD(888888);
-   	SetDisplay_Estado();
    	while(1) {
     	TimerEvent();
     	Maq_PCTransmision(num_cabina, estado_cabina);

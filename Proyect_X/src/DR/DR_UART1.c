@@ -116,19 +116,18 @@ void UART1_Inicializacion (void)
 		//UART1LCR = 0x0000008b;		//Tx de 8 bits, 1 bit de stop, impar, sin break cond, habilito silicio para DLL y DLM (divisores) DLAB =1
 		//UART1LCR = 0x00000087;	//Tx de 8 bits, 2 bit de stop, sin paridad, sin break cond, habilito silicio para DLL y DLM (divisores) DLAB =1
 
-		//seteado a 115200 baud (PLL a 100Mhz)
+		//seteado a 115200 baud (PLL a 100Mhz) (PCLKSEL = 25Mhz)
 		UART1DLM = 0;	//parte alta de divisor
-		UART1DLL = 0x04;	//parte baja de divisor
+		UART1DLL = 0x0E;	//parte baja de divisor
 
-		FDR_UART1 |= (0x05<<0);
-		FDR_UART1 |= (0x08<<4);
+
 
 		SetPinsel( TX1 , PINSEL_FUNC1);
 		SetPinsel( RX1 , PINSEL_FUNC1);
 
 		//UART1LCR = 0x03; // SIN PARIDAD habilito silicio para RBR y THR (buffer de recepcion y escritura) DLAB = 0
 		//UART1LCR = 0x1b; // PARIDAD PAR habilito silicio para RBR y THR (buffer de recepcion y escritura) DLAB = 0
-		UART1LCR = 0x0b; //   PARIDAD IMPARhabilito silicio para RBR y THR (buffer de recepcion y escritura) DLAB = 0
+		UART1LCR = 0x1b; //   PARIDAD IMPARhabilito silicio para RBR y THR (buffer de recepcion y escritura) DLAB = 0
 		//UART1LCR = 0x07; // SIN PARIDAD habilito silicio para RBR y THR (buffer de recepcion y escritura) DLAB = 0
 
 
