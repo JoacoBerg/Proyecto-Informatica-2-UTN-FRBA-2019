@@ -20,6 +20,15 @@
 #define OCHO_D7S        0x7F
 #define NUEVE_D7S       0x67
 #define APAGAR_D7S      0x00
+
+#define R_MIN
+#define U_MIN
+#define N_MIN
+#define T_MIN
+#define E_MIN
+#define P_MIN
+#define S_MIN
+#define C_MIN
 //#define PUNTO_D7S       0x12
 
 
