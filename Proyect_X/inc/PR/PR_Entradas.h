@@ -21,22 +21,24 @@
 
 #include "DR_tipos.h"
 
-#define IR1_l 0
-#define IR2_l 1
-#define IR3_l 2
+#define E0_l 0
+#define E1_l 1
+#define E2_l 2
+/*
 #define IR4_l 3
 #define IR5_l 4
 #define IMAN_l 5
 #define BOTON_l 6
-
-#define IR_IZQ_OUT LeerEntrada (IR1_l)
-#define IR_IZQ_IN LeerEntrada (IR2_l)
-#define IR_DER_IN LeerEntrada (IR3_l)
+*/
+#define LEER_E0 LeerEntrada (E0_l)
+#define LEER_E1 LeerEntrada (E1_l)
+#define LEER_E2 LeerEntrada (E2_l)
+/*
 #define IR_DER_OUT LeerEntrada (IR4_l)
 #define IR_OBSTACULO LeerEntrada (IR5_l)
 #define IMAN LeerEntrada (IMAN_l)
 #define BOTON LeerEntrada (BOTON_l)
-
+*/
 
 /***********************************************************************************************************************************
  *** DEFINES GLOBALES

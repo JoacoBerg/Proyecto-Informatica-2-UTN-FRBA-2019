@@ -67,9 +67,4 @@ void Inicializacion ( void )
 	Init_Display();
 	InicializarEntradas( ); //InitIR() no existe, las entradas se definen en InicializarEntradas()
 	InicializarSalidas( );
-
-	BLUE_ON;
-	RED_ON;
-	GREEN_ON;
-
 }

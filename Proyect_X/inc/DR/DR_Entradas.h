@@ -27,9 +27,9 @@
 
 
 #define IR4 0,25
-#define IR3 0,26
-#define IR2 1,30
-#define IR1 1,31
+#define E2 0,26
+#define E1 1,30
+#define E0 1,31
 #define IR5 0,9
 
 #define PIN_BOTON 0, 24

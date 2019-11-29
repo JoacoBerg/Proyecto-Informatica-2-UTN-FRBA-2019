@@ -33,28 +33,19 @@
  *** TIPO DE DATOS GLOBALES
  **********************************************************************************************************************************/
 
-#define 	OUT_BUZZER	0,28
-#define		OUT_BLUE	3, 26
-#define		OUT_GREEN	3, 25
-#define		OUT_RED		0, 22
+#define 	SD0	0,28
+#define		SD1	3, 26
+#define		SD2	3, 25
 
 
-#define BUZZER_ON		(BufferSalidas |= (1<<0))
-#define BLUE_ON			(BufferSalidas |= (1<<1))
-#define GREEN_ON		(BufferSalidas |= (1<<2))
-#define RED_ON			(BufferSalidas |= (1<<3))
-#define MOTOR01_ON		(BufferSalidas |= (1<<4))
-#define MOTOR02_ON		(BufferSalidas |= (1<<5))
-#define MOTOR03_ON		(BufferSalidas |= (1<<6))
+#define SD0_ON		(BufferSalidas |= (1<<0))
+#define SD1_ON		(BufferSalidas |= (1<<1))
+#define SD2_ON		(BufferSalidas |= (1<<2))
 
 
-#define BUZZER_OFF		(BufferSalidas &= ~(1<<0))
-#define BLUE_OFF		(BufferSalidas &= ~(1<<1))
-#define GREEN_OFF		(BufferSalidas &= ~(1<<2))
-#define RED_OFF			(BufferSalidas &= ~(1<<3))
-#define MOTOR01_OFF		(BufferSalidas &= ~(1<<4))
-#define MOTOR02_OFF		(BufferSalidas &= ~(1<<5))
-#define MOTOR03_OFF		(BufferSalidas &= ~(1<<6))
+#define SD0_OFF		(BufferSalidas &= ~(1<<0))
+#define SD1_OFF		(BufferSalidas &= ~(1<<1))
+#define SD2_OFF		(BufferSalidas &= ~(1<<2))
 
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES
