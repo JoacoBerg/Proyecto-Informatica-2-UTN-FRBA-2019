@@ -70,9 +70,9 @@ void tiempo_seteos(void)
 	}
 	else{
 		//Set de numero de cabina
+    	Display7seg_per_digit_BCD(0, 1);
+    	Display7seg_per_digit_BCD(0, 2);
     	Display7seg_per_digit_BCD(num_cabina, 0);
-    	Display7seg_per_digit_BCD(0, 4);
-    	Display7seg_per_digit_BCD(0, 5);
     	//Set de estado de cabina
 		switch(estado_cabina){
 		case RUN_e:

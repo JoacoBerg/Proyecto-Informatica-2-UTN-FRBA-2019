@@ -28,7 +28,7 @@ void Maquina_PC(uint8_t NUM_CABINA, uint8_t ESTADO){
 	 	 {
 				 case RESET:
 					if(flagSEND)
-					estadoMAQ_PC = SEND;
+						estadoMAQ_PC = SEND;
 
 					 break;
 				//----------------ESTADO ENVIO--------------------//
@@ -86,18 +86,18 @@ void Maquina_PC(uint8_t NUM_CABINA, uint8_t ESTADO){
 				dato = UART1_PopRX();
 
 				if(dato != -1){
-							switch(estadoRECV){
-								case 0:
-									if('O' == dato)
-										estadoRECV++;
-									break;
+					switch(estadoRECV){
+						case 0:
+							if('O' == dato)
+								estadoRECV++;
+							break;
 
-								case 1:
-									if('K' == dato)
-										estadoRECV++;
-									break;
-							}
+						case 1:
+							if('K' == dato)
+								estadoRECV++;
+							break;
 					}
+				}
 
 				 if(estadoRECV == 2)
 				 {
