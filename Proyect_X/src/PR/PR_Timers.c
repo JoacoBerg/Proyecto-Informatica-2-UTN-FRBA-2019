@@ -16,7 +16,7 @@
 /***********************************************************************************************************************************
  *** DEFINES PRIVADOS AL MODULO
  **********************************************************************************************************************************/
-#define 	MILIS			1
+#define 	MILIS			100
 #define 	DECIMAS			40
 #define 	SEGUNDOS		10
 #define 	MINUTOS			60
@@ -65,9 +65,9 @@ void TimerStart(uint8_t event, uint32_t time, Timer_Handler handler , uint8_t ba
 {
 	switch ( base )
 	{
-	/*	case MIL:
+		case MIL250:
 			time *= MILIS;
-			break;*/
+			break;
 		case DEC:
 			time *= DECIMAS;
 			break;
