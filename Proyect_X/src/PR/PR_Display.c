@@ -21,14 +21,15 @@
 #define NUEVE_D7S       0x67
 #define APAGAR_D7S      0x00
 
-#define R_MIN
-#define U_MIN
-#define N_MIN
-#define T_MIN
-#define E_MIN
-#define P_MIN
-#define S_MIN
-#define C_MIN
+#define R_MIN			0x50
+#define U_MIN			0x1C
+#define N_MIN			0x54
+#define T_MIN			0x78
+#define E_MIN			0x79
+#define P_MIN			0x73
+#define S_MIN			0x6D
+#define C_MIN			0x58
+#define GUION			0x40
 //#define PUNTO_D7S       0x12
 
 
@@ -128,7 +129,26 @@ uint8_t Tabla_D7S[] = {
     SIETE_D7S,
     OCHO_D7S,
     NUEVE_D7S,
-    APAGAR_D7S/*,
+    APAGAR_D7S,
+	R_MIN,
+	U_MIN,
+	N_MIN,
+	T_MIN,
+	E_MIN,
+	P_MIN,
+	P_MIN,
+	R_MIN,
+	E_MIN,
+	S_MIN,
+	T_MIN,
+	P_MIN,
+	E_MIN,
+	R_MIN,
+	R_MIN,
+	GUION,
+	P_MIN,
+	C_MIN
+	/*,
     PUNTO_D7S*/
 };         //traduce de bcd al codigo del D7S (HACER)
 
