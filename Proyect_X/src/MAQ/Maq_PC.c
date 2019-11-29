@@ -12,22 +12,22 @@ static uint8_t estadoMAQ_PC = RESET;
 uint8_t flagSEND = 0;
 uint8_t flagERROR = 0; //si la PC no manda en 250 ms OK -> flag =1
 uint8_t estadoRECV = 0;
-void handler_ERRORPC()
+void TimerHandler_ErrorPC_Reception()
 {
 	flagERROR = 1;
 	estadoRECV = 0;
 	estadoMAQ_PC = RESET;
 	flagSEND = 0;
 
-	TimerStart(E_ERROR, T_ERROR , handler_BLOCK, SEG);
+	TimerStart(E_ERROR, TIEMPO_ERROR , TimerHandler_Fin_De_Error, SEG);
 }
 
-void handler_BLOCK()
+void TimerHandler_Fin_De_Error()
 {
 	flagERROR = 0; //despues del tiempo de bloqueo
 }
 
-void Maquina_PC(uint8_t NUM_CABINA, uint8_t ESTADO){
+void Maq_PCTransmision(uint8_t NUM_CABINA, uint8_t ESTADO){
 	 int dato;
 	 volatile uint32_t estadoRECV = 0;
 
@@ -35,42 +35,42 @@ void Maquina_PC(uint8_t NUM_CABINA, uint8_t ESTADO){
 	 	 {
 				 case RESET:
 					if(flagSEND)
-						estadoMAQ_PC = SEND;
+						estadoMAQ_PC = SENDUNG;
 
 					 break;
 				//----------------ESTADO ENVIO--------------------//
-				 case SEND:
+				 case SENDUNG:
 					 UART1_PushTX('#');
 
 					 UART1_PushTX(NUM_CABINA + '0');
 
 					 switch(ESTADO)
 					 {
-					 case RUN_e:
+					 case ESTADO_RUN:
 						 UART1_PushTX('R');
 						 UART1_PushTX('U');
 						 UART1_PushTX('N');
 						 break;
 
-						 case TEP:
+						 case ESTADO_TEP:
 							 UART1_PushTX('T');
 							 UART1_PushTX('E');
 							 UART1_PushTX('P');
 							 break;
 
-						 case PRE:
+						 case ESTADO_PRE:
 							 UART1_PushTX('P');
 							 UART1_PushTX('R');
 							 UART1_PushTX('E');
 							 break;
 
-						 case STP:
+						 case ESTADO_STP:
 							 UART1_PushTX('S');
 							 UART1_PushTX('T');
 							 UART1_PushTX('P');
 							 break;
 
-						 case ERR:
+						 case ESTADO_ERR:
 							 UART1_PushTX('E');
 							 UART1_PushTX('R');
 							 UART1_PushTX('R');
@@ -81,14 +81,14 @@ void Maquina_PC(uint8_t NUM_CABINA, uint8_t ESTADO){
 						UART1_PushTX('$');
 						estadoMAQ_PC ++;
 
-						TimerStart(E_PC, T_PC , handler_ERRORPC, MIL250);
+						TimerStart(E_PC, TIEMPO_PC , TimerHandler_ErrorPC_Reception, MIL250);
 
 						flagSEND = 0;
 						break;
 
 
 			//----------------ESTADO RECIBO--------------------//
-			 case RECV:
+			 case RECEPTION:
 
 				dato = UART1_PopRX();
 

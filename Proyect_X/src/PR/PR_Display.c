@@ -30,14 +30,14 @@
 #define NUEVE_D7S       0x67
 #define APAGAR_D7S      0x00
 
-#define R_MIN			0x50
-#define U_MIN			0x1C
-#define N_MIN			0x54
-#define T_MIN			0x78
-#define E_MIN			0x79
-#define P_MIN			0x73
-#define S_MIN			0x6D
-#define C_MIN			0x58
+#define LETRA_R			0x50
+#define LETRA_U			0x1C
+#define LETRA_N			0x54
+#define LETRA_T			0x78
+#define LETRA_E			0x79
+#define LETRA_P			0x73
+#define LETRA_S			0x6D
+#define LETRA_C			0x58
 #define GUION			0x40
 //#define PUNTO_D7S       0x12
 
@@ -139,27 +139,27 @@ uint8_t Tabla_D7S[] = {
     OCHO_D7S,
     NUEVE_D7S,
     APAGAR_D7S,
-	R_MIN,
-	U_MIN,
-	N_MIN,
-	T_MIN,
-	E_MIN,
-	P_MIN,
-	P_MIN,
-	R_MIN,
-	E_MIN,
-	S_MIN,
-	T_MIN,
-	P_MIN,
-	E_MIN,
-	R_MIN,
-	R_MIN,
+	LETRA_R,	//Esta no es la mejor manera de hacerlo, pero me ahorra tiempo contando en el main
+	LETRA_U,
+	LETRA_N,
+	LETRA_T,
+	LETRA_E,
+	LETRA_P,
+	LETRA_P,
+	LETRA_R,
+	LETRA_E,
+	LETRA_S,
+	LETRA_T,
+	LETRA_P,
+	LETRA_E,
+	LETRA_R,
+	LETRA_R,
 	GUION,
-	P_MIN,
-	C_MIN
+	LETRA_P,
+	LETRA_C
 	/*,
     PUNTO_D7S*/
-};         //traduce de bcd al codigo del D7S (HACER)
+};         //traduce de bcd al codigo del D7S
 
 uint8_t BUFFER_D7S[CANT_DIGITOS];     //
 
@@ -199,10 +199,7 @@ void Display7seg_Binary(uint32_t val){ // val a cargar en el dsp asignado
 
 
 //systick
-///HACER EL BARRIDO EN SERIO
 void BarridoDisplay(void){
-    //static char time = REFRESH_TIME -1; // sistick para 1 ms
-    //if(!time){
         static uint8_t digito = 0;
         uint8_t auxiliar = BUFFER_D7S[digito];
         Apagar_D7S();
@@ -211,10 +208,6 @@ void BarridoDisplay(void){
             digito++;
         else
             digito = 0;
-      //  time = REFRESH_TIME - 1;
-    //}
-    //else
-    //    time --;
 }
 
 //funciones internas del modulo
