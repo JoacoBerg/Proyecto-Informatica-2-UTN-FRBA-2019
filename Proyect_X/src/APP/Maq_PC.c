@@ -1,6 +1,6 @@
-
-
 #include "Maq_PC.h"
+
+
 static uint8_t estadoMAQ_PC = RESET;
 uint8_t flagSEND = 0;
 uint8_t flagERROR = 0; //si la PC no manda en 250 ms OK -> flag =1
@@ -31,7 +31,8 @@ void Maquina_PC(uint8_t NUM_CABINA, uint8_t ESTADO){
 						estadoMAQ_PC = SEND;
 
 					 break;
-				//----------------ESTADO ENVIO--------------------//
+
+				//Estado envio
 				 case SEND:
 					 UART1_PushTX('#');
 
@@ -80,7 +81,7 @@ void Maquina_PC(uint8_t NUM_CABINA, uint8_t ESTADO){
 						break;
 
 
-			//----------------ESTADO RECIBO--------------------//
+			//estado recibir
 			 case RECV:
 
 				dato = UART1_PopRX();

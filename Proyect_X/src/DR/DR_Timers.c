@@ -65,12 +65,7 @@ void AnalizarTimers(void)
 	}
 }
 
-/**
-	\fn void Timer_Event(void)
-	\brief Chequeo de timers vencidos
- 	\details Llama a los callbacks de los timers vencidos. Debe llamarse desde el lazo principal del programa
-	\return void
-*/
+
 void TimerEvent(void)
 {
 	uint8_t i;

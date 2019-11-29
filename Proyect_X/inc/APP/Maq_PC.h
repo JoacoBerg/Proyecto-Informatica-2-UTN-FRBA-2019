@@ -1,9 +1,8 @@
-#ifndef MAQ_MAQ_PC_H_
-#define MAQ_MAQ_PC_H_
+#ifndef APP_MAQ_PC_H_
+#define APP_MAQ_PC_H_
 
 #include "DR_UART1.h"
-#include "PR_Maq_Recibo.h"
-#include "PR_Maq_Envio.h"
+#include "PR_UART1.h"
 #include "PR_Timers.h"
 
 //-----FLAGS----------//
@@ -39,4 +38,4 @@ void Maquina_PC(uint8_t NUM_CABINA, uint8_t ESTADO);
 
 
 
-#endif /* MAQ_MAQ_PC_H_ */
+#endif

@@ -1,3 +1,4 @@
+
 /*
 ===============================================================================
  Name        : main.c
@@ -16,22 +17,22 @@
 #include <DR_Inicializacion.h>
 #include "PR_Timers.h"
 #include "PR_Display.h"
-#include "PR_SE_Parcial2.h"
+#include "SistExt.h"
 #include "Maq_PC.h"
 
 
-void tiempo_pregunta(void);
-void tiempo_seteos(void);
+void handler_preguntar(void);
+void handler_set(void);
 
+uint8_t cab_est = 0;
+uint8_t cab_num = 1;
 
-uint8_t num_cabina = 1;
-uint8_t estado_cabina = 0;
 
 int main(void) {
 
 	Inicializacion (); //Inicializo todo lo pedido
 
-   	TimerStart(2, 1, tiempo_pregunta, SEG); //Impresion en los displays de 7 Segmentos + Sistema externo
+   	TimerStart(2, 1, handler_preguntar, SEG); //Impresion en los displays de 7 Segmentos + Sistema externo
 
    	Display7seg_BCD(888888); //Prendo todos los D7s en 8
 
@@ -39,29 +40,31 @@ int main(void) {
 
     	TimerEvent(); //Maquina de timers
 
-    	Maquina_PC(num_cabina, estado_cabina); //Maquina de comunicacion por uart
+    	Maquina_PC(cab_num, cab_est); //Maquina de comunicacion por uart
 
     }
     return 0;
 }
 
 
-void tiempo_pregunta(void)
+void handler_preguntar(void)
 {
-	if(num_cabina == 6)
-		num_cabina = 1;
+	if(cab_num == 6)
+		cab_num = 1;
 	else
-		num_cabina++;
-	Set_SE(num_cabina);
-	TimerStart(2, 1, tiempo_pregunta, SEG);
-	TimerStart(3, 1, tiempo_seteos, MILISX250);
+		cab_num++;
+	Set_SE(cab_num);
+	TimerStart(2, 1, handler_preguntar, SEG);
+	TimerStart(3, 1, handler_set, MILISX250);
 }
 
 
-void tiempo_seteos(void)
+void handler_set(void)
 {
-	estado_cabina = Get_SE();
+	cab_est = Get_SE();
 	flagSEND = 1;
+
+	//Print error con PC
 	if(flagERROR){
     	Display7seg_per_digit_BCD(23, 0);
     	Display7seg_per_digit_BCD(24, 1);
@@ -71,12 +74,13 @@ void tiempo_seteos(void)
     	Display7seg_per_digit_BCD(28, 5);
 	}
 	else{
-		//Set de numero de cabina
+		//Print del numro de cabina
     	Display7seg_per_digit_BCD(0, 1);
     	Display7seg_per_digit_BCD(0, 2);
-    	Display7seg_per_digit_BCD(num_cabina, 0);
-    	//Set de estado de cabina
-		switch(estado_cabina){
+    	Display7seg_per_digit_BCD(cab_num, 0);
+
+    	//Print estado de cabina
+		switch(cab_est){
 		case RUN_e:
 	    	Display7seg_per_digit_BCD(11, 5);
 	    	Display7seg_per_digit_BCD(12, 4);

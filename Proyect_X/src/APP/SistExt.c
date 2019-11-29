@@ -1,4 +1,4 @@
-#include "PR_SE_Parcial2.h"
+#include "SistExt.h"
 #include "DR_tipos.h"
 #include "DR_Salidas.h"
 #include "PR_Entradas.h"
