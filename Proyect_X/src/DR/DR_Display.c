@@ -1,15 +1,16 @@
-/*
- * DR_Display.c
+/*******************************************************************************************************************************//**
  *
- *  Created on: 29 nov. 2019
- *      Author: gif30
+ * @file		Template.c
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
+ *
  */
 
 #include "DR_Display.h"
 #include "DR_PINSEL.h"
 #include "DR_GPIO.h"
 
-#define REFRESH_TIME 2
 
 //codigo D7S
 #define CERO_D7S        0x3F
