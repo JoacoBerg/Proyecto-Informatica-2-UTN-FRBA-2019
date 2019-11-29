@@ -29,7 +29,7 @@
 
 //variables Globales Main
 uint8_t num_cabina = 1;
-uint8_t estado_cabina = 0;
+uint8_t estado_cabina = 7;
 
 void TimerHandler_MaquinaSE(void);
 void TimerHandler_StartSend(void);
@@ -40,6 +40,7 @@ int main(void) {
 	Inicializacion ();
    	TimerStart(TIMER_MAQUINA_SE, TIEMPO_MAQUINA_SE, TimerHandler_MaquinaSE, SEG);
    	Display7seg_BCD(888888);
+   	SetDisplay_Estado();
    	while(1) {
     	TimerEvent();
     	Maq_PCTransmision(num_cabina, estado_cabina);
@@ -74,12 +75,12 @@ void TimerHandler_StartSend(void)
 }
 
 void SetDisplay_Error(void){
-	Display7seg_SetDigit_BCD(23, 0);
-	Display7seg_SetDigit_BCD(24, 1);
-	Display7seg_SetDigit_BCD(25, 2);
-	Display7seg_SetDigit_BCD(26, 3);
-	Display7seg_SetDigit_BCD(27, 4);
-	Display7seg_SetDigit_BCD(28, 5);
+	Display7seg_SetDigit_BCD(23, 5);
+	Display7seg_SetDigit_BCD(24, 4);
+	Display7seg_SetDigit_BCD(25, 3);
+	Display7seg_SetDigit_BCD(26, 2);
+	Display7seg_SetDigit_BCD(27, 1);
+	Display7seg_SetDigit_BCD(28, 0);
 }
 
 
@@ -115,5 +116,10 @@ void SetDisplay_Estado(void){
     	Display7seg_SetDigit_BCD(24, 4);
     	Display7seg_SetDigit_BCD(25, 3);
     break;
+	default:
+    	Display7seg_SetDigit_BCD(23, 5);
+    	Display7seg_SetDigit_BCD(24, 4);
+    	Display7seg_SetDigit_BCD(25, 3);
+		break;
 	}
 }

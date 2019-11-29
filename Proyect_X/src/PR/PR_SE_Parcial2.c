@@ -52,5 +52,6 @@ void Set_SE(uint8_t cabina){
 }
 
 uint8_t Get_SE(void){
+	//return (0<<2) + (0<<1) + (1);
 	return (LEER_E2<<2) + (LEER_E1<<1) + (LEER_E0);
 }
