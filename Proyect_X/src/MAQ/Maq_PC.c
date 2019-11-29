@@ -1,14 +1,10 @@
-/*
- * Maq_PC.c
- *
- *  Created on: Nov 28, 2019
- *      Author: GCRIS
- */
+
 
 #include "Maq_PC.h"
 static uint8_t estadoMAQ_PC = RESET;
 uint8_t flagSEND = 0;
-
+uint8_t flagERROR = 0; //si la PC no manda en 250 ms OK -> flag =1
+uint8_t estadoRECV = 0;
 void handler_ERRORPC()
 {
 	flagERROR = 1;
@@ -24,7 +20,7 @@ void handler_BLOCK()
 	flagERROR = 0; //despues del tiempo de bloqueo
 }
 
-void Maquina_PC(uint32_t NUM_CABINA, uint32_t ESTADO){
+void Maquina_PC(uint8_t NUM_CABINA, uint8_t ESTADO){
 	 int dato;
 	 volatile uint32_t estadoRECV = 0;
 
@@ -43,7 +39,7 @@ void Maquina_PC(uint32_t NUM_CABINA, uint32_t ESTADO){
 
 					 switch(ESTADO)
 					 {
-					 case RUN:
+					 case RUN_e:
 						 UART1_PushTX('R');
 						 UART1_PushTX('U');
 						 UART1_PushTX('N');
@@ -78,7 +74,7 @@ void Maquina_PC(uint32_t NUM_CABINA, uint32_t ESTADO){
 						UART1_PushTX('$');
 						estadoMAQ_PC ++;
 
-						TimerStart(E_PC, T_PC , handler_ERRORPC, MIL);
+						TimerStart(E_PC, T_PC , handler_ERRORPC, MIL250);
 
 						flagSEND = 0;
 						break;
