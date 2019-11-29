@@ -58,7 +58,8 @@ void TimerHandler_MaquinaSE(void)
 	TimerStart(TIMER_MAQUINA_SE, TIEMPO_MAQUINA_SE, TimerHandler_MaquinaSE, SEG);
 
 
-	TimerStart(TIMER_START_SEND, TIEMPO_START_SEND, TimerHandler_StartSend, MIL250); //Este Tiempo esta para que tenga tiempo el set de la salida hecho en Set_SE()
+	TimerStart(TIMER_START_SEND, TIEMPO_START_SEND, TimerHandler_StartSend, MIL250);
+	//Este Tiempo esta para que tenga tiempo el set de la salida hecho en Set_SE() porq esta hecho con entradas
 }
 
 void TimerHandler_StartSend(void)
