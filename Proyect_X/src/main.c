@@ -38,6 +38,8 @@ int main(void) {
    	TimerStart(1, 1, prueba, MIL);
    	while(1) {
     	TimerEvent();
+    	//Maquina_PC();
+
     	//Maq_General();
     	//ftl();
     	//Maq_FollowTheLine_v2();
