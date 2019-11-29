@@ -15,6 +15,7 @@
 
 void SysTick_Init(void){
 	Systick->STRELOAD = (Systick->STCALIB / 4) - 1; //Base de tiempo dada por 10ms/10: El -1 es porque cuenta uno de mas el STCURR
+	//CAMBIADO A 2.5 ms
 	Systick->STCURR = 0; //esto es para limpiar el timer
 
 	Systick->ENABLE = 1; //activa el modulo
@@ -24,11 +25,9 @@ void SysTick_Init(void){
 
 void SysTick_Handler(void){
 
-	//cada 1 milisegundo
+	//cada 1 milisegundo --> AHORA 2.5 MS
 	BarridoDisplay();
-
-	DebounceEntradas( );
 	AnalizarTimers( );
+	DebounceEntradas( );
     RefrescoSalidas( );
-
 }

@@ -31,15 +31,10 @@
 uint8_t num_cabina = 1;
 uint8_t estado_cabina = 0;
 
-
-
-
 void TimerHandler_MaquinaSE(void);
 void TimerHandler_StartSend(void);
 void SetDisplay_Error(void);
 void SetDisplay_Estado(void);
-
-
 
 int main(void) {
 	Inicializacion ();
@@ -48,7 +43,6 @@ int main(void) {
    	while(1) {
     	TimerEvent();
     	Maq_PCTransmision(num_cabina, estado_cabina);
-
     }
     return 0;
 }

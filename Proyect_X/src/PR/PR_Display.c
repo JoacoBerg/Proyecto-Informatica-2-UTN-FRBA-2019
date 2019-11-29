@@ -12,9 +12,6 @@
 #include "DR_Display.h"
 
 
-
-
-
 //primitiva
 void Display7seg_BCD(uint32_t val){ // val a cargar en el dsp asignado
     uint8_t i = 0;
