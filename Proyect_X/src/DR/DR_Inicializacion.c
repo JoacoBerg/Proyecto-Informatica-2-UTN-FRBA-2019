@@ -5,8 +5,9 @@
 #include "DR_PLL.h"
 #include "DR_SysTick.h"
 #include "DR_Entradas.h"
-#include <DR_Salidas.h>
+#include "DR_Salidas.h"
 #include "DR_UART1.h"
+#include "DR_Display.h"
 
 
 
