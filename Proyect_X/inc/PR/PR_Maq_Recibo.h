@@ -1,8 +1,10 @@
-/*
- * PR_Maq_Recibo.h
+/*******************************************************************************************************************************//**
  *
- *  Created on: Nov 10, 2019
- *      Author: GCRIS
+ * @file		Template.h
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
+ *
  */
 
 #ifndef PR_MAQ_RECIBO_H_

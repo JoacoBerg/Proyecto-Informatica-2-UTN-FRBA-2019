@@ -13,8 +13,6 @@
 #define		PINSEL_FUNC3	3
 
 
-
-
 //Registros generales:
 //0x4002C000UL : Direccion de inicio de los registros PINSEL
 #define		PINSEL		( (__RW uint32_t  * ) 0x4002C000UL )

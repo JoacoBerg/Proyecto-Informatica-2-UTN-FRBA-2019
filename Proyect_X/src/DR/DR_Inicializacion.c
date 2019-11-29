@@ -4,8 +4,6 @@
 #include <DR_Inicializacion.h>
 #include "DR_PLL.h"
 #include "DR_SysTick.h"
-#include "DR_UART0.h"
-#include "Tanks.h"
 #include "DR_Entradas.h"
 //#include "DR_Salidas.h"
 //#include "Maq_Caja.h"

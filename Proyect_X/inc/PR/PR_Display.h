@@ -1,8 +1,10 @@
-/*
- * PR_Display.h
+/*******************************************************************************************************************************//**
  *
- *  Created on: 18 oct. 2019
- *      Author: gif30
+ * @file		Template.h
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
+ *
  */
 
 #ifndef PR_PR_DISPLAY_H_

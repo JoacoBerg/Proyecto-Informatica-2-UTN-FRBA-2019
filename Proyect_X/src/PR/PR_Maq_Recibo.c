@@ -1,9 +1,3 @@
-/*
- * PR_Maq_Recibo.c
- *
- *  Created on: Nov 10, 2019
- *      Author: GCRIS
- */
 #include "PR_Maq_Recibo.h"
 
 int recepcionTrama(void){

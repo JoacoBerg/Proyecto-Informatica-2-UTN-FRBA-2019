@@ -1,8 +1,10 @@
-/*
- * DR_Systick.h
+/*******************************************************************************************************************************//**
  *
- *  Created on: 6 sep. 2019
- *      Author: gif30
+ * @file		Template.h
+ * @brief		Breve descripción del objetivo del Módulo
+ * @date		Fecha de creacion del archivo XX/XX/XXXX
+ * @author		Nombre, Apellido
+ *
  */
 #include <DR_tipos.h>
 #include "PR_Display.h"
