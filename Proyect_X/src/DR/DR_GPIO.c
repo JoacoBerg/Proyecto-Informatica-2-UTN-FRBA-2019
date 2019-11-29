@@ -76,9 +76,9 @@ void SetPinMode_OD(uint32_t Puerto, uint32_t Pin,uint32_t Modo){	//0 normal | 1 
 void SetPin(uint32_t Puerto, uint32_t Pin, uint32_t Estado){	//escritura del GPIO
 
 	if(1==Estado)	//Buena practica de programacion: en lugar de if(Estado==1)
-		GPIOs[Puerto].FIOSET = (1<<Pin);
+		GPIOs[Puerto].FIOSET |= (1<<Pin);
 	else
-		GPIOs[Puerto].FIOCLR = (1<<Pin);
+		GPIOs[Puerto].FIOCLR |= (1<<Pin);
 }
 
 
