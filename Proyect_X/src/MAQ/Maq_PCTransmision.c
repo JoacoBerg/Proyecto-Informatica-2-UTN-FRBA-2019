@@ -8,15 +8,15 @@
  */
 
 #include <Maq_PCTransmision.h>
-static uint8_t estadoMAQ_PC = RESET;
+static uint8_t estado_PC = RESET;
 uint8_t START_TRANSMISION_FLAG = 0;
-uint8_t ERROR_FLAG = 0; //si la PC no manda en 250 ms OK -> flag =1
-uint8_t estadoRECV = 0;
+uint8_t ERROR_FLAG = 0; //PC NO ENVIA OK -> FLAG =1
+uint8_t estadoRECEPTION = 0;
 void TimerHandler_ErrorPC_Reception()
 {
 	ERROR_FLAG = 1;
-	estadoRECV = 0;
-	estadoMAQ_PC = RESET;
+	estadoRECEPTION = 0;
+	estado_PC = RESET;
 	START_TRANSMISION_FLAG = 0;
 
 	TimerStart(TIMER_ERROR, TIEMPO_ERROR , TimerHandler_Fin_De_Error, SEG);
@@ -24,27 +24,27 @@ void TimerHandler_ErrorPC_Reception()
 
 void TimerHandler_Fin_De_Error()
 {
-	ERROR_FLAG = 0; //despues del tiempo de bloqueo
+	ERROR_FLAG = 0;
 }
 
-void Maq_PCTransmision(uint8_t NUM_CABINA, uint8_t ESTADO){
+void Maq_PCTransmision(uint8_t cabin_nr, uint8_t cabin_status){
 	 int dato;
-	 volatile uint32_t estadoRECV = 0;
+	 volatile uint32_t estadoRECEPTION = 0;
 
-	 	 switch(estadoMAQ_PC)
+	 	 switch(estado_PC)
 	 	 {
 				 case RESET:
 					if(START_TRANSMISION_FLAG)
-						estadoMAQ_PC = SENDUNG;
+						estado_PC = SENDUNG;
 
 					 break;
-				//----------------ESTADO ENVIO--------------------//
+
 				 case SENDUNG:
 					 UART1_PushTX('#');
 
-					 UART1_PushTX(NUM_CABINA + '0');
+					 UART1_PushTX(cabin_nr + '0');
 
-					 switch(ESTADO)
+					 switch(cabin_status)
 					 {
 					 case ESTADO_RUN:
 						 UART1_PushTX('R');
@@ -79,7 +79,7 @@ void Maq_PCTransmision(uint8_t NUM_CABINA, uint8_t ESTADO){
 
 
 						UART1_PushTX('$');
-						estadoMAQ_PC ++;
+						estado_PC ++;
 
 						TimerStart(TIMER_PC, TIEMPO_PC , TimerHandler_ErrorPC_Reception, MIL250);
 
@@ -87,31 +87,31 @@ void Maq_PCTransmision(uint8_t NUM_CABINA, uint8_t ESTADO){
 						break;
 
 
-			//----------------ESTADO RECIBO--------------------//
+
 			 case RECEPTION:
 
 				dato = UART1_PopRX();
 
 				if(dato != -1){
-					switch(estadoRECV){
+					switch(estadoRECEPTION){
 						case 0:
 							if('O' == dato)
-								estadoRECV++;
+								estadoRECEPTION++;
 							break;
 
 						case 1:
 							if('K' == dato)
-								estadoRECV++;
+								estadoRECEPTION++;
 							break;
 					}
 				}
 
-				 if(estadoRECV == 2)
+				 if(estadoRECEPTION == 2)
 				 {
 					 TimerStop(TIMER_PC);
-					 estadoRECV = 0;
+					 estadoRECEPTION = 0;
 					 ERROR_FLAG = 0;
-					 estadoMAQ_PC = 0;
+					 estado_PC = 0;
 				 }
 
 			}
