@@ -1,8 +1,6 @@
 /*
  * PR_SPI_MFRC522.c
  *
- *  Created on: Nov 2, 2019
- *      Author: GCRIS
  */
 
 #include <PR_MFRC522.h>
@@ -10,6 +8,7 @@
 #define MAX_ID 4
 //volatile uint8_t id[MAX_ID+1] = { 0xcb , 0x73 , 0xd7 , 0x73 , 0x00 };
 volatile uint8_t id[MAX_ID+1] = { 0x95 , 0x32 , 0x78 , 0x89 , 0x00 };
+
 //INICIALIZACION SPI Y MFRC522 (mediante comandos)
 void setup_MFRC522() {
 	/* Inicializo MFRC522 */
@@ -35,50 +34,55 @@ uint16_t Card(void)
 	    	if( *(str+i) != *(id+i) )
 	    		isCard = -1;
 	    }
-	    if( 0x10 == checksum1 || 0x00 == checksum1)
+	    if( 0x10 == checksum1 || 0x00 == checksum1)	//si no hay tarjeta
 	    	isCard = 0;
+	    //NOTA: el registro donde el MFRC522 guarda los ID se encuentra con contenido (distinto de 0 porque lo usa el modulo para inicializar)
+	    // |-> cuando NO hay tarjeta se lee ese contenido y se guarda en buffer STR con SPI
+	    // |-> cuando hay tarjeta el MFRC522 cola la ID en ese registro, despues se lee y se guarda en buffer STR con SPI
+
+	    //CONCLUSION: si no hay tarjeta, se lee contenido que no es ID y se chequea con el CHECKSUM1
+
 	    MFRC522_Halt(); //modo hibernacion
 	  return isCard ;
 }
 
-/*
- * Function Name：Write_MFRC5200
- * Function Description: To a certain MFRC522 register to write a byte of data
- * Input Parameters：addr - register address; val - the value to be written
- * Return value: None
- */
+
+//--------------------------- PRIMITIVAS: Read/Write ---------------------------------//
+//mandan COMANDOS de 16 bits
+//           |-> ESCRITURA: primeros 8 bits address y restantes valor a escribir
+//			 |-> LECTURA: primeros 8 bits address a leer y restantes 0x00
+//
+//el SPI manda 8 bits y lee 8 bits simultaneamente (funcion MSS_SPI_transfer_frame)
+// Casos:
+//  |-> ESCRITURA: escribe la 'address' y lee 0x00, luego escribe 'valor' y lee 0x00
+//	|-> LECTURA: escribe la 'address' y lee 0x00, luego escribe 0x00 y lee 8 bits que se encuentran en 'address'
+
+
+//FUNCION Write_MFRC522: escribe 'val' en registro 'addr' (se manda un COMANDO DE ESCRITURA)
+//
 void Write_MFRC522(uint8_t addr, uint8_t val) {
   uint32_t rx_bits;
 
-  // set the select line so we can start transferring
-  SPI_ChipSelect_LOW();
+  SPI_ChipSelect_LOW();  //con GPIO -> empieza transferencia de bits con PIN Select(SSEL_PIN) en LOW
 
   rx_bits = MSS_SPI_transfer_frame( (((addr << 1) & 0x7E) << 8) |  val );
   rx_bits = rx_bits;
-  // clear the select line-- we are done here
-  SPI_ChipSelect_HIGH();
+  SPI_ChipSelect_HIGH();  //con GPIO -> termina transferencia de bits con PIN Select(SSEL_PIN) en HIGH
 }
 
-
-/*
- * Function Name：Read_MFRC522
- * Description: From a certain MFRC522 read a byte of data register
- * Input Parameters: addr - register address
- * Returns: a byte of data read from the
- */
+//FUNCION Read_MFRC522: se lee de registro 'addr' (se manda un COMANDO DE LECTURA)
+//Return: bits leidos
 uint8_t Read_MFRC522(uint8_t addr) {
   uint32_t rx_bits;
 
-  // set the select line so we can start transferring
+  //con GPIO -> empieza transferencia de bits con PIN Select(SSEL_PIN) en LOW
   SPI_ChipSelect_LOW();
 
-  // -Primeros 8 bits: address
-  // -ultimos 8 bits: 0x00
   rx_bits = MSS_SPI_transfer_frame(((((addr << 1) & 0x7E) | 0x80) << 8) | 0x00 );
 
-  // clear the select line-- we are done here
+  //con GPIO -> termina transferencia de bits con PIN Select(SSEL_PIN) en HIGH
   SPI_ChipSelect_HIGH();
-	return (uint8_t) rx_bits; // return the rx bits (solo ultimos 8 bits)
+	return (uint8_t) rx_bits; // return the rx bits (solo ultimos 8 bits de los 32)
 }
 
 
