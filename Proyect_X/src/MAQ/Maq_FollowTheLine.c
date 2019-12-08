@@ -3,7 +3,7 @@
  * @file		Maq_Follow_the_line.c
  * @brief		Descripcion del modulo
  * @date		15 sep. 2019
- * @author		Ing. Marcelo Trujillo
+ * @author		Tanks
  *
  **********************************************************************************************************************************/
 
@@ -123,6 +123,8 @@ uint8_t Maq_FollowTheLine_v2(void)
 	static uint8_t Flag_Turn_ftl_aux = OFF; //Flag para "prender" o "apagar" ftl()
 	static uint8_t waiting_IRs_aux = OFF;
 
+	ftl();
+
 	if(estado_obstaculo == RESET){
 
 		if (IR_OBSTACULO == OFF && waiting_OBSTACULO == ON){ //IR_OBSTACULO ESTA AL REVES (OFF = hay obstaculo)
@@ -233,6 +235,7 @@ void TimerFrenar(void){
  */
 uint8_t Maq_Freno(void){
 	static uint8_t estado = RESET;
+	ftl();
 	switch(estado)
 	{
 

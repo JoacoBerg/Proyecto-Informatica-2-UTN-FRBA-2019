@@ -43,13 +43,13 @@ void Maq_General()
 				break;
 			
 			case FORWARD:
-				ftl();
+				//ftl();
 				if(Maq_FollowTheLine_v2() == EXITO) //AVANZAR
 					estado = SELECTION;
 				break;
 			
 			case FRENO:
-				ftl();
+				//ftl();
 				if(Maq_Freno() == EXITO) //AVANZAR
 					estado = SELECTION;
 				break;

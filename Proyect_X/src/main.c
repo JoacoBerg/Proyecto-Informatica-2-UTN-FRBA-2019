@@ -1,7 +1,7 @@
 /*
 ===============================================================================
  Name        : main.c
- Author      : $(author)
+ Author      : $(Tanks)
  Version     :
  Copyright   : $(copyright)
  Description : main definition
