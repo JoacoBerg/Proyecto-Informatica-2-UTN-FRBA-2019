@@ -37,21 +37,23 @@
 #define		BUSCAR_BOTON			2
 #define		BUSCAR_IMAN				3
 
-#define PIN_RED 0, 22
-#define PIN_BLUE 3, 26
-#define PIN_GREEN 3, 25
+#define PIN_RED 2,6 		//1
+#define PIN_BLUE 2,7 		//2
+#define PIN_GREEN 2,8		//3
 
-#define OFFF 1
-#define ONN 0
 
-#define RED_ON 		SetPin( PIN_RED, ONN)
-#define RED_OFF 	SetPin( PIN_RED, OFFF)
 
-#define BLUE_ON 	SetPin( PIN_BLUE, ONN)
-#define BLUE_OFF 	SetPin( PIN_BLUE, OFFF)
+//#define OFFF 1
+//#define ONN 0
 
-#define GREEN_ON 	SetPin( PIN_GREEN, ONN)
-#define GREEN_OFF 	SetPin( PIN_GREEN, OFFF)
+#define RED_ON 		SetPin( PIN_RED, ON)
+#define RED_OFF 	SetPin( PIN_RED, OFF)
+
+#define BLUE_ON 	SetPin( PIN_BLUE, ON)
+#define BLUE_OFF 	SetPin( PIN_BLUE, OFF)
+
+#define GREEN_ON 	SetPin( PIN_GREEN, ON)
+#define GREEN_OFF 	SetPin( PIN_GREEN, OFF)
 
 #define SERVO_ABIERTO	Servo_Abierto()
 #define SERVO_CERRADO	Servo_Cerrado()

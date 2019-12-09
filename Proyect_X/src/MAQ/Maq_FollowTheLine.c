@@ -133,8 +133,8 @@ uint8_t Maq_FollowTheLine_v2(void)
 	static uint8_t Flag_Turn_ftl_aux = OFF; //Flag para "prender" o "apagar" ftl()
 	static uint8_t waiting_IRs_aux = OFF;
 
-	//ftl();
-	ftl_Alarma();
+	ftl();
+	//ftl_Alarma();
 
 	if(estado_obstaculo == RESET){
 

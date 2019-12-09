@@ -36,19 +36,7 @@ int main(void) {
    	//test_Maq_GRAL_init();
 
 
-   	SetPinsel(LED1, PINSEL_GPIO);
-	SetPinMode(LED1, PINMODE_PULLUP);
-	SetPinDir(LED1, PINDIR_OUTPUT);
-
-	SetPinsel(LED2, PINSEL_GPIO);
-	SetPinMode(LED2, PINMODE_PULLUP);
-	SetPinDir(LED2, PINDIR_OUTPUT);
-
-	SetPinsel(LED3, PINSEL_GPIO);
-	SetPinMode(LED3, PINMODE_PULLUP);
-	SetPinDir(LED3, PINDIR_OUTPUT);
-
-	SetPinsel(LED4, PINSEL_GPIO);
+ 	SetPinsel(LED4, PINSEL_GPIO);
 	SetPinMode(LED4, PINMODE_PULLUP);
 	SetPinDir(LED4, PINDIR_OUTPUT);
 

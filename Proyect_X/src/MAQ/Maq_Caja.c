@@ -80,9 +80,9 @@ void init_caja()
 #define E_BlinkGreenOFF	8
 
 //------------------TIEMPOS--------------------------
-#define T_WrongID		2
-#define T_BlinkRed		3 //en decimas
-#define T_Exit			2
+#define T_WrongID		3
+#define T_BlinkRed		5 //en decimas
+#define T_Exit			4
 #define T_BlinkGreen	5 //en decimas
 //------------------HANDLERS----------------------------------
 void handler_BlinkOFF();
@@ -93,6 +93,7 @@ void handler_BlinkGreenOFF();
 //Bloquea acceso por tarjeta no valida
 void handler_WrongID(){
 	estado_CAJA = BUSCAR_ID;
+	RED_ON;
 }
 
 //Parpadeo hasta que termine tiempo de bloqueo
@@ -122,12 +123,15 @@ void handler_BlinkGreenON(){
 
 uint8_t flag=0;
 uint8_t flag_malcerrada = 0;
+
 //-----------FIN DE HANDLERS-----------------------------------
 // FUNCION Maq_Caja: se encarga de supervisar el estado de la caja
 //return: exito si tarjeta ID, Boton e iman son correctos
 uint8_t Maq_Caja()
 {
-	uint8_t retorno = ENPROCESO , card, flag_Wrong = 0;
+	uint8_t retorno = ENPROCESO , card;
+	static uint8_t flag_Wrong = 0;
+
 	switch(estado_CAJA)
 	{
 		case RESET:
@@ -195,6 +199,7 @@ uint8_t Maq_Caja()
 				UART0_SendString("Saliendo de estacion");
 				SERVO_CERRADO;
 				TimerStart(E_Exit, T_Exit, handler_Exit, SEG );
+				TimerStart(E_BlinkGreenON, T_BlinkGreen, handler_BlinkGreenON, DEC );
 				GREEN_ON;
 				flag_malcerrada = 0;
 				estado_CAJA = ESPERANDO;
@@ -212,8 +217,9 @@ uint8_t Maq_Caja()
 
 		case SALIENDO:
 			TimerStop(E_Exit);
+			TimerStop(E_BlinkGreenON);
+			TimerStop(E_BlinkGreenOFF);
 			retorno = EXITO;
-			TimerStart(E_BlinkGreenON, T_BlinkGreen, handler_BlinkGreenON, DEC );
 			estado_CAJA = RESET;
 			break;
 
