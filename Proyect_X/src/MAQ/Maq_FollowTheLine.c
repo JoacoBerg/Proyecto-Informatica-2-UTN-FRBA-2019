@@ -113,6 +113,7 @@ void TimerSleepIRs(void);
 void TimerSleepOBSTACULO(void);
 void TimerRestart(void);
 void f_res(void);
+void go_to_ignorar(void);
 
 
 /*
@@ -358,9 +359,7 @@ uint8_t ftl(void)
 }
 
 
-void go_to_ignorar(void){
-	est_ftl = IGNORAR;
-}
+
 
 uint8_t est_ftl = RESET;
 
@@ -424,4 +423,9 @@ void f_res(void)
 		Flag_Turn_ftl = ON;
 		est_ftl = FTL;
 	}
+}
+
+
+void go_to_ignorar(void){
+	est_ftl = IGNORAR;
 }
