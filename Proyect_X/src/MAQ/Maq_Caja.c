@@ -137,6 +137,7 @@ uint8_t Maq_Caja()
 			SERVO_CERRADO;
 			TimerStop(E_BlinkGreenOFF);
 			TimerStop(E_BlinkGreenON);
+			UART0_SendString("En la estacion");
 
 			estado_CAJA = BUSCAR_ID;
 			break;

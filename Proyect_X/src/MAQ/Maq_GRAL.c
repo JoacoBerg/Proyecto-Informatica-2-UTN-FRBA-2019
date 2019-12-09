@@ -20,6 +20,9 @@ void Maq_General()
 		{
 			case SELECTION:
 				estado = Pop_list_estados();
+				if(estado == BASE){
+					while(UART0_PopRX() != -1){} //flush de rx
+				}
 				break;
 			case BASE:
 				if(Maq_Base() == EXITO){ //LECTURA DE UART

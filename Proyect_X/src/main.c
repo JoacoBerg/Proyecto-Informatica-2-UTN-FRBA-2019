@@ -23,7 +23,7 @@
 
 #include "testings.h"
 
-//#include "Maq_FollowTheLine.h"
+#include "Maq_FollowTheLine.h"
 
 #define LED1 2,6
 #define LED2 2,7
@@ -69,6 +69,8 @@ int main(void) {
     	//Maq_General();
     	Maq_Alarma();
 
+    	//Flag_Turn_ftl = ON;
+    	//ftl_Alarma();
     	//ftl();
     	//Maq_FollowTheLine_v2();
     	//test_servos();

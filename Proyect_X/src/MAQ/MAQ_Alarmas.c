@@ -24,7 +24,7 @@
 #define RESET_AL 		0
 #define FUNCAx4			1
 #define ESPERANDOx4		2
-#define ALARMA			3
+#define ALARMA_MAQ		3
 #define CHECKOBS		4
 #define ESPERANDO_OBS   5
 #define SOBRERUEDAS		6
@@ -54,12 +54,10 @@
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PUBLICAS
  **********************************************************************************************************************************/
-
+uint8_t estAl = RESET_AL;
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PRIVADAS AL MODULO
  **********************************************************************************************************************************/
-
-uint8_t estAl = RESET_AL;
 
 /***********************************************************************************************************************************
  *** PROTOTIPO DE FUNCIONES PRIVADAS AL MODULO
@@ -147,7 +145,7 @@ static 	uint8_t flag_esperandoObs = 0;
 
 			break;
 
-		case ALARMA:
+		case ALARMA_MAQ:
 			if(flag_esperandox4 == 1)
 			{
 				if(IR_IZQ_IN == ON && IR_DER_IN == ON && IR_IZQ_OUT == ON && IR_DER_OUT == ON)
@@ -189,7 +187,7 @@ void f_esperandox4(void)
 	if(IR_DER_OUT == OFF)
 		UART0_SendString("ALARMA:'IR_DER_OUT' Roto");
 
-	estAl = ALARMA;
+	estAl = ALARMA_MAQ;
 	//LED_ON
 }
 
@@ -200,7 +198,7 @@ void f_esperandoObs(void)
 
 void f_obsRoto(void)
 {
-	estAl = ALARMA;
+	estAl = ALARMA_MAQ;
 	UART0_SendString("SensorObs: Defectuoso");
 }
 

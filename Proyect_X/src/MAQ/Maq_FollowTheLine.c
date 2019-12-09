@@ -18,11 +18,12 @@
 #include "PR_Timers.h"
 #include <DR_PINSEL.h>
 #include "PR_UART0.h"
+#include "MAQ_Alarmas.h"
 
 /***********************************************************************************************************************************
  *** DEFINES PRIVADOS AL MODULO
  **********************************************************************************************************************************/
-
+#define ALARMA_MAQ		3
 /***********************************************************************************************************************************
  *** MACROS PRIVADAS AL MODULO
  **********************************************************************************************************************************/
@@ -71,6 +72,12 @@
 #define 	ALARMA	4
 #define 	CONTROL 5
 
+//Declaracion de estados de ftl_Alarma()
+//#define 	RESET			0
+#define 	WAITING_FTL		1
+#define		FTL				2
+#define  	prueba			3
+
 //Declaracion de estados de Maq_FollowTheLine_v2()
 //#define 	RESET		0
 #define 	PRIMERCRUCE		1
@@ -104,6 +111,7 @@ void TimerFrenar(void);
 void TimerSleepIRs(void);
 void TimerSleepOBSTACULO(void);
 void TimerRestart(void);
+void f_res(void);
 
 
 /*
@@ -123,7 +131,8 @@ uint8_t Maq_FollowTheLine_v2(void)
 	static uint8_t Flag_Turn_ftl_aux = OFF; //Flag para "prender" o "apagar" ftl()
 	static uint8_t waiting_IRs_aux = OFF;
 
-	ftl();
+	//ftl();
+	ftl_Alarma();
 
 	if(estado_obstaculo == RESET){
 
@@ -347,6 +356,42 @@ uint8_t ftl(void)
 	return ENPROCESO;
 }
 
+uint8_t est_ftl = RESET;
+
+
+
+void ftl_Alarma(void){
+
+	switch (est_ftl) {
+		case RESET:
+			if(IR_IZQ_IN == OFF && IR_DER_IN == OFF)
+			{
+				Flag_Turn_ftl = OFF;
+				Tank_Forward(VELOCIDAD_FTL);
+				est_ftl = WAITING_FTL;
+				TimerStart(11, 4, f_res, DEC);
+			}
+			else
+			{
+				est_ftl = FTL;
+			}
+			break;
+		case WAITING_FTL:
+			break;
+
+		case FTL:
+			ftl();
+			est_ftl = RESET;
+			break;
+
+		case prueba:
+			Flag_Turn_ftl = OFF;
+			break;
+		default:
+			est_ftl = RESET;
+			break;
+	}
+}
 //------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------
@@ -354,4 +399,19 @@ uint8_t ftl(void)
 //------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------
 
-
+void f_res(void)
+{
+	if(IR_IZQ_IN == OFF && IR_DER_IN == OFF)
+	{
+		estAl = ALARMA_MAQ;
+		est_ftl = RESET;
+		Flag_Turn_ftl = OFF;
+		Tank_Brake();
+		UART0_SendString("Sensores centrales defectuosos");
+	}
+	else
+	{
+		Flag_Turn_ftl = ON;
+		est_ftl = FTL;
+	}
+}
