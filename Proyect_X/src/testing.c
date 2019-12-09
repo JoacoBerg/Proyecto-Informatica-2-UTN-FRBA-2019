@@ -9,7 +9,7 @@
 #include "Maq_GRAL.h"
 #include "PR_Timers.h"
 #include "Maq_FollowTheLine.h"
-
+#include "DR_GPIO.h"
 
 void test_Maq_GRAL_init(void){
 
@@ -43,6 +43,21 @@ void test_servos(void){
 		}
 		else{
 			Servo_Cerrado();
+			a = 0;
+		}
+	}
+}
+
+void test_leds(void){
+	static uint8_t a = 0;
+
+	if (Maq_Dummy()){
+		if(a == 0){
+			SetPin(2,6, ON);
+			a = 1;
+		}
+		else{
+			SetPin(2,6, OFF);
 			a = 0;
 		}
 	}

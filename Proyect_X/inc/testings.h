@@ -11,5 +11,6 @@
 
 void test_servos(void);
 void test_Maq_GRAL_init(void);
+void test_leds(void);
 
 #endif /* TESTINGS_H_ */

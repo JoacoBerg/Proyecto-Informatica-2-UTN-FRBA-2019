@@ -15,12 +15,13 @@
 
 #include <DR_Inicializacion.h>
 #include "PR_Timers.h"
-#include "Maq_GRAL.h"
+//#include "Maq_GRAL.h"
+#include "MAQ_Alarmas.h"
 
 #include "DR_GPIO.h"
 #include "DR_PINSEL.h"
 
-//#include "testings.h"
+#include "testings.h"
 
 //#include "Maq_FollowTheLine.h"
 
@@ -51,10 +52,11 @@ int main(void) {
 	SetPinMode(LED4, PINMODE_PULLUP);
 	SetPinDir(LED4, PINDIR_OUTPUT);
 
-	//SetPin(LED1, ON);
-	//SetPin(LED2, ON);
-	//SetPin(LED3, ON);
-	//SetPin(LED4, ON);
+
+	SetPin(LED1, ON);
+	SetPin(LED2, ON);
+	SetPin(LED3, ON);
+	SetPin(LED4, ON);
 
 	SetPin(LED1, OFF);
 	SetPin(LED2, OFF);
@@ -63,10 +65,17 @@ int main(void) {
 
    	while(1) {
     	TimerEvent();
-    	Maq_General();
+
+    	//Maq_General();
+    	Maq_Alarma();
+
     	//ftl();
     	//Maq_FollowTheLine_v2();
     	//test_servos();
+
+   		//test_leds();
+
+
     }
 
     return 0;

@@ -124,6 +124,7 @@ void handler_BlinkGreenON(){
 }
 
 uint8_t flag=0;
+uint8_t flag_malcerrada = 0;
 //-----------FIN DE HANDLERS-----------------------------------
 // FUNCION Maq_Caja: se encarga de supervisar el estado de la caja
 //return: exito si tarjeta ID, Boton e iman son correctos
@@ -197,11 +198,15 @@ uint8_t Maq_Caja()
 				SERVO_CERRADO;
 				TimerStart(E_Exit, T_Exit, handler_Exit, SEG );
 				GREEN_ON;
+				flag_malcerrada = 0;
 				estado_CAJA = ESPERANDO;
 			}
 			else
 			{
-				UART0_SendString("Caja Mal Cerrada");
+				if(flag_malcerrada==0){
+					UART0_SendString("Caja Mal Cerrada");
+					flag_malcerrada = 1;
+				}
 				BLUE_ON;
 				estado_CAJA = BUSCAR_BOTON;
 			}

@@ -15,6 +15,8 @@
 #include "PR_Timers.h"
 #include "PR_UART0.h"
 
+#include "Maq_GRAL.h"
+
 
 /***********************************************************************************************************************************
  *** DEFINES PRIVADOS AL MODULO
@@ -25,6 +27,7 @@
 #define ALARMA			3
 #define CHECKOBS		4
 #define ESPERANDO_OBS   5
+#define SOBRERUEDAS		6
 
 //---------Timers---------
 #define ev_esperandox4  8
@@ -75,8 +78,8 @@ void f_obsRoto(void);
 uint8_t Maq_Alarma(void)
 {
 
-	uint8_t flag_esperandox4 = 0;
-	uint8_t flag_esperandoObs = 0;
+static	uint8_t flag_esperandox4 = 0;
+static 	uint8_t flag_esperandoObs = 0;
 
 
 	switch (estAl) {
@@ -89,6 +92,7 @@ uint8_t Maq_Alarma(void)
 			else
 			{
 				estAl = ESPERANDOx4;
+				UART0_SendString("Auto mal colocado");
 			}
 
 			break;
@@ -119,8 +123,11 @@ uint8_t Maq_Alarma(void)
 			if(IR_OBSTACULO == ON) //ON --> OFF
 			{
 				UART0_SendString("SensorObs: ok");
-				/*llamar MAQ_GRAL*/
-				return EXITO;
+				estAl = SOBRERUEDAS;
+				TimerStop(ev_esperandoObs);
+				TimerStop(ev_esperandox4);
+				TimerStop(ev_obsRoto);
+				//return EXITO;
 			}
 			break;
 
@@ -128,7 +135,7 @@ uint8_t Maq_Alarma(void)
 
 			if(flag_esperandox4 == 0)
 			{
-				UART0_SendString("Auto mal colocado");
+
 				TimerStart(ev_esperandox4, t_esperandox4, f_esperandox4, SEG);
 				flag_esperandox4 = 1;
 			}
@@ -141,7 +148,21 @@ uint8_t Maq_Alarma(void)
 			break;
 
 		case ALARMA:
+			if(flag_esperandox4 == 1)
+			{
+				if(IR_IZQ_IN == ON && IR_DER_IN == ON && IR_IZQ_OUT == ON && IR_DER_OUT == ON)
+				{
+					estAl = FUNCAx4;
+				}
+			}
 			/*hacer mierda todo*/
+			//LED_ON
+			break;
+
+		case SOBRERUEDAS:
+
+			Maq_General();
+			estAl = SOBRERUEDAS;
 			break;
 
 		default:
