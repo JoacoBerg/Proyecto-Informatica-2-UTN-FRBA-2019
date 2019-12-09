@@ -14,6 +14,7 @@
 #include "PR_Entradas.h"
 #include "PR_Timers.h"
 #include "PR_UART0.h"
+#include "DR_GPIO.h"
 
 #include "Maq_GRAL.h"
 
@@ -21,7 +22,7 @@
 /***********************************************************************************************************************************
  *** DEFINES PRIVADOS AL MODULO
  **********************************************************************************************************************************/
-#define LED4 2,10
+
 
 #define RESET_AL 		0
 #define FUNCAx4			1
@@ -39,7 +40,7 @@
 //---------Timers---------
 #define t_esperandox4  5 //seg
 #define t_esperandoObs 2 //dec
-#define t_obsRoto      3 //seg
+#define t_obsRoto      7 //seg
 
 /***********************************************************************************************************************************
  *** MACROS PRIVADAS AL MODULO
@@ -60,7 +61,7 @@ uint8_t estAl = RESET_AL;
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PRIVADAS AL MODULO
  **********************************************************************************************************************************/
-
+uint8_t flag1 = 0;
 /***********************************************************************************************************************************
  *** PROTOTIPO DE FUNCIONES PRIVADAS AL MODULO
  **********************************************************************************************************************************/
@@ -84,7 +85,7 @@ static 	uint8_t flag_esperandoObs = 0;
 
 	switch (estAl) {
 		case RESET_AL:
-
+			SetPin(LED4, OFF);
 			if(IR_IZQ_IN == ON && IR_DER_IN == ON && IR_IZQ_OUT == ON && IR_DER_OUT == ON)
 			{
 				estAl = FUNCAx4;
@@ -109,6 +110,10 @@ static 	uint8_t flag_esperandoObs = 0;
 			{
 				TimerStart(ev_esperandoObs, t_esperandoObs, f_esperandoObs, DEC);
 			}
+			if(flag1 == 0){
+				TimerStart(ev_obsRoto, t_obsRoto, f_obsRoto, SEG);
+				flag1 = 1;
+			}
 			break;
 
 		case ESPERANDO_OBS:
@@ -116,7 +121,7 @@ static 	uint8_t flag_esperandoObs = 0;
 			if(flag_esperandoObs == 0)
 			{
 				UART0_SendString("Quite el obstaculo");
-				TimerStart(ev_obsRoto, t_obsRoto, f_obsRoto, SEG);
+				//TimerStart(ev_obsRoto, t_obsRoto, f_obsRoto, SEG);
 				flag_esperandoObs = 1;
 			}
 
@@ -148,15 +153,32 @@ static 	uint8_t flag_esperandoObs = 0;
 			break;
 
 		case ALARMA_MAQ:
+
+			/*
 			if(flag_esperandox4 == 1)
 			{
 				if(IR_IZQ_IN == ON && IR_DER_IN == ON && IR_IZQ_OUT == ON && IR_DER_OUT == ON)
 				{
 					estAl = FUNCAx4;
+					SetPin(LED4, OFF);
 				}
 			}
+
+			if(flag1 == 1)
+			{
+				if(IR_OBSTACULO == ON)
+				{
+					SetPin(LED4, OFF);
+					estAl = SOBRERUEDAS;
+					TimerStop(ev_esperandoObs);
+					TimerStop(ev_esperandox4);
+					TimerStop(ev_obsRoto);
+				}
+			}
+			*/
+
 			/*hacer mierda todo*/
-			//LED_ON
+
 			break;
 
 		case SOBRERUEDAS:
@@ -177,20 +199,8 @@ static 	uint8_t flag_esperandoObs = 0;
 //------Funciones timers----------
 void f_esperandox4(void)
 {
-	if(IR_IZQ_IN == OFF)
-		UART0_SendString("ALARMA:'IR_IZQ_IN' Roto");
-
-	if(IR_DER_IN == OFF)
-		UART0_SendString("ALARMA:'IR_DER_IN' Roto");
-
-	if(IR_IZQ_OUT == OFF)
-		UART0_SendString("ALARMA:'IR_IZQ_OUT' Roto");
-
-	if(IR_DER_OUT == OFF)
-		UART0_SendString("ALARMA:'IR_DER_OUT' Roto");
-
 	estAl = ALARMA_MAQ;
-	//LED_ON
+	SetPin(LED4, ON);
 }
 
 void f_esperandoObs(void)
@@ -200,7 +210,9 @@ void f_esperandoObs(void)
 
 void f_obsRoto(void)
 {
+	SetPin(LED4, ON);
 	estAl = ALARMA_MAQ;
 	UART0_SendString("SensorObs: Defectuoso");
+
 }
 

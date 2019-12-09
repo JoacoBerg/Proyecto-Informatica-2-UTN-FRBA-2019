@@ -26,6 +26,7 @@ void Maq_General()
 				break;
 			case BASE:
 				if(Maq_Base() == EXITO){ //LECTURA DE UART
+					UART0_SendString("Sensores funcionan correctamente");
 					estado_CAJA = BUSCAR_BOTON;
 					estado = CAJA;
 				}

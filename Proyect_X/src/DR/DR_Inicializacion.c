@@ -77,4 +77,16 @@ void Inicializacion ( void )
 	setup_MFRC522();
 
 	init_caja();
+
+	SetPinsel(LED4, PINSEL_GPIO);
+	SetPinMode(LED4, PINMODE_PULLUP);
+	SetPinDir(LED4, PINDIR_OUTPUT);
+
+	SetPin(LED1, OFF);
+	SetPin(LED2, OFF);
+	SetPin(LED3, OFF);
+	SetPin(LED4, OFF);
+
+
+
 }

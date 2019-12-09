@@ -125,11 +125,14 @@ uint8_t flag=0;
 uint8_t flag_malcerrada = 0;
 
 //-----------FIN DE HANDLERS-----------------------------------
+
+
 // FUNCION Maq_Caja: se encarga de supervisar el estado de la caja
 //return: exito si tarjeta ID, Boton e iman son correctos
 uint8_t Maq_Caja()
 {
-	uint8_t retorno = ENPROCESO , card;
+	uint8_t retorno = ENPROCESO ;
+	int card;
 	static uint8_t flag_Wrong = 0;
 
 	switch(estado_CAJA)

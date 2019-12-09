@@ -17,9 +17,10 @@ void setup_MFRC522() {
 
 //FUNCION Card: primitiva de MFRC522 para acceso por tarjeta magnetica
 // return: hay tarjeta valida o no
-uint16_t Card(void)
+int Card(void)
 {
-	uint8_t status, checksum1, str[MAX_LEN], isCard = 1;
+	uint8_t status, checksum1, str[MAX_LEN];
+	int isCard = 1;
 	uint32_t i;
 	    // Find cards
 	    status = MFRC522_Request(PICC_REQIDL, str);
