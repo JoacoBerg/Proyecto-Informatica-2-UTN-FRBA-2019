@@ -4,12 +4,29 @@
 //4 bytes card serial number, the first 5 bytes for the checksum byte
 uint8_t serNum[5];
 
-/*
- * Function Name：SetBitMask
- * Description: Set RC522 register bit
- * Input parameters: reg - register address; mask - set value
- * Return value: None
- */
+
+//FUNCION MFRC522_Init: inicializacion MFRC522 a partir de comandos
+void MFRC522_Init(void)
+{
+	SPI_ChipSelect_LOW();
+	MFRC522_Reset();
+
+  // Timer: TPrescaler*TreloadVal/6.78MHz = 24ms
+  Write_MFRC522(TModeReg, 0x8D);      // Tauto=1; f(Timer) = 6.78MHz/TPreScaler
+  Write_MFRC522(TPrescalerReg, 0x3E); // TModeReg[3..0] + TPrescalerReg
+  Write_MFRC522(TReloadRegL, 30);
+  Write_MFRC522(TReloadRegH, 0);
+  Write_MFRC522(TxAutoReg, 0x40);     // force 100% ASK modulation
+  Write_MFRC522(ModeReg, 0x3D);       // CRC Initial value 0x6363
+
+  // turn antenna ON
+  AntennaOn();
+}
+
+
+
+//FUNCION SetBitMask: manda COMANDO de LECTURA y segun lo que lee manda COMANDO de ESCRITURA con mascara de seteo
+// Parametros: reg = address(registro de MFRC522) y mask = set bit value
 void SetBitMask(uint8_t reg, uint8_t mask)
 {
     uint8_t tmp;
@@ -18,19 +35,14 @@ void SetBitMask(uint8_t reg, uint8_t mask)
 }
 
 
-/*
- * Function Name: ClearBitMask
- * Description: clear RC522 register bit
- * Input parameters: reg - register address; mask - clear bit value
- * Return value: None
-*/
+//FUNCION SetBitMask: manda COMANDO de LECTURA y segun lo que lee manda COMANDO de ESCRITURA con mascara de clear
+// Parametros: reg = address(registro de MFRC522) y mask = clear bit value
 void ClearBitMask(uint8_t reg, uint8_t mask)
 {
     uint8_t tmp;
     tmp = Read_MFRC522(reg);
     Write_MFRC522(reg, tmp & (~mask));  // clear bit mask
 }
-
 
 /*
  * Function Name：AntennaOn
@@ -56,40 +68,11 @@ void AntennaOff(void)
 }
 
 
-/*
- * Function Name: ResetMFRC522
- * Description: Reset RC522
- * Input: None
- * Return value: None
- */
+//FUNCION MFRC522_Reset: reset de registros del modulo MFRC522
 void MFRC522_Reset(void)
 {
   Write_MFRC522(CommandReg, PCD_RESETPHASE);
 }
-
-
-//FUNCION MFRC522_Init: inicializacion MFRC522 a partir de comandos
-///////
-///////
-void MFRC522_Init(void)
-{
-	SPI_ChipSelect_LOW();
-	MFRC522_Reset();
-
-  // Timer: TPrescaler*TreloadVal/6.78MHz = 24ms
-  Write_MFRC522(TModeReg, 0x8D);      // Tauto=1; f(Timer) = 6.78MHz/TPreScaler
-  Write_MFRC522(TPrescalerReg, 0x3E); // TModeReg[3..0] + TPrescalerReg
-  Write_MFRC522(TReloadRegL, 30);
-  Write_MFRC522(TReloadRegH, 0);
-  Write_MFRC522(TxAutoReg, 0x40);     // force 100% ASK modulation
-  Write_MFRC522(ModeReg, 0x3D);       // CRC Initial value 0x6363
-
-  // turn antenna ON
-  AntennaOn();
-}
-
-
-
 
 //FUNCION MFRC522_Request: find cards
 // argumento: ReqMode = find cards way
@@ -295,13 +278,13 @@ void CalulateCRC(uint8_t *pIndata, uint8_t len, uint8_t *pOutData)
   pOutData[1] = Read_MFRC522(CRCResultRegM);
 }
 
-
 /*
- * Function Name: MFRC522_SelectTag
- * Description: election card, read the card memory capacity
- * Input parameters: serNum - Incoming card serial number
- * Return value: the successful return of card capacity
- */
+
+// Function Name: MFRC522_SelectTag
+//  Description: election card, read the card memory capacity
+//  Input parameters: serNum - Incoming card serial number
+// Return value: the successful return of card capacity
+
 uint8_t MFRC522_SelectTag(uint8_t *serNum)
 {
   uint8_t i;
@@ -330,7 +313,7 @@ uint8_t MFRC522_SelectTag(uint8_t *serNum)
 
   return size;
 }
-
+*/
 
 /*
  * Function Name: MFRC522_Auth
@@ -438,13 +421,7 @@ uint8_t MFRC522_Write(uint8_t blockAddr, uint8_t *writeData)
   return status;
 }
 
-
-/*
- * Function Name: MFRC522_Halt
- * Description: Command card into hibernation
- * Input: None
- * Return value: None
- */
+//FUNCION MFRC522_Halt: modo hibernacion de MFRC522
 void MFRC522_Halt(void)
 {
   uint8_t status;
