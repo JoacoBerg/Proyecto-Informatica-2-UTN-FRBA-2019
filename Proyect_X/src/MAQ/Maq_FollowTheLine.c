@@ -74,9 +74,10 @@
 
 //Declaracion de estados de ftl_Alarma()
 //#define 	RESET			0
-#define 	WAITING_FTL		1
-#define		FTL				2
-#define  	prueba			3
+#define		IGNORAR			1
+#define 	WAITING_FTL		2
+#define		FTL				3
+#define  	prueba			4
 
 //Declaracion de estados de Maq_FollowTheLine_v2()
 //#define 	RESET		0
@@ -356,14 +357,23 @@ uint8_t ftl(void)
 	return ENPROCESO;
 }
 
-uint8_t est_ftl = RESET;
 
+void go_to_ignorar(void){
+	est_ftl = IGNORAR;
+}
+
+uint8_t est_ftl = RESET;
 
 
 void ftl_Alarma(void){
 
 	switch (est_ftl) {
+
 		case RESET:
+
+			TimerStart(12, 3, go_to_ignorar, DEC);
+			break;
+		case IGNORAR:
 			if(IR_IZQ_IN == OFF && IR_DER_IN == OFF)
 			{
 				Flag_Turn_ftl = OFF;
