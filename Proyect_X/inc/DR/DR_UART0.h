@@ -3,7 +3,7 @@
  * @file		DR_UART.h
  * @brief		Breve descripción del objetivo del Módulo
  * @date		12 de oct. de 2017
- * @author		Ing. Marcelo Trujillo
+ * @author		Tanks
  *
  **********************************************************************************************************************************/
 

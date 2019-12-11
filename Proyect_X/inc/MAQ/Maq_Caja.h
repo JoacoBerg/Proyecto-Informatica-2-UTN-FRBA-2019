@@ -3,7 +3,7 @@
  * @file		Maq_Caja.h
  * @brief		Breve descripción del objetivo del Módulo
  * @date		3 nov. 2019
- * @author		Ing. Marcelo Trujillo
+ * @author		Tanks
  *
  **********************************************************************************************************************************/
 

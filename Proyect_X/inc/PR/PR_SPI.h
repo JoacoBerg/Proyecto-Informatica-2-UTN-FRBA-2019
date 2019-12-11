@@ -2,7 +2,7 @@
  * PR_SPI.h
  *
  *  Created on: Nov 2, 2019
- *      Author: GCRIS
+ *      Author: Tanks
  */
 
 #ifndef PR_SPI_H_

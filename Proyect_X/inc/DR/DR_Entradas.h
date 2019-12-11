@@ -3,7 +3,7 @@
  * @file		Template.h
  * @brief		Breve descripción del objetivo del Módulo
  * @date		Fecha de creacion del archivo XX/XX/XXXX
- * @author		Nombre, Apellido
+ * @author		Tanks
  *
  **********************************************************************************************************************************/
 

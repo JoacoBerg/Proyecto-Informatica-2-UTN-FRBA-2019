@@ -3,7 +3,7 @@
  * @file		DR_Salidas.h
  * @brief		Breve descripción del objetivo del Módulo
  * @date		14 de nov. de 2017
- * @author		Ing. Marcelo Trujillo
+ * @author		Tanks
  *
  **********************************************************************************************************************************/
 

@@ -3,7 +3,7 @@
  * @file		PR_Timers.c
  * @brief		Maquinaria de timers
  * @date		2 de jun. de 2017
- * @author		Ing. Marcelo Trujillo
+ * @author		Tanks
  *
  **********************************************************************************************************************************/
 

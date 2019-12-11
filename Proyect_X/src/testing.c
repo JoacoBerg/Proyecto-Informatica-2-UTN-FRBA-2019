@@ -2,7 +2,7 @@
  * testing.c
  *
  *  Created on: 10 nov. 2019
- *      Author: gif30
+ *      Author: Tanks
  */
 
 #include <PR_Servo.h>

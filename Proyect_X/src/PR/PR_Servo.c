@@ -2,7 +2,7 @@
  * DR_Servo.c
  *
  *  Created on: 15 sep. 2019
- *      Author: gif30
+ *      Author: Tanks
  */
 #include "DR_PWM.h"
 #define SERVO PWM6

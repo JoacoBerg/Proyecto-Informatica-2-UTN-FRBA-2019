@@ -3,7 +3,7 @@
  * @file		DR_Timers.c
  * @brief		Descripcion del modulo
  * @date		9 de jun. de 2017
- * @author		Ing. Marcelo Trujillo
+ * @author		Tanks
  *
  **********************************************************************************************************************************/
 

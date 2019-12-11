@@ -3,7 +3,7 @@
  * @file		PR_Timers.h
  * @brief		Breve descripción del objetivo del Módulo
  * @date		2 de jun. de 2017
- * @author		Ing. Marcelo Trujillo
+ * @author		Tanks
  *
  **********************************************************************************************************************************/
 

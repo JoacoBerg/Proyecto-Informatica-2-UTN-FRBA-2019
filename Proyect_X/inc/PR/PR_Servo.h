@@ -2,7 +2,7 @@
  * DR_Servo.h
  *
  *  Created on: 15 sep. 2019
- *      Author: gif30
+ *      Author: Tanks
  */
 
 #ifndef DR_SERVO_H_

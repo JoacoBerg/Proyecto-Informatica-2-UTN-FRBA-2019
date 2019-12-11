@@ -2,7 +2,7 @@
  * Kit_Inic.c
  *
  *  Created on: 06/05/2016
- *      Author: Usuario
+ *      Author: Tanks
  */
 
 

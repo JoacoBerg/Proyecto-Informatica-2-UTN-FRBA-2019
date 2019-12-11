@@ -3,7 +3,7 @@
  * @file		Infotronic.h
  * @brief		Declaracion de tipos Globales
  * @date		23-03-16
- * @author		Marcelo Trujillo
+ * @author		Tanks
  *
  **********************************************************************************************************************************/
 

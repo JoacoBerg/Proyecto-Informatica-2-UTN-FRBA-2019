@@ -2,7 +2,7 @@
  * testings.h
  *
  *  Created on: 10 nov. 2019
- *      Author: gif30
+ *      Author: Tanks
  */
 
 #ifndef TESTINGS_H_

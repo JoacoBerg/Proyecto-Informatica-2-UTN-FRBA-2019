@@ -2,7 +2,7 @@
  * Maq_Base.c
  *
  *  Created on: 27 oct. 2019
- *      Author: gif30
+ *      Author: Tanks
  */
 #include <PR_Servo.h>
 #include "Maq_Base.h"

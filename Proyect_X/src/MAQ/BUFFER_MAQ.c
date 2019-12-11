@@ -2,7 +2,7 @@
  * BUFFER_MAQ.c
  *
  *  Created on: 27 oct. 2019
- *      Author: JoaquinBergmann
+ *      Author: Tanks
  */
 
 #include "BUFFER_MAQ.h"

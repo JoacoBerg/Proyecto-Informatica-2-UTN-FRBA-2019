@@ -3,7 +3,7 @@
  * @file		Infotronic.h
  * @brief		Macros, tipos , prototipos, de la aplicacion
  * @date		23-03-16
- * @author		Marcelo Trujillo
+ * @author		Tanks
  *
  **********************************************************************************************************************************/
 

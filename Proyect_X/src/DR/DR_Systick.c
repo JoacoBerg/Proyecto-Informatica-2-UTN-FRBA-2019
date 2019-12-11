@@ -2,7 +2,7 @@
  * DR_systick.c
  *
  *  Created on: 6 sep. 2019
- *      Author: gif30
+ *      Author: Tanks
  */
 #include <DR_Salidas.h>
 #include <DR_Systick.h>

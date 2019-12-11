@@ -3,7 +3,7 @@
  * @file		DR_Salidas.c
  * @brief		Descripcion del modulo
  * @date		14 de nov. de 2017
- * @author		Ing. Marcelo Trujillo
+ * @author		Tanks
  *
  **********************************************************************************************************************************/
 

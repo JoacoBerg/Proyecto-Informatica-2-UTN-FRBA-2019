@@ -2,7 +2,7 @@
  * PR_SPI_MFRC522.h
  *
  *  Created on: Nov 2, 2019
- *      Author: GCRIS
+ *      Author:Tanks
  */
 
 #ifndef PR_SPI_MFRC522_H_

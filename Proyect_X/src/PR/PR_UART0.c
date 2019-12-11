@@ -2,7 +2,7 @@
  * PR_UART0.c
  *
  *  Created on: Oct 31, 2019
- *      Author: augusto
+ *      Author: Tanks
  */
 
 #include "DR_UART0.h"

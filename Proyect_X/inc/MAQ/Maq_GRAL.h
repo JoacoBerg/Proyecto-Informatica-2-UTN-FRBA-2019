@@ -2,7 +2,7 @@
 *	\file funciones.h
 *	\brief Resumen del archivo
 *	\details Descripcion detallada del archivo
-*	\author German
+*	\author Tanks
 *	\date 17-09-2019 18:07:28
 */
 #include <DR_tipos.h>

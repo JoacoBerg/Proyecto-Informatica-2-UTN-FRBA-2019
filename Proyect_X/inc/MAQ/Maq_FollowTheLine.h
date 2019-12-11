@@ -3,7 +3,7 @@
  * @file		Maq_Follow_the_line.h
  * @brief		Breve descripción del objetivo del Módulo
  * @date		15 sep. 2019
- * @author		Ing. Marcelo Trujillo
+ * @author		Tanks
  *
  **********************************************************************************************************************************/
 

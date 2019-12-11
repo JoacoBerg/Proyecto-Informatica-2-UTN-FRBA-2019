@@ -3,7 +3,8 @@
  * @file		DR_PWM1.c
  * @brief		Descripcion del modulo
  * @date		8 sep. 2019
- * @author		Ing. Marcelo Trujillo
+ * @author		Tanks
+ *
  *
  **********************************************************************************************************************************/
 
